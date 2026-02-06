@@ -1,0 +1,94 @@
+Schema Editor
+Close
+
+date
+(
+date, required
+)
+
+תאריך המשבצת
+
+
+start_time
+(
+text, required
+)
+
+שעת התחלה (HH:MM)
+
+
+end_time
+(
+text, required
+)
+
+שעת סיום (HH:MM)
+
+
+doctor_id
+(
+text, required
+)
+
+מזהה הרופא
+
+
+doctor_name
+(
+text, required
+)
+
+שם הרופא
+
+
+room_id
+(
+text
+)
+
+מזהה החדר
+
+
+room_name
+(
+text
+)
+
+שם החדר
+
+
+status
+(
+text
+)
+
+סטטוס המשבצת
+
+Default: "available"
+Options: available, booked, blocked
+
+template_id
+(
+text
+)
+
+מזהה תבנית המקור
+
+
+capacity
+(
+number
+)
+
+קיבולת
+
+Default: 1
+
+booked_count
+(
+number
+)
+
+מספר תורים שנקבעו
+
+Default: 0

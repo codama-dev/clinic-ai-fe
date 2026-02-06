@@ -1,0 +1,85 @@
+Schema Editor
+Close
+
+employee_id
+(
+text, required
+)
+
+מזהה העובד
+
+
+employee_name
+(
+text, required
+)
+
+שם העובד
+
+
+employee_email
+(
+text, required
+)
+
+אימייל העובד
+
+
+date
+(
+date, required
+)
+
+תאריך המשמרת
+
+
+clock_in_time
+(
+text, required
+)
+
+שעת כניסה למשמרת (HH:MM)
+
+
+clock_out_time
+(
+text
+)
+
+שעת יציאה מהמשמרת (HH:MM)
+
+
+shift_type
+(
+text
+)
+
+סוג המשמרת
+
+Options: morning, evening, full_day, split
+
+total_hours
+(
+number
+)
+
+סך שעות המשמרת
+
+
+notes
+(
+text
+)
+
+הערות
+
+
+status
+(
+text
+)
+
+סטטוס נוכחות
+
+Default: "clocked_in"
+Options: clocked_in, clocked_out

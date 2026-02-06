@@ -1,0 +1,60 @@
+Schema Editor
+Close
+
+item_name
+(
+text, required
+)
+
+שם הפריט החסר
+
+
+category
+(
+text, required
+)
+
+קטגוריה של הפריט
+
+Options: תרופה, ציוד מתכלה, מזון רפואי, ציוד משרדי, אחר
+
+quantity_needed
+(
+number
+)
+
+הכמות הנדרשת
+
+
+notes
+(
+text
+)
+
+הערות נוספות
+
+
+status
+(
+text
+)
+
+סטטוס הפריט
+
+Default: "needed"
+Options: needed, ordered, stocked
+
+requested_by_id
+(
+text, required
+)
+
+מזהה המשתמש שדיווח
+
+
+requested_by_name
+(
+text, required
+)
+
+שם המשתמש שדיווח

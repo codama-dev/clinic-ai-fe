@@ -1,0 +1,70 @@
+Schema Editor
+Close
+
+product_name
+(
+text, required
+)
+
+שם המוצר
+
+
+item_type
+(
+text, required
+)
+
+סוג הפריט
+
+Options: תרופה, ציוד רפואי, מזון, מזון רפואי, תכשיר, ציוד משרדי, אחר
+
+current_quantity
+(
+number
+)
+
+סך כל הכמות הנוכחית במלאי (סכום מכל המיקומים)
+
+Default: 0
+
+required_quantity
+(
+number
+)
+
+כמות נדרשת במלאי
+
+Default: 0
+
+locations
+(
+array
+)
+
+רשימת מיקומים והכמויות בכל מיקום
+
+Default: []
+
+location
+(
+text
+)
+
+מיקום המוצר במרפאה (שדה ישן, לתאימות לאחור)
+
+Options: חדר בדיקות 1, חדר בדיקות 2, קבלה, חדר ניתוח, חדרי אשפוז
+
+last_counted_by
+(
+text
+)
+
+שם המשתמש שעדכן לאחרונה
+
+
+last_counted_date
+(
+date-time
+)
+
+תאריך עדכון אחרון

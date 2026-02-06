@@ -1,0 +1,105 @@
+Schema Editor
+Close
+
+patient_id
+(
+text, required
+)
+
+מזהה המטופל
+
+
+patient_name
+(
+text, required
+)
+
+שם המטופל
+
+
+client_id
+(
+text, required
+)
+
+מזהה הלקוח
+
+
+measurement_date
+(
+date, required
+)
+
+תאריך המדידה
+
+
+measurement_time
+(
+text
+)
+
+שעת המדידה
+
+
+weight
+(
+number
+)
+
+משקל בק"ג
+
+
+temperature
+(
+number
+)
+
+טמפרטורה במעלות צלזיוס
+
+
+heart_rate
+(
+number
+)
+
+קצב לב (פעימות לדקה)
+
+
+respiratory_rate
+(
+number
+)
+
+קצב נשימות (נשימות לדקה)
+
+
+blood_pressure_systolic
+(
+number
+)
+
+לחץ דם סיסטולי
+
+
+blood_pressure_diastolic
+(
+number
+)
+
+לחץ דם דיאסטולי
+
+
+notes
+(
+text
+)
+
+הערות
+
+
+measured_by
+(
+text, required
+)
+
+שם מי שביצע את המדידה

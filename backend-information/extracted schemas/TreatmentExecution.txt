@@ -1,0 +1,89 @@
+Schema Editor
+Close
+
+animal_id
+(
+text, required
+)
+
+מזהה החיה המאושפזת
+
+
+animal_name
+(
+text, required
+)
+
+שם החיה
+
+
+medication_name
+(
+text, required
+)
+
+שם התרופה/טיפול
+
+
+dosage
+(
+text, required
+)
+
+מינון
+
+
+route
+(
+text
+)
+
+דרך מתן
+
+
+frequency
+(
+text
+)
+
+תדירות
+
+
+instruction_notes
+(
+text
+)
+
+הערות מההנחיה המקורית
+
+
+executed_by
+(
+text, required
+)
+
+אימייל המשתמש שביצע
+
+
+executed_by_name
+(
+text, required
+)
+
+שם המשתמש שביצע
+
+
+execution_date
+(
+date, required
+)
+
+תאריך הביצוע
+
+
+execution_time
+(
+text, required
+)
+
+שעת הביצוע (HH:MM)

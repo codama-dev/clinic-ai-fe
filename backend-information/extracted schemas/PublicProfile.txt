@@ -1,0 +1,60 @@
+Schema Editor
+Close
+
+user_id
+(
+text, required
+)
+
+מזהה המשתמש
+
+
+email
+(
+text, required
+)
+
+כתובת אימייל
+
+
+display_name
+(
+text, required
+)
+
+שם לתצוגה
+
+
+job
+(
+text, required
+)
+
+תפקיד המשתמש
+
+Options: doctor, assistant, receptionist, admin
+
+id_number
+(
+text
+)
+
+מספר תעודת זהות
+
+
+birthday_date
+(
+date
+)
+
+תאריך לידה (מועתק מ-User.date_of_birth)
+
+
+is_active
+(
+boolean
+)
+
+האם המשתמש פעיל ומשובץ
+
+Default: true

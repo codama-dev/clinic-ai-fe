@@ -1,0 +1,116 @@
+Schema Editor
+Close
+
+doctor_id
+(
+text, required
+)
+
+מזהה הרופא
+
+
+doctor_name
+(
+text, required
+)
+
+שם הרופא
+
+
+day_of_week
+(
+number, required
+)
+
+יום בשבוע (0=ראשון, 6=שבת)
+
+
+shift_type
+(
+text
+)
+
+סוג המשמרת
+
+Default: "full_day"
+Options: morning, evening, full_day, split
+
+start_time
+(
+text
+)
+
+שעת התחלה
+
+
+end_time
+(
+text
+)
+
+שעת סיום
+
+
+morning_start
+(
+text
+)
+
+שעת התחלה משמרת בוקר
+
+
+morning_end
+(
+text
+)
+
+שעת סיום משמרת בוקר
+
+
+evening_start
+(
+text
+)
+
+שעת התחלה משמרת ערב
+
+
+evening_end
+(
+text
+)
+
+שעת סיום משמרת ערב
+
+
+break_start
+(
+text
+)
+
+שעת התחלת הפסקה
+
+
+break_end
+(
+text
+)
+
+שעת סיום הפסקה
+
+
+is_active
+(
+boolean
+)
+
+האם ההגדרה פעילה
+
+Default: true
+
+notes
+(
+text
+)
+
+הערות

@@ -1,0 +1,93 @@
+Schema Editor
+Close
+week_start_date
+(
+date
+, required
+)
+
+תאריך תחילת השבוע
+
+schedule_data
+(
+object
+, required
+)
+
+נתוני לוח הזמנים השבועי
+
+previous_approved_schedule_data
+(
+object
+)
+
+נתוני הסידור המאושר הקודם לצורך השוואה
+
+Default: {}
+locked_shifts
+(
+object
+)
+
+An object storing the locked status of shifts, e.g. {"sunday-morning": true}
+
+Default: {}
+reception_coverage
+(
+object
+)
+
+Tracks which assistants are covering reception. e.g. {"sunday-morning": ["John Doe"]}
+
+Default: {}
+is_published
+(
+boolean
+)
+
+האם לוח המשמרות פורסם
+
+Default: false
+approval_status
+(
+text
+)
+
+סטטוס אישור הסידור
+
+Default: "draft"
+Options: draft, pending_approval, approved, rejected
+submitted_by
+(
+text
+)
+
+שם המשתמש ששלח את הסידור לאישור
+
+submitted_date
+(
+date-time
+)
+
+תאריך ושעת שליחה לאישור
+
+approved_by
+(
+text
+)
+
+שם האדמין שאישר את הסידור
+
+rejection_reason
+(
+text
+)
+
+סיבת דחיית הסידור (אם נדחה)
+
+publication_date
+(
+date-time
+)
+
+תאריך ושעת פרסום

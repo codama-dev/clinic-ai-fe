@@ -1,0 +1,75 @@
+Schema Editor
+Close
+
+case_number
+(
+text, required
+)
+
+מספר תיק רפואי
+
+
+client_name
+(
+text, required
+)
+
+שם הלקוח
+
+
+created_by_name
+(
+text
+)
+
+שם המשתמש שיצר את התיק
+
+
+treatments
+(
+array
+)
+
+רשימת טיפולים בתיק
+
+
+status
+(
+text
+)
+
+סטטוס התיק: ממתין, אושר, הוגשה תביעה
+
+Default: "pending"
+Options: pending, approved, submitted
+
+approved_by
+(
+text
+)
+
+שם הרופא שאישר את התיק
+
+
+approval_date
+(
+date-time
+)
+
+תאריך ושעת אישור התיק
+
+
+submitted_by
+(
+text
+)
+
+שם המשתמש שסימן שהתביעה הוגשה
+
+
+submission_date
+(
+date-time
+)
+
+תאריך ושעת סימון הגשת התביעה

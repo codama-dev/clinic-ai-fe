@@ -1,0 +1,25 @@
+Schema Editor
+Close
+
+user_id
+(
+text, required
+)
+
+The ID of the user who is a doctor.
+
+
+display_name
+(
+text, required
+)
+
+The display name of the doctor.
+
+
+email
+(
+text, required
+)
+
+The email of the doctor.

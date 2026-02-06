@@ -1,0 +1,76 @@
+Schema Editor
+Close
+
+order_number
+(
+number
+)
+
+מספר הזמנה ייחודי
+
+
+customer_name
+(
+text, required
+)
+
+שם הלקוח
+
+
+order_date
+(
+date, required
+)
+
+תאריך ההזמנה
+
+
+total_amount
+(
+number, required
+)
+
+סכום כולל
+
+
+status
+(
+text
+)
+
+סטטוס ההזמנה
+
+Default: "pending"
+Options: pending, processing, shipped, delivered, cancelled, draft, completed_with_shortages
+
+items
+(
+array, required
+)
+
+פריטים בהזמנה
+
+
+received_items
+(
+object
+)
+
+אוביקט המכיל מצב קבלת המוצרים, כאשר המפתח הוא שם המוצר והערך הוא boolean (true=הגיע, false=לא הגיע)
+
+Default: {}
+
+received_by
+(
+text
+)
+
+שם המשתמש שאישר את קבלת המשלוח
+
+
+received_date
+(
+date-time
+)
+
+תאריך ושעת אישור קבלת המשלוח

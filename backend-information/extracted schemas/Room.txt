@@ -1,0 +1,53 @@
+Schema Editor
+Close
+
+name
+(
+text, required
+)
+
+שם החדר/משאב
+
+
+room_type
+(
+text, required
+)
+
+סוג החדר
+
+Options: examination, surgery, laboratory, imaging, reception
+
+capacity
+(
+number
+)
+
+קיבולת מקבילה
+
+Default: 1
+
+equipment
+(
+text
+)
+
+ציוד זמין בחדר
+
+
+status
+(
+text
+)
+
+סטטוס החדר
+
+Default: "available"
+Options: available, maintenance, unavailable
+
+notes
+(
+text
+)
+
+הערות

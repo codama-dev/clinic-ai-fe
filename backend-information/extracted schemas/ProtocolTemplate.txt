@@ -1,0 +1,201 @@
+Schema Editor
+Close
+
+visit_number
+(
+number
+)
+
+מספר ביקור ייחודי - מתחיל ב-1 ועולה אוטומטית
+
+
+client_number
+(
+number, required
+)
+
+מספר הלקוח מהישות Client
+
+
+patient_number
+(
+number, required
+)
+
+מספר המטופל מהישות Patient
+
+
+full_name
+(
+text, required
+)
+
+שם מלא של הלקוח מהישות Client
+
+
+client_name
+(
+text
+)
+
+שם הלקוח
+
+
+patient_name
+(
+text, required
+)
+
+שם המטופל
+
+
+doctor_name
+(
+text, required
+)
+
+שם הרופא
+
+
+doctor_license
+(
+text
+)
+
+מספר רישיון הרופא
+
+
+visit_date
+(
+date, required
+)
+
+תאריך הביקור
+
+
+visit_time
+(
+text, required
+)
+
+שעת הביקור
+
+
+chief_complaint
+(
+text
+)
+
+סיבת הביקור
+
+
+findings_and_tests
+(
+text
+)
+
+ממצאים ובדיקות
+
+
+diagnosis
+(
+text
+)
+
+אבחנה
+
+
+treatment
+(
+text
+)
+
+הטיפול שניתן
+
+
+vital_signs
+(
+object
+)
+
+מדדים חיוניים
+
+
+lab_tests
+(
+array
+)
+
+בדיקות מעבדה כולל מחיר
+
+Default: []
+
+items_from_pricelist
+(
+array
+)
+
+פריטים ממחירון לקוחות
+
+Default: []
+
+prescriptions
+(
+array
+)
+
+מרשמים
+
+Default: []
+
+follow_up_days
+(
+number
+)
+
+מספר ימים למעקב
+
+
+follow_up_date
+(
+date
+)
+
+תאריך מעקב
+
+
+follow_up_completed
+(
+boolean
+)
+
+האם המעקב הושלם
+
+Default: false
+
+attachments
+(
+array
+)
+
+קבצים מצורפים (URLs)
+
+Default: []
+
+notes
+(
+text
+)
+
+הערות
+
+
+status
+(
+text
+)
+
+סטטוס הביקור
+
+Default: "draft"
+Options: draft, completed

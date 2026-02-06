@@ -1,0 +1,177 @@
+Schema Editor
+Close
+
+owner_name
+(
+text, required
+)
+
+שם הבעלים
+
+
+animal_name
+(
+text, required
+)
+
+שם החיה
+
+
+animal_image_url
+(
+text
+)
+
+קישור לתמונת החיה
+
+
+animal_type
+(
+text
+)
+
+סוג החיה
+
+Options: כלב, חתול, ארנב, תוכי, חמוס, שרקן
+
+admission_weight
+(
+number
+)
+
+משקל החיה בהגעה (ק"ג)
+
+
+animal_sex
+(
+text
+)
+
+מין החיה
+
+Options: זכר, נקבה
+
+age
+(
+text
+)
+
+גיל החיה
+
+
+breed
+(
+text
+)
+
+גזע החיה
+
+
+is_neutered
+(
+boolean
+)
+
+האם מעוקר/מסורס
+
+Default: false
+
+has_catheter
+(
+boolean
+)
+
+האם הוחדר קטטר ורידי
+
+Default: false
+
+catheter_insertion_date
+(
+date
+)
+
+תאריך החדרת הקטטר
+
+
+admission_date
+(
+date, required
+)
+
+תאריך האשפוז
+
+
+diagnoses
+(
+text
+)
+
+אבחנות ובעיות רפואיות
+
+
+treatment_instructions
+(
+array
+)
+
+הנחיות טיפול מאושפזים - נקבעות על ידי רופאים
+
+Default: []
+
+status
+(
+text
+)
+
+סטטוס האשפוז
+
+Default: "active"
+Options: active, discharged, deceased
+
+discharge_instructions
+(
+text
+)
+
+הנחיות לשחרור בעת סיום האשפוז
+
+
+date_of_death
+(
+date
+)
+
+תאריך פטירה (אם רלוונטי)
+
+
+monitoring_log
+(
+array
+)
+
+
+Default: []
+
+fluids_log
+(
+array
+)
+
+
+Default: []
+
+treatments_log
+(
+array
+)
+
+
+Default: []
+
+observations_log
+(
+array
+)
+
+
+Default: []

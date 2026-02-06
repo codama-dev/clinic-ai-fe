@@ -1,0 +1,104 @@
+Schema Editor
+Close
+employee_id
+(
+text
+, required
+)
+
+מזהה העובד
+
+employee_name
+(
+text
+, required
+)
+
+שם העובד
+
+employee_email
+(
+text
+, required
+)
+
+Email of the employee for filtering
+
+start_date
+(
+date
+, required
+)
+
+תאריך תחילת החופשה
+
+end_date
+(
+date
+, required
+)
+
+תאריך סיום החופשה
+
+total_days
+(
+number
+, required
+)
+
+סך ימי החופשה
+
+unpaid_days
+(
+number
+)
+
+מספר ימי החופשה ללא תשלום (חל״ת)
+
+Default: 0
+vacation_type
+(
+text
+, required
+)
+
+סוג החופשה: חופשה רגילה, חופשת מחלה או חופשה ללא תשלום
+
+Default: "regular"
+Options: regular, sick_leave, unpaid_leave
+medical_document_url
+(
+text
+)
+
+קישור למסמך אישור רפואי (לחופשת מחלה)
+
+reason
+(
+text
+)
+
+סיבת החופשה
+
+status
+(
+text
+)
+
+סטטוס הבקשה
+
+Default: "pending"
+Options: pending, approved, rejected
+manager_response
+(
+text
+)
+
+תגובת המנהל
+
+response_date
+(
+date-time
+)
+
+תאריך תגובת המנהל

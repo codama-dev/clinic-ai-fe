@@ -1,0 +1,64 @@
+Schema Editor
+Close
+
+name
+(
+text, required
+)
+
+שם השירות
+
+
+duration_minutes
+(
+number, required
+)
+
+משך זמן ברירת מחדל (דקות)
+
+Default: 20
+
+base_price
+(
+number, required
+)
+
+מחיר בסיס
+
+Default: 0
+
+color
+(
+text
+)
+
+צבע להצגה בלוח שנה
+
+Default: "#3b82f6"
+
+requires_room_type
+(
+text
+)
+
+סוג חדר נדרש
+
+Default: "examination"
+Options: examination, surgery, laboratory, imaging, any
+
+description
+(
+text
+)
+
+תיאור השירות
+
+
+is_active
+(
+boolean
+)
+
+האם השירות פעיל
+
+Default: true

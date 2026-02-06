@@ -1,0 +1,130 @@
+Schema Editor
+Close
+
+client_number
+(
+number
+)
+
+מספר לקוח סידורי אוטומטי
+
+
+full_name
+(
+text
+)
+
+שם מלא של הלקוח
+
+
+id_number
+(
+text
+)
+
+תעודת זהות
+
+
+phone
+(
+text
+)
+
+מספר טלפון ראשי - שדה מרכזי לחיפוש
+
+
+phone_secondary
+(
+text
+)
+
+מספר טלפון משני
+
+
+email
+(
+text
+)
+
+כתובת אימייל
+
+
+address
+(
+text
+)
+
+כתובת מגורים
+
+
+city
+(
+text
+)
+
+עיר
+
+
+notes
+(
+text
+)
+
+הערות כלליות על הלקוח
+
+
+status
+(
+text
+)
+
+סטטוס הלקוח
+
+Default: "active"
+Options: active, inactive, blocked
+
+marketing_consent
+(
+boolean
+)
+
+הסכמה לקבלת חומרי שיווק
+
+Default: false
+
+reminders_consent
+(
+boolean
+)
+
+הסכמה לקבלת תזכורות
+
+Default: true
+
+preferred_contact
+(
+text
+)
+
+אמצעי תקשורת מועדף
+
+Default: "whatsapp"
+Options: phone, email, whatsapp, sms
+
+balance
+(
+number
+)
+
+יתרה/חוב נוכחי
+
+Default: 0
+
+has_no_show_history
+(
+boolean
+)
+
+האם ללקוח יש היסטוריה של אי התייצבות לתורים
+
+Default: false

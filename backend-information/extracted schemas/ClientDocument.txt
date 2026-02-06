@@ -1,0 +1,57 @@
+Schema Editor
+Close
+
+client_id
+(
+text, required
+)
+
+מזהה הלקוח
+
+
+client_name
+(
+text, required
+)
+
+שם הלקוח
+
+
+patient_id
+(
+text
+)
+
+מזהה המטופל (אופציונלי)
+
+
+patient_name
+(
+text
+)
+
+שם המטופל (אופציונלי)
+
+
+document_name
+(
+text, required
+)
+
+שם המסמך
+
+
+file_url
+(
+text, required
+)
+
+קישור לקובץ
+
+
+uploaded_by
+(
+text
+)
+
+שם המשתמש שהעלה

@@ -1,0 +1,27 @@
+Schema Editor
+Close
+
+name
+(
+text, required
+)
+
+שם המחירון
+
+
+description
+(
+text
+)
+
+תיאור המחירון
+
+
+is_active
+(
+boolean
+)
+
+האם המחירון פעיל
+
+Default: true

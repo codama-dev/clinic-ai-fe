@@ -1,0 +1,189 @@
+Schema Editor
+Close
+
+appointment_id
+(
+text
+)
+
+מזהה התור
+
+
+visit_id
+(
+text
+)
+
+מזהה הביקור הרפואי
+
+
+client_id
+(
+text, required
+)
+
+מזהה הלקוח
+
+
+client_name
+(
+text, required
+)
+
+שם הלקוח
+
+
+patient_id
+(
+text
+)
+
+מזהה המטופל
+
+
+patient_name
+(
+text
+)
+
+שם המטופל
+
+
+billing_date
+(
+date, required
+)
+
+תאריך החיוב
+
+
+items
+(
+array
+)
+
+פריטי החיוב
+
+Default: []
+
+subtotal
+(
+number
+)
+
+סכום ביניים
+
+Default: 0
+
+discount
+(
+number
+)
+
+הנחה
+
+Default: 0
+
+discount_reason
+(
+text
+)
+
+סיבת ההנחה
+
+
+vat_rate
+(
+number
+)
+
+אחוז מע״מ
+
+Default: 0
+
+vat_amount
+(
+number
+)
+
+סכום מע״מ
+
+Default: 0
+
+total
+(
+number, required
+)
+
+סכום כולל
+
+Default: 0
+
+status
+(
+text
+)
+
+סטטוס התשלום
+
+Default: "draft"
+Options: draft, pending, paid, partial, cancelled
+
+payments
+(
+array
+)
+
+תשלומים שבוצעו
+
+Default: []
+
+amount_paid
+(
+number
+)
+
+סכום ששולם
+
+Default: 0
+
+balance
+(
+number
+)
+
+יתרה
+
+Default: 0
+
+document_type
+(
+text
+)
+
+סוג מסמך
+
+Options: invoice, receipt, invoice_receipt
+
+document_number
+(
+text
+)
+
+מספר מסמך
+
+
+pdf_url
+(
+text
+)
+
+קישור למסמך PDF
+
+
+notes
+(
+text
+)
+
+הערות

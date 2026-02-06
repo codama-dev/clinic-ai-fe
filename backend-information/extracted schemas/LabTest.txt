@@ -1,0 +1,109 @@
+Schema Editor
+Close
+
+test_number
+(
+number
+)
+
+מספר בדיקה ייחודי כרונולוגי - מתחיל ב-1 ועולה אוטומטית
+
+
+client_number
+(
+number, required
+)
+
+מספר הלקוח מהישות Client
+
+
+client_name
+(
+text, required
+)
+
+שם הלקוח
+
+
+patient_number
+(
+number, required
+)
+
+מספר המטופל מהישות Patient
+
+
+patient_name
+(
+text, required
+)
+
+שם המטופל
+
+
+test_type_id
+(
+text
+)
+
+מזהה סוג הבדיקה
+
+
+test_name
+(
+text, required
+)
+
+שם הבדיקה
+
+
+test_date
+(
+date, required
+)
+
+תאריך ביצוע הבדיקה
+
+
+results
+(
+object, required
+)
+
+תוצאות הבדיקה - אובייקט של פרמטרים עם ערכים
+
+Default: {}
+
+results_file_url
+(
+text
+)
+
+קישור לקובץ תוצאות הבדיקה
+
+
+performed_by
+(
+text
+)
+
+שם המבצע
+
+
+notes
+(
+text
+)
+
+הערות על הבדיקה
+
+
+status
+(
+text
+)
+
+סטטוס הבדיקה
+
+Default: "pending"
+Options: pending, completed, reviewed

@@ -1,0 +1,53 @@
+Schema Editor
+Close
+
+name
+(
+text, required
+)
+
+שם סוג החיסון/טיפול המונע
+
+
+description
+(
+text
+)
+
+תיאור
+
+
+default_interval_days
+(
+number
+)
+
+מרווח זמן ברירת מחדל לחיסון הבא (בימים)
+
+
+first_reminder_days_before
+(
+number
+)
+
+כמה ימים לפני לשלוח תזכורת ראשונה
+
+Default: 14
+
+second_reminder_days_before
+(
+number
+)
+
+כמה ימים לפני לשלוח תזכורת שנייה
+
+Default: 7
+
+is_active
+(
+boolean
+)
+
+האם פעיל
+
+Default: true

@@ -1,0 +1,73 @@
+Schema Editor
+Close
+
+price_list_id
+(
+text, required
+)
+
+מזהה המחירון
+
+
+price_list_name
+(
+text, required
+)
+
+שם המחירון
+
+
+product_name
+(
+text, required
+)
+
+שם המוצר
+
+
+category
+(
+text
+)
+
+קטגוריה ראשית
+
+
+sub_category
+(
+text
+)
+
+תת קטגוריה
+
+
+supplier_name
+(
+text
+)
+
+שם הספק
+
+
+supplier_price
+(
+number
+)
+
+מחיר הספק
+
+
+sale_price
+(
+number, required
+)
+
+מחיר מכירה
+
+
+notes
+(
+text
+)
+
+הערות

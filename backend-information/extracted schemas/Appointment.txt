@@ -1,0 +1,174 @@
+Schema Editor
+Close
+
+appointment_number
+(
+number
+)
+
+מספר מזהה ייחודי לתור
+
+
+date
+(
+date, required
+)
+
+תאריך התור
+
+
+start_time
+(
+text, required
+)
+
+שעת התחלה (HH:MM)
+
+
+end_time
+(
+text
+)
+
+שעת סיום (HH:MM)
+
+
+client_id
+(
+text
+)
+
+מזהה הלקוח (רק לתור רגיל)
+
+
+client_name
+(
+text
+)
+
+שם הלקוח (רק לתור רגיל)
+
+
+client_phone
+(
+text
+)
+
+טלפון הלקוח (רק לתור רגיל)
+
+
+patient_id
+(
+text
+)
+
+מזהה המטופל (רק לתור רגיל)
+
+
+patient_name
+(
+text
+)
+
+שם המטופל (רק לתור רגיל)
+
+
+doctor_id
+(
+text
+)
+
+מזהה הרופא המטפל (רק לתור רגיל)
+
+
+doctor_name
+(
+text
+)
+
+שם הרופא המטפל (רק לתור רגיל)
+
+
+appointment_type_id
+(
+text
+)
+
+מזהה סוג התור (רק לתור רגיל)
+
+
+appointment_type_name
+(
+text
+)
+
+שם סוג התור (רק לתור רגיל)
+
+
+room_id
+(
+text
+)
+
+מזהה החדר
+
+
+room_name
+(
+text
+)
+
+שם החדר
+
+
+duration_minutes
+(
+number, required
+)
+
+משך התור בדקות
+
+
+chief_complaint
+(
+text
+)
+
+סיבת ההגעה או נושא הפגישה
+
+
+reception_notes
+(
+text
+)
+
+הערות קבלה או פרטים נוספים
+
+
+status
+(
+text
+)
+
+סטטוס התור
+
+Default: "scheduled"
+Options: scheduled, confirmed, arrived, in_progress, completed, no_show, cancelled
+
+is_general_meeting
+(
+boolean
+)
+
+האם זו פגישה כללית (לא משוייכת ללקוח)
+
+Default: false
+
+participants
+(
+array
+)
+
+רשימת משתתפים לפגישה כללית
+
+Default: []

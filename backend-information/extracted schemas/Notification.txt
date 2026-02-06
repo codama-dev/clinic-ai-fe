@@ -1,0 +1,109 @@
+Schema Editor
+Close
+
+appointment_id
+(
+text
+)
+
+מזהה התור (אופציונלי)
+
+
+client_id
+(
+text, required
+)
+
+מזהה הלקוח
+
+
+client_name
+(
+text
+)
+
+שם הלקוח
+
+
+patient_name
+(
+text
+)
+
+שם המטופל
+
+
+channel
+(
+text, required
+)
+
+ערוץ התזכורת
+
+Options: whatsapp, sms, email
+
+type
+(
+text, required
+)
+
+סוג ההתראה
+
+Options: confirmation, reminder_24h, reminder_2h, cancellation, rescheduled, manual
+
+scheduled_time
+(
+date-time, required
+)
+
+מתי לשלוח
+
+
+sent_time
+(
+date-time
+)
+
+מתי נשלח בפועל
+
+
+status
+(
+text
+)
+
+סטטוס השליחה
+
+Default: "pending"
+Options: pending, sent, failed, cancelled
+
+recipient
+(
+text
+)
+
+כתובת/מספר הנמען
+
+
+message_content
+(
+text
+)
+
+תוכן ההודעה
+
+
+failure_reason
+(
+text
+)
+
+סיבת כישלון
+
+
+response
+(
+text
+)
+
+תגובת הלקוח

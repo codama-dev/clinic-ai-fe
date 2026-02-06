@@ -1,0 +1,29 @@
+Schema Editor
+Close
+
+name
+(
+text, required
+)
+
+שם מלא של העובד החיצוני
+
+
+job
+(
+text, required
+)
+
+תפקיד העובד
+
+Default: "assistant"
+Options: doctor, assistant, receptionist
+
+is_active
+(
+boolean
+)
+
+האם העובד פעיל וזמין לשיבוץ
+
+Default: true

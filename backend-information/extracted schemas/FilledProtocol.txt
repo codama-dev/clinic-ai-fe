@@ -1,0 +1,75 @@
+Schema Editor
+Close
+
+template_id
+(
+text, required
+)
+
+מזהה של תבנית הפרוטוקול
+
+
+template_name
+(
+text, required
+)
+
+שם תבנית הפרוטוקול
+
+
+patient_name
+(
+text, required
+)
+
+שם המטופל/החיה
+
+
+filled_by_name
+(
+text, required
+)
+
+שם המשתמש שמילא את הפרוטוקול
+
+
+data
+(
+object, required
+)
+
+הנתונים שנאספו מהטופס
+
+
+field_metadata
+(
+object
+)
+
+מטא-דאטה על כל שדה - מי מילא אותו ומתי
+
+Default: {}
+
+is_released
+(
+boolean
+)
+
+האם החיה שוחררה לאחר הניתוח
+
+Default: false
+
+released_by
+(
+text
+)
+
+שם המשתמש ששחרר את החיה
+
+
+released_date
+(
+date-time
+)
+
+תאריך ושעת שחרור החיה

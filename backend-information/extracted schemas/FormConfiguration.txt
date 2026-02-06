@@ -1,0 +1,69 @@
+Schema Editor
+Close
+
+form_name
+(
+text, required
+)
+
+שם הטופס במערכת
+
+
+display_name
+(
+text, required
+)
+
+שם לתצוגה בעברית
+
+
+description
+(
+text
+)
+
+תיאור הטופס
+
+
+fields
+(
+array
+)
+
+הגדרות השדות בטופס
+
+Default: []
+
+is_active
+(
+boolean
+)
+
+האם הטופס פעיל
+
+Default: true
+
+allow_multiple_submissions
+(
+boolean
+)
+
+האם מותר להגיש מספר רב של טפסים
+
+Default: true
+
+requires_approval
+(
+boolean
+)
+
+האם נדרש אישור לשליחת הטופס
+
+Default: false
+
+notification_settings
+(
+object
+)
+
+הגדרות התראות

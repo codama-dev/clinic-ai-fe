@@ -1,0 +1,68 @@
+Schema Editor
+Close
+
+subject
+(
+text, required
+)
+
+נושא הפנייה
+
+
+referring_user_id
+(
+text, required
+)
+
+מזהה המשתמש המפנה
+
+
+referring_user_name
+(
+text, required
+)
+
+שם המשתמש המפנה
+
+
+target_doctor_id
+(
+text, required
+)
+
+מזהה הרופא המטפל
+
+
+target_doctor_name
+(
+text, required
+)
+
+שם הרופא המטפל
+
+
+is_urgent
+(
+boolean
+)
+
+האם הפנייה דחופה
+
+Default: false
+
+status
+(
+text
+)
+
+סטטוס הפנייה
+
+Default: "open"
+Options: open, closed
+
+messages
+(
+array, required
+)
+
+היסטוריית ההודעות בפנייה

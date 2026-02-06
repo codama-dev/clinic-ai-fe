@@ -1,0 +1,128 @@
+Schema Editor
+Close
+
+setting_type
+(
+text, required
+)
+
+סוג ההגדרה
+
+Options: time_slots, blocked_date, working_hours, special_schedule
+
+date
+(
+date
+)
+
+תאריך רלוונטי להגדרה
+
+
+day_of_week
+(
+number
+)
+
+יום בשבוע (0=ראשון, 6=שבת)
+
+
+start_time
+(
+text
+)
+
+שעת התחלה
+
+
+end_time
+(
+text
+)
+
+שעת סיום
+
+
+slot_duration
+(
+number
+)
+
+משך זמן של משבצת בדקות
+
+Default: 20
+
+is_blocked
+(
+boolean
+)
+
+האם היומן חסום לתאריך זה
+
+Default: false
+
+block_reason
+(
+text
+)
+
+סיבת החסימה
+
+
+doctor_id
+(
+text
+)
+
+מזהה רופא (אם ההגדרה ספציפית לרופא)
+
+
+doctor_name
+(
+text
+)
+
+שם הרופא
+
+
+max_appointments_per_slot
+(
+number
+)
+
+מספר תורים מקסימלי למשבצת
+
+Default: 1
+
+is_active
+(
+boolean
+)
+
+האם ההגדרה פעילה
+
+Default: true
+
+notes
+(
+text
+)
+
+הערות
+
+
+recurrence_type
+(
+text
+)
+
+סוג החזרתיות
+
+Default: "none"
+Options: none, weekly, monthly, yearly
+
+recurrence_end_date
+(
+date
+)
+
+תאריך סיום החזרתיות

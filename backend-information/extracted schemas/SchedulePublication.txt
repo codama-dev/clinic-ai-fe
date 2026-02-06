@@ -1,0 +1,39 @@
+Schema Editor
+Close
+week_start_date
+(
+date
+, required
+)
+
+תאריך תחילת השבוע
+
+publication_date
+(
+date-time
+)
+
+תאריך ושעת פרסום
+
+is_published
+(
+boolean
+)
+
+האם פורסם
+
+Default: false
+notification_sent
+(
+boolean
+)
+
+האם נשלחה התראה למייל
+
+Default: false
+recipients
+(
+array
+)
+
+רשימת מיילים שקיבלו התראה

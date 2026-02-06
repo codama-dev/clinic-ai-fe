@@ -1,0 +1,52 @@
+Schema Editor
+Close
+employee_id
+(
+text
+, required
+)
+
+מזהה העובד
+
+employee_name
+(
+text
+, required
+)
+
+שם העובד
+
+week_start_date
+(
+date
+, required
+)
+
+תאריך תחילת השבוע
+
+unavailable_day
+(
+text
+, required
+)
+
+יום שבו העובד לא זמין
+
+Options: sunday, monday, tuesday, wednesday, thursday, friday, saturday
+unavailable_shift
+(
+text
+, required
+)
+
+משמרת שבה העובד לא זמין
+
+Options: morning, evening
+is_submitted_on_time
+(
+boolean
+)
+
+האם הוגש בזמן
+
+Default: true

@@ -1,0 +1,30 @@
+Schema Editor
+Close
+
+constraint_deadline_day
+(
+text, required
+)
+
+היום האחרון להגשת אילוצים
+
+Default: "thursday"
+Options: sunday, monday, tuesday, wednesday, thursday, friday, saturday
+
+constraint_deadline_time
+(
+text, required
+)
+
+השעה האחרונה להגשת אילוצים (HH:MM)
+
+Default: "20:00"
+
+constraint_weeks_ahead
+(
+number, required
+)
+
+כמה שבועות קדימה ניתן להגיש אילוצים
+
+Default: 3

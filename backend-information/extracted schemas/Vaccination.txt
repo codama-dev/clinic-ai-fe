@@ -1,0 +1,113 @@
+Schema Editor
+Close
+
+client_id
+(
+text, required
+)
+
+מזהה הלקוח
+
+
+client_name
+(
+text
+)
+
+שם הלקוח
+
+
+client_number
+(
+number
+)
+
+מספר לקוח
+
+
+patient_id
+(
+text, required
+)
+
+מזהה המטופל
+
+
+patient_name
+(
+text
+)
+
+שם המטופל
+
+
+patient_number
+(
+number
+)
+
+מספר מטופל
+
+
+vaccination_type
+(
+text, required
+)
+
+סוג החיסון/טיפול המונע
+
+
+vaccination_date
+(
+date, required
+)
+
+תאריך מתן החיסון
+
+
+administered_by
+(
+text
+)
+
+שם המבצע
+
+
+next_vaccination_date
+(
+date
+)
+
+מועד הבא לחיסון
+
+
+first_reminder_date
+(
+date
+)
+
+תזכורת ראשונה
+
+
+second_reminder_date
+(
+date
+)
+
+תזכורת שנייה
+
+
+batch_number
+(
+text
+)
+
+מספר אצווה
+
+
+notes
+(
+text
+)
+
+הערות

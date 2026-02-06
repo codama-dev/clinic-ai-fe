@@ -1,0 +1,44 @@
+Schema Editor
+Close
+name
+(
+text
+, required
+)
+
+שם המשמרת
+
+start_time
+(
+text
+, required
+)
+
+שעת התחלה (HH:MM)
+
+end_time
+(
+text
+, required
+)
+
+שעת סיום (HH:MM)
+
+staffing_requirements
+(
+object
+)
+
+דרישות איוש למשמרת
+
+Default: {}
+Additional Properties:
+additionalProperties: {"type":"object","properties":{"min":{"type":"number"},"max":{"type":"number"}}}
+is_active
+(
+boolean
+)
+
+האם המשמרת פעילה
+
+Default: true

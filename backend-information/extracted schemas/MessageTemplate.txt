@@ -1,0 +1,77 @@
+Schema Editor
+Close
+
+template_name
+(
+text, required
+)
+
+שם התבנית
+
+
+channel
+(
+text, required
+)
+
+ערוץ התקשורת
+
+Options: email, whatsapp, sms
+
+subject
+(
+text
+)
+
+כותרת (רלוונטי למייל בלבד)
+
+
+header_image_url
+(
+text
+)
+
+לוגו/תמונת כותרת
+
+
+message_content
+(
+text, required
+)
+
+תוכן ההודעה
+
+
+signature
+(
+text
+)
+
+חתימה בסוף ההודעה
+
+
+footer_text
+(
+text
+)
+
+טקסט תחתון
+
+
+is_active
+(
+boolean
+)
+
+האם התבנית פעילה
+
+Default: true
+
+is_default
+(
+boolean
+)
+
+האם זו תבנית ברירת מחדל
+
+Default: false

@@ -1,0 +1,36 @@
+Schema Editor
+Close
+
+name
+(
+text, required
+)
+
+שם הבדיקה
+
+
+description
+(
+text
+)
+
+תיאור הבדיקה
+
+
+parameters
+(
+array
+)
+
+רשימת פרמטרים עם טווחים תקינים
+
+Default: []
+
+is_active
+(
+boolean
+)
+
+האם הבדיקה פעילה
+
+Default: true

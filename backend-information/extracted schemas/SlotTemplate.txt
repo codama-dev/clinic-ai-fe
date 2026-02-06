@@ -1,0 +1,126 @@
+Schema Editor
+Close
+
+name
+(
+text, required
+)
+
+שם התבנית
+
+
+day_of_week
+(
+number, required
+)
+
+יום בשבוע (0=ראשון, 6=שבת)
+
+
+start_time
+(
+text, required
+)
+
+שעת התחלה (HH:MM)
+
+
+end_time
+(
+text, required
+)
+
+שעת סיום (HH:MM)
+
+
+slot_duration
+(
+number
+)
+
+אורך משבצת בדקות
+
+Default: 20
+
+doctor_id
+(
+text, required
+)
+
+מזהה הרופא
+
+
+doctor_name
+(
+text, required
+)
+
+שם הרופא
+
+
+room_id
+(
+text
+)
+
+מזהה החדר
+
+
+room_name
+(
+text
+)
+
+שם החדר
+
+
+break_times
+(
+array
+)
+
+הפסקות (למשל צהריים)
+
+Default: []
+
+allowed_appointment_types
+(
+array
+)
+
+סוגי ביקור מותרים (ריק = הכל)
+
+Default: []
+
+capacity
+(
+number
+)
+
+מספר תורים במקביל
+
+Default: 1
+
+is_active
+(
+boolean
+)
+
+האם התבנית פעילה
+
+Default: true
+
+valid_from
+(
+date
+)
+
+תקף מתאריך
+
+
+valid_until
+(
+date
+)
+
+תקף עד תאריך

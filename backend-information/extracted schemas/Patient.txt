@@ -1,0 +1,217 @@
+Schema Editor
+Close
+
+patient_number
+(
+number
+)
+
+מספר מטופל ייחודי (אוטומטי)
+
+
+client_number
+(
+number, required
+)
+
+מספר לקוח ייחודי (מקשר לטבלת לקוחות)
+
+
+client_id
+(
+text
+)
+
+מזהה הלקוח
+
+
+client_name
+(
+text, required
+)
+
+שם הלקוח בעלים
+
+
+name
+(
+text, required
+)
+
+שם המטופל
+
+
+species
+(
+text, required
+)
+
+סוג החיה
+
+Options: כלב, חתול, ארנב, תוכי, חמוס, שרקן, אחר
+
+breed
+(
+text
+)
+
+גזע
+
+
+sex
+(
+text
+)
+
+מין
+
+Options: זכר, נקבה
+
+neutered
+(
+boolean
+)
+
+מעוקר/מסורס
+
+Default: false
+
+neutered_date
+(
+date
+)
+
+תאריך עיקור/סירוס
+
+
+date_of_birth
+(
+date
+)
+
+תאריך לידה
+
+
+weight
+(
+number
+)
+
+משקל (ק״ג)
+
+
+microchip
+(
+text
+)
+
+מספר שבב
+
+
+microchip_date
+(
+date
+)
+
+תאריך ביצוע שבב
+
+
+color
+(
+text
+)
+
+צבע/סימנים
+
+
+description
+(
+text
+)
+
+תיאור החיה
+
+
+photo_url
+(
+text
+)
+
+תמונת המטופל
+
+
+allergies
+(
+text
+)
+
+אלרגיות ידועות
+
+
+chronic_conditions
+(
+text
+)
+
+מחלות כרוניות
+
+
+current_medications
+(
+text
+)
+
+תרופות קבועות
+
+
+is_insured
+(
+boolean
+)
+
+לקוח מבוטח
+
+Default: false
+
+insurance_company
+(
+text
+)
+
+חברת ביטוח
+
+Options: מרפאט, חיותא, פניקס, אחר
+
+insurance_policy
+(
+text
+)
+
+מספר פוליסה
+
+
+status
+(
+text
+)
+
+סטטוס המטופל
+
+Default: "active"
+Options: active, inactive
+
+inactive_reason
+(
+text
+)
+
+סיבת חוסר פעילות
+
+Options: נפטרה, אבדה, עברה בעלים, אחר
+
+notes
+(
+text
+)
+
+הערות רפואיות כלליות
