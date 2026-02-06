@@ -1,0 +1,3 @@
+name,start_time,end_time,staffing_requirements,is_active,id,created_date,updated_date,created_by_id,created_by,is_sample
+משמרת ערב,14:00,19:00,"{""doctor"":{""min"":1,""max"":0},""assistant"":{""min"":1,""max"":0},""receptionist"":{""min"":1,""max"":0}}",true,68d7bb096a582374d93115c9,2025-09-27T10:23:05.942000,2025-10-15T09:19:36.224000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+משמרת בוקר,09:00,16:00,"{""doctor"":{""min"":1,""max"":0},""assistant"":{""min"":2,""max"":0},""receptionist"":{""min"":1,""max"":0}}",true,68d7bb096a582374d93115ca,2025-09-27T10:23:05.942000,2025-10-15T09:02:04.290000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false

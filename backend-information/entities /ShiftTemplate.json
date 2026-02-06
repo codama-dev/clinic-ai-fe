@@ -1,0 +1,44 @@
+{
+  "name": "ShiftTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05e9\u05de\u05e8\u05ea"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "\u05e9\u05e2\u05ea \u05d4\u05ea\u05d7\u05dc\u05d4 (HH:MM)"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "\u05e9\u05e2\u05ea \u05e1\u05d9\u05d5\u05dd (HH:MM)"
+    },
+    "staffing_requirements": {
+      "type": "object",
+      "description": "\u05d3\u05e8\u05d9\u05e9\u05d5\u05ea \u05d0\u05d9\u05d5\u05e9 \u05dc\u05de\u05e9\u05de\u05e8\u05ea",
+      "default": {},
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "min": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "\u05d4\u05d0\u05dd \u05d4\u05de\u05e9\u05de\u05e8\u05ea \u05e4\u05e2\u05d9\u05dc\u05d4"
+    }
+  },
+  "required": [
+    "name",
+    "start_time",
+    "end_time"
+  ]
+}

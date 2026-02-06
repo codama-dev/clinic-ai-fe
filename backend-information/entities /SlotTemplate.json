@@ -1,0 +1,95 @@
+{
+  "name": "SlotTemplate",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05ea\u05d1\u05e0\u05d9\u05ea"
+    },
+    "day_of_week": {
+      "type": "number",
+      "description": "\u05d9\u05d5\u05dd \u05d1\u05e9\u05d1\u05d5\u05e2 (0=\u05e8\u05d0\u05e9\u05d5\u05df, 6=\u05e9\u05d1\u05ea)"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "\u05e9\u05e2\u05ea \u05d4\u05ea\u05d7\u05dc\u05d4 (HH:MM)"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "\u05e9\u05e2\u05ea \u05e1\u05d9\u05d5\u05dd (HH:MM)"
+    },
+    "slot_duration": {
+      "type": "number",
+      "default": 20,
+      "description": "\u05d0\u05d5\u05e8\u05da \u05de\u05e9\u05d1\u05e6\u05ea \u05d1\u05d3\u05e7\u05d5\u05ea"
+    },
+    "doctor_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05e8\u05d5\u05e4\u05d0"
+    },
+    "doctor_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05e8\u05d5\u05e4\u05d0"
+    },
+    "room_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05d7\u05d3\u05e8"
+    },
+    "room_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05d7\u05d3\u05e8"
+    },
+    "break_times": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string"
+          },
+          "end": {
+            "type": "string"
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05d4\u05e4\u05e1\u05e7\u05d5\u05ea (\u05dc\u05de\u05e9\u05dc \u05e6\u05d4\u05e8\u05d9\u05d9\u05dd)"
+    },
+    "allowed_appointment_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "\u05e1\u05d5\u05d2\u05d9 \u05d1\u05d9\u05e7\u05d5\u05e8 \u05de\u05d5\u05ea\u05e8\u05d9\u05dd (\u05e8\u05d9\u05e7 = \u05d4\u05db\u05dc)"
+    },
+    "capacity": {
+      "type": "number",
+      "default": 1,
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05ea\u05d5\u05e8\u05d9\u05dd \u05d1\u05de\u05e7\u05d1\u05d9\u05dc"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "\u05d4\u05d0\u05dd \u05d4\u05ea\u05d1\u05e0\u05d9\u05ea \u05e4\u05e2\u05d9\u05dc\u05d4"
+    },
+    "valid_from": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05e7\u05e3 \u05de\u05ea\u05d0\u05e8\u05d9\u05da"
+    },
+    "valid_until": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05e7\u05e3 \u05e2\u05d3 \u05ea\u05d0\u05e8\u05d9\u05da"
+    }
+  },
+  "required": [
+    "name",
+    "day_of_week",
+    "start_time",
+    "end_time",
+    "doctor_id",
+    "doctor_name"
+  ]
+}

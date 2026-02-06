@@ -1,0 +1,238 @@
+{
+  "name": "HospitalizedAnimal",
+  "type": "object",
+  "properties": {
+    "owner_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05d1\u05e2\u05dc\u05d9\u05dd"
+    },
+    "animal_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05d7\u05d9\u05d4"
+    },
+    "animal_image_url": {
+      "type": "string",
+      "description": "\u05e7\u05d9\u05e9\u05d5\u05e8 \u05dc\u05ea\u05de\u05d5\u05e0\u05ea \u05d4\u05d7\u05d9\u05d4"
+    },
+    "animal_type": {
+      "type": "string",
+      "enum": [
+        "\u05db\u05dc\u05d1",
+        "\u05d7\u05ea\u05d5\u05dc",
+        "\u05d0\u05e8\u05e0\u05d1",
+        "\u05ea\u05d5\u05db\u05d9",
+        "\u05d7\u05de\u05d5\u05e1",
+        "\u05e9\u05e8\u05e7\u05df"
+      ],
+      "description": "\u05e1\u05d5\u05d2 \u05d4\u05d7\u05d9\u05d4"
+    },
+    "admission_weight": {
+      "type": "number",
+      "description": "\u05de\u05e9\u05e7\u05dc \u05d4\u05d7\u05d9\u05d4 \u05d1\u05d4\u05d2\u05e2\u05d4 (\u05e7\"\u05d2)"
+    },
+    "animal_sex": {
+      "type": "string",
+      "enum": [
+        "\u05d6\u05db\u05e8",
+        "\u05e0\u05e7\u05d1\u05d4"
+      ],
+      "description": "\u05de\u05d9\u05df \u05d4\u05d7\u05d9\u05d4"
+    },
+    "age": {
+      "type": "string",
+      "description": "\u05d2\u05d9\u05dc \u05d4\u05d7\u05d9\u05d4"
+    },
+    "breed": {
+      "type": "string",
+      "description": "\u05d2\u05d6\u05e2 \u05d4\u05d7\u05d9\u05d4"
+    },
+    "is_neutered": {
+      "type": "boolean",
+      "default": false,
+      "description": "\u05d4\u05d0\u05dd \u05de\u05e2\u05d5\u05e7\u05e8/\u05de\u05e1\u05d5\u05e8\u05e1"
+    },
+    "has_catheter": {
+      "type": "boolean",
+      "default": false,
+      "description": "\u05d4\u05d0\u05dd \u05d4\u05d5\u05d7\u05d3\u05e8 \u05e7\u05d8\u05d8\u05e8 \u05d5\u05e8\u05d9\u05d3\u05d9"
+    },
+    "catheter_insertion_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d4\u05d7\u05d3\u05e8\u05ea \u05d4\u05e7\u05d8\u05d8\u05e8"
+    },
+    "admission_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d4\u05d0\u05e9\u05e4\u05d5\u05d6"
+    },
+    "diagnoses": {
+      "type": "string",
+      "description": "\u05d0\u05d1\u05d7\u05e0\u05d5\u05ea \u05d5\u05d1\u05e2\u05d9\u05d5\u05ea \u05e8\u05e4\u05d5\u05d0\u05d9\u05d5\u05ea"
+    },
+    "treatment_instructions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "medication_name": {
+            "type": "string"
+          },
+          "dosage": {
+            "type": "string"
+          },
+          "frequency": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "prescribed_by": {
+            "type": "string"
+          },
+          "prescribed_date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05d4\u05e0\u05d7\u05d9\u05d5\u05ea \u05d8\u05d9\u05e4\u05d5\u05dc \u05de\u05d0\u05d5\u05e9\u05e4\u05d6\u05d9\u05dd - \u05e0\u05e7\u05d1\u05e2\u05d5\u05ea \u05e2\u05dc \u05d9\u05d3\u05d9 \u05e8\u05d5\u05e4\u05d0\u05d9\u05dd"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "discharged",
+        "deceased"
+      ],
+      "default": "active",
+      "description": "\u05e1\u05d8\u05d8\u05d5\u05e1 \u05d4\u05d0\u05e9\u05e4\u05d5\u05d6"
+    },
+    "discharge_instructions": {
+      "type": "string",
+      "description": "\u05d4\u05e0\u05d7\u05d9\u05d5\u05ea \u05dc\u05e9\u05d7\u05e8\u05d5\u05e8 \u05d1\u05e2\u05ea \u05e1\u05d9\u05d5\u05dd \u05d4\u05d0\u05e9\u05e4\u05d5\u05d6"
+    },
+    "date_of_death": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05e4\u05d8\u05d9\u05e8\u05d4 (\u05d0\u05dd \u05e8\u05dc\u05d5\u05d5\u05e0\u05d8\u05d9)"
+    },
+    "monitoring_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "string"
+          },
+          "temperature": {
+            "type": "string"
+          },
+          "respirations": {
+            "type": "string"
+          },
+          "created_by_name": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    },
+    "fluids_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "fluid_type": {
+            "type": "string"
+          },
+          "rate_ml_hr": {
+            "type": "string"
+          },
+          "additive_ml": {
+            "type": "string"
+          },
+          "created_by_name": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    },
+    "treatments_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "treatment_name": {
+            "type": "string"
+          },
+          "created_by_name": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    },
+    "observations_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "has_feces": {
+            "type": "boolean",
+            "default": false
+          },
+          "has_urine": {
+            "type": "boolean",
+            "default": false
+          },
+          "has_appetite": {
+            "type": "boolean",
+            "default": false
+          },
+          "notes": {
+            "type": "string"
+          },
+          "created_by_name": {
+            "type": "string"
+          }
+        }
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "owner_name",
+    "animal_name",
+    "admission_date"
+  ]
+}

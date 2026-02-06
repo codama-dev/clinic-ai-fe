@@ -1,0 +1,135 @@
+{
+  "name": "FormConfiguration",
+  "type": "object",
+  "properties": {
+    "form_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05d8\u05d5\u05e4\u05e1 \u05d1\u05de\u05e2\u05e8\u05db\u05ea"
+    },
+    "display_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05dc\u05ea\u05e6\u05d5\u05d2\u05d4 \u05d1\u05e2\u05d1\u05e8\u05d9\u05ea"
+    },
+    "description": {
+      "type": "string",
+      "description": "\u05ea\u05d9\u05d0\u05d5\u05e8 \u05d4\u05d8\u05d5\u05e4\u05e1"
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "field_name": {
+            "type": "string",
+            "description": "\u05e9\u05dd \u05d4\u05e9\u05d3\u05d4"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "\u05e9\u05dd \u05dc\u05ea\u05e6\u05d5\u05d2\u05d4"
+          },
+          "field_type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "number",
+              "date",
+              "textarea",
+              "select",
+              "checkbox",
+              "email",
+              "phone"
+            ],
+            "description": "\u05e1\u05d5\u05d2 \u05d4\u05e9\u05d3\u05d4"
+          },
+          "is_required": {
+            "type": "boolean",
+            "default": false,
+            "description": "\u05d4\u05d0\u05dd \u05d4\u05e9\u05d3\u05d4 \u05d7\u05d5\u05d1\u05d4"
+          },
+          "is_critical": {
+            "type": "boolean",
+            "default": false,
+            "description": "\u05d4\u05d0\u05dd \u05d4\u05e9\u05d3\u05d4 \u05e7\u05e8\u05d9\u05d8\u05d9 (\u05e1\u05d9\u05de\u05d5\u05df \u05de\u05d9\u05d5\u05d7\u05d3)"
+          },
+          "max_length": {
+            "type": "number",
+            "description": "\u05de\u05d2\u05d1\u05dc\u05ea \u05d0\u05d5\u05e8\u05da \u05d8\u05e7\u05e1\u05d8"
+          },
+          "min_value": {
+            "type": "number",
+            "description": "\u05e2\u05e8\u05da \u05de\u05d9\u05e0\u05d9\u05de\u05dc\u05d9 (\u05dc\u05de\u05e1\u05e4\u05e8\u05d9\u05dd)"
+          },
+          "max_value": {
+            "type": "number",
+            "description": "\u05e2\u05e8\u05da \u05de\u05e7\u05e1\u05d9\u05de\u05dc\u05d9 (\u05dc\u05de\u05e1\u05e4\u05e8\u05d9\u05dd)"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "\u05d0\u05e4\u05e9\u05e8\u05d5\u05d9\u05d5\u05ea \u05dc\u05e9\u05d3\u05d4 select"
+          },
+          "placeholder": {
+            "type": "string",
+            "description": "\u05d8\u05e7\u05e1\u05d8 \u05de\u05e6\u05d9\u05d9\u05df \u05de\u05e7\u05d5\u05dd"
+          },
+          "help_text": {
+            "type": "string",
+            "description": "\u05d8\u05e7\u05e1\u05d8 \u05e2\u05d6\u05e8\u05d4"
+          },
+          "is_visible": {
+            "type": "boolean",
+            "default": true,
+            "description": "\u05d4\u05d0\u05dd \u05d4\u05e9\u05d3\u05d4 \u05de\u05d5\u05e6\u05d2"
+          },
+          "validation_pattern": {
+            "type": "string",
+            "description": "\u05ea\u05d1\u05e0\u05d9\u05ea \u05d5\u05dc\u05d9\u05d3\u05e6\u05d9\u05d4 (regex)"
+          },
+          "order": {
+            "type": "number",
+            "description": "\u05e1\u05d3\u05e8 \u05ea\u05e6\u05d5\u05d2\u05d4"
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05d4\u05d2\u05d3\u05e8\u05d5\u05ea \u05d4\u05e9\u05d3\u05d5\u05ea \u05d1\u05d8\u05d5\u05e4\u05e1"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "\u05d4\u05d0\u05dd \u05d4\u05d8\u05d5\u05e4\u05e1 \u05e4\u05e2\u05d9\u05dc"
+    },
+    "allow_multiple_submissions": {
+      "type": "boolean",
+      "default": true,
+      "description": "\u05d4\u05d0\u05dd \u05de\u05d5\u05ea\u05e8 \u05dc\u05d4\u05d2\u05d9\u05e9 \u05de\u05e1\u05e4\u05e8 \u05e8\u05d1 \u05e9\u05dc \u05d8\u05e4\u05e1\u05d9\u05dd"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": false,
+      "description": "\u05d4\u05d0\u05dd \u05e0\u05d3\u05e8\u05e9 \u05d0\u05d9\u05e9\u05d5\u05e8 \u05dc\u05e9\u05dc\u05d9\u05d7\u05ea \u05d4\u05d8\u05d5\u05e4\u05e1"
+    },
+    "notification_settings": {
+      "type": "object",
+      "properties": {
+        "send_on_submit": {
+          "type": "boolean",
+          "default": false
+        },
+        "recipients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "\u05d4\u05d2\u05d3\u05e8\u05d5\u05ea \u05d4\u05ea\u05e8\u05d0\u05d5\u05ea"
+    }
+  },
+  "required": [
+    "form_name",
+    "display_name"
+  ]
+}

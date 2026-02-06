@@ -1,0 +1,72 @@
+{
+  "name": "Vaccination",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05dc\u05e7\u05d5\u05d7"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05dc\u05e7\u05d5\u05d7"
+    },
+    "client_number": {
+      "type": "number",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05dc\u05e7\u05d5\u05d7"
+    },
+    "patient_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05de\u05d8\u05d5\u05e4\u05dc"
+    },
+    "patient_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05d8\u05d5\u05e4\u05dc"
+    },
+    "patient_number": {
+      "type": "number",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05de\u05d8\u05d5\u05e4\u05dc"
+    },
+    "vaccination_type": {
+      "type": "string",
+      "description": "\u05e1\u05d5\u05d2 \u05d4\u05d7\u05d9\u05e1\u05d5\u05df/\u05d8\u05d9\u05e4\u05d5\u05dc \u05d4\u05de\u05d5\u05e0\u05e2"
+    },
+    "vaccination_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05de\u05ea\u05df \u05d4\u05d7\u05d9\u05e1\u05d5\u05df"
+    },
+    "administered_by": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05d1\u05e6\u05e2"
+    },
+    "next_vaccination_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05de\u05d5\u05e2\u05d3 \u05d4\u05d1\u05d0 \u05dc\u05d7\u05d9\u05e1\u05d5\u05df"
+    },
+    "first_reminder_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d6\u05db\u05d5\u05e8\u05ea \u05e8\u05d0\u05e9\u05d5\u05e0\u05d4"
+    },
+    "second_reminder_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d6\u05db\u05d5\u05e8\u05ea \u05e9\u05e0\u05d9\u05d9\u05d4"
+    },
+    "batch_number": {
+      "type": "string",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05d0\u05e6\u05d5\u05d5\u05d4"
+    },
+    "notes": {
+      "type": "string",
+      "description": "\u05d4\u05e2\u05e8\u05d5\u05ea"
+    }
+  },
+  "required": [
+    "client_id",
+    "patient_id",
+    "vaccination_type",
+    "vaccination_date"
+  ]
+}

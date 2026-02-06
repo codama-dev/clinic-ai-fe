@@ -14,10 +14,17 @@
 | **web-socket.txt** | WebSocket URL, subscribe/unsubscribe message format, server event types (create/update/delete) and payload shape. | ✅ Realtime API – use to implement WS in your backend. |
 | **complete-openapi.json** | Full OpenAPI 3 spec (entities, auth, integrations, functions, health). | ✅ API spec for your replacement backend. |
 | **OPENAPI_FRONTEND_COVERAGE.md** | Gaps: app public settings, Send SMS, auth refresh, PublicProfile vs PublicDoctorInfo. | ✅ Reminders for endpoints to add and names to align. |
+| **all-entities-json-schema.json** | JSON Schema for all 44 entities (properties, required, types, enums) from Base44 agent. | ✅ Request validation (create/update) in replacement API. |
+| **authorization-permission-map.md** | Admin-only pages, permission-based access table, known permissions list, realtime/polling note. | ✅ Replicate authz rules and decide realtime for v1. |
+| **sdk-call-catalogue.md** | Every `base44.*` call with file(s) and usage (from agent). | ✅ Verify backend covers all frontend calls. |
+| **migration-checklist-by-page.md** | Per-page entities/integrations and test checklist (from agent). | ✅ Test each screen after cutover. |
+| **agent-final-extraction-reply.md** | Summary of final extraction reply and where each output is stored. | ✅ Reference. |
 
 So you already have:
 
 - Entity list and field-level “schema” (db-entities)
+- JSON Schema for all 44 entities (all-entities-json-schema.json) for API request validation
+- Authorization/permission map and realtime note (authorization-permission-map.md)
 - Relationships (db-relations)
 - Behavioral notes (db-important-data, current-backend)
 - Full SQL schema (db-schema.sql)
@@ -25,6 +32,7 @@ So you already have:
 - Custom function code and behavior (deno-functions)
 - Realtime protocol (web-socket)
 - OpenAPI + coverage report
+- SDK call catalogue and migration checklist by page (sdk-call-catalogue.md, migration-checklist-by-page.md)
 
 ---
 
@@ -94,6 +102,6 @@ Please don’t regenerate the full entity list or relationship document; we alre
 
 ## After You Get the Agent’s Response
 
-- Merge the **SDK call catalogue** into your backend-information (e.g. `sdk-call-catalogue.md`) and use it to double-check OPENAPI_FRONTEND_COVERAGE and your OpenAPI spec.
-- Use the **migration checklist** when testing each screen after cutting over to your Express + Postgres backend.
+- **Agent response received.** SDK call catalogue → **sdk-call-catalogue.md**; migration checklist → **migration-checklist-by-page.md**. Use the catalogue to double-check OPENAPI_FRONTEND_COVERAGE and your OpenAPI spec.
+- Use **migration-checklist-by-page.md** when testing each screen after cutting over to your Express + Postgres backend.
 - For **app public settings**, **Send SMS**, and **auth refresh**: get those from Base44 support or docs, as the agent said it cannot see platform APIs.

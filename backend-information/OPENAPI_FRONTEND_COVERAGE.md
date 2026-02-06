@@ -2,6 +2,8 @@
 
 Comparison of `docs/complete-openapi.json` with all backend/API calls made in the frontend repo (`src/`).
 
+**See also:** [sdk-call-catalogue.md](./sdk-call-catalogue.md) for the full list of every `base44.*` call (from Base44 agent analysis).
+
 ---
 
 ## 1. Summary

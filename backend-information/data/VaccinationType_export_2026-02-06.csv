@@ -1,0 +1,7 @@
+name,description,default_interval_days,first_reminder_days_before,second_reminder_days_before,is_active,id,created_date,updated_date,created_by_id,created_by,is_sample
+"תולעת הפארק - 10-25 ק""ג",,180,14,7,true,695aad924e0e335c24e98a8c,2026-01-04T18:12:34.307000,2026-01-04T18:12:34.307000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+חיסון משושה - בוגרים,,365,14,7,true,695aab8ba82c9c1b614492df,2026-01-04T18:03:55.340000,2026-01-04T18:03:55.340000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+טיפול מונע - ברבקטו,,90,14,7,true,695aab61487d8dcc271212b1,2026-01-04T18:03:13.002000,2026-01-04T18:03:13.002000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+"תולעת הפארק - עד 10 ק""ג",,90,14,7,true,695aab4c258ef243e168770e,2026-01-04T18:02:52.693000,2026-01-04T18:11:45.892000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+תילוע - כדור,,180,14,7,true,695aab1c0b89a7571a50bad2,2026-01-04T18:02:04.595000,2026-01-04T18:02:04.595000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+חיסון כלבת,,730,14,7,true,695aaae4fb94a1d562f69a48,2026-01-04T18:01:08.813000,2026-01-04T18:01:08.813000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false

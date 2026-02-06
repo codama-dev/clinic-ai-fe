@@ -1,0 +1,3 @@
+setting_type,date,day_of_week,start_time,end_time,slot_duration,is_blocked,block_reason,doctor_id,doctor_name,max_appointments_per_slot,is_active,notes,recurrence_type,recurrence_end_date,id,created_date,updated_date,created_by_id,created_by,is_sample
+time_slots,,,09:00,19:00,15,false,,,,1,true,,none,,6947dd2d4910affcb1d7c371,2025-12-21T11:42:37.290000,2025-12-21T11:42:37.290000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+blocked_date,2025-12-16,,,,20,true,יום חופש,68f0dd1cfbd9ff8b5ebbd348,ד״ר עדי כהן פלג,1,true,,weekly,,693ebb18ae1c5b719b8b1a7c,2025-12-14T13:26:48.965000,2025-12-14T13:26:48.965000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false

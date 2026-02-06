@@ -1,0 +1,12 @@
+user_id,email,display_name,job,id_number,birthday_date,is_active,id,created_date,updated_date,created_by_id,created_by,is_sample
+68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,יובל פלג - אדמין,assistant,037033560,1985-08-30,true,6931c0d8f65d8af1f7378a7d,2025-12-04T17:11:52.223000,2025-12-25T09:19:44.437000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+6926e4aebc30eb9f910b694e,shaza.farah.sf70@gmail.com,"ד""ר שאזא פרח",doctor,315988030,1995-12-25,true,6931c0d7c123e8bd49595825,2025-12-04T17:11:51.914000,2025-12-25T09:22:40.364000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+6920154c01a2d4a1c5377a5b,hazalon@gmail.com,"ד""ר קייסי אנדרסון",doctor,316351709,,true,69201d74f2829995312706f2,2025-11-21T08:06:12.813000,2025-12-25T09:19:40.613000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+68f0d737ec5f2c3937c3d118,v.lambir@gmail.com,ונינה למביר,receptionist,327238358,,true,690c9ae88f0c14de6aa64a94,2025-11-06T12:56:08.324000,2025-12-25T09:19:44.046000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+68e76a8a7d4a54c20857c5c5,uvpe85@gmail.com,יובל פלג,assistant,037033560,,true,690c9ae7d2eb2fd56233a573,2025-11-06T12:56:07.109000,2026-01-11T15:44:50.613000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+68f0e69727b7405c7c9a8ca1,shiraz7743@gmail.com,שירז איגנץ,assistant,324950419,,true,690c9ae5d6ba18f0c7a38944,2025-11-06T12:56:05.225000,2025-12-25T09:19:42.884000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+68f248669dc2274903f95a25,sasha.anikeeva.108@gmail.com,אלכס ,assistant,347496598,,true,690c9ae4e37e6490109c7ee5,2025-11-06T12:56:04.674000,2025-12-25T09:19:41.797000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+68f244878e2b779ce8de20f1,orsm94@gmail.com,אור סמוביץ,assistant,311170435,,false,690c9ae45d0250d62be99bca,2025-11-06T12:56:04.280000,2025-12-25T09:19:41.168000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+68eceaa6f432485fc9845221,galitpaskar@gmail.com,גלית פסקר,assistant,312164999,,true,690c9ae3dcd3e637c341d42d,2025-11-06T12:56:03.877000,2026-01-11T15:10:52.412000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+68efb92d1db2d3eb7fa326da,avia.raviv@gmail.com,אביה רביב,assistant,302685862,,true,690c9ae35d4ac09ab8ca9052,2025-11-06T12:56:03.531000,2025-12-25T09:19:39.581000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+68f0dd1cfbd9ff8b5ebbd348,adicohen15@gmail.com,ד״ר עדי כהן פלג,doctor,302925417,,true,690c9ae3fc6a1a450a838b7c,2025-11-06T12:56:03.216000,2026-01-24T08:02:26.793000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false

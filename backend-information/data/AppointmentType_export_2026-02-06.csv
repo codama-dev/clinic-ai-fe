@@ -1,0 +1,9 @@
+name,duration_minutes,base_price,color,requires_room_type,description,is_active,id,created_date,updated_date,created_by_id,created_by,is_sample
+מעקב,15,0,#14b8a6,examination,ביקור מעקב אחרי טיפול קודם,true,693e9b9729c4c3aec059d2c6,2025-12-14T11:12:23.353000,2025-12-14T13:01:24.017000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+סירוס,90,900,#ec4899,surgery,סירוס נקבה,true,693e99fba0d207e4501b53c2,2025-12-14T11:05:31.446000,2025-12-14T11:05:31.446000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+ניקוי/עקירה שיניים,90,700,#f59e0b,surgery,טיפול שיניים כירורגי,true,693e99fba0d207e4501b53c0,2025-12-14T11:05:31.446000,2025-12-31T11:08:21.050000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+חיסון,15,100,#10b981,examination,מתן חיסון,true,693e99fba0d207e4501b53bf,2025-12-14T11:05:31.446000,2025-12-14T11:05:31.446000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+צילומי רנטגן,30,250,#06b6d4,imaging,בדיקת רנטגן,true,693e99fba0d207e4501b53c3,2025-12-14T11:05:31.446000,2025-12-14T11:05:31.446000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+בדיקת רופא,15,190,#3b82f6,examination,בדיקה רפואית כללית,true,693e99fba0d207e4501b53be,2025-12-14T11:05:31.446000,2025-12-14T13:02:01.696000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+עיקור,90,800,#8b5cf6,surgery,עיקור זכר,true,693e99fba0d207e4501b53c1,2025-12-14T11:05:31.446000,2025-12-31T11:08:41.793000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+שיוף שיניים,45,400,#f97316,examination,שיוף שיניים,true,693e99fba0d207e4501b53c4,2025-12-14T11:05:31.446000,2025-12-14T11:05:31.446000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false

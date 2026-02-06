@@ -1,0 +1,2 @@
+appointment_id,client_id,client_name,patient_name,channel,type,scheduled_time,sent_time,status,recipient,message_content,failure_reason,response,id,created_date,updated_date,created_by_id,created_by,is_sample
+,6947abaf8c8fe24befc181c5,יובל פלג,ג'וני,email,manual,2025-12-25T10:21:15.256Z,,pending,yuval@ypeleg-eng.co.il,דסדדשסשס,,,694d101a52956abf967fb995,2025-12-25T10:21:14.667000,2025-12-25T10:21:14.667000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false

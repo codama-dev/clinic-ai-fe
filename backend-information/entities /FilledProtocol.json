@@ -1,0 +1,52 @@
+{
+  "name": "FilledProtocol",
+  "type": "object",
+  "properties": {
+    "template_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05e9\u05dc \u05ea\u05d1\u05e0\u05d9\u05ea \u05d4\u05e4\u05e8\u05d5\u05d8\u05d5\u05e7\u05d5\u05dc"
+    },
+    "template_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05ea\u05d1\u05e0\u05d9\u05ea \u05d4\u05e4\u05e8\u05d5\u05d8\u05d5\u05e7\u05d5\u05dc"
+    },
+    "patient_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05d8\u05d5\u05e4\u05dc/\u05d4\u05d7\u05d9\u05d4"
+    },
+    "filled_by_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05e9\u05ea\u05de\u05e9 \u05e9\u05de\u05d9\u05dc\u05d0 \u05d0\u05ea \u05d4\u05e4\u05e8\u05d5\u05d8\u05d5\u05e7\u05d5\u05dc"
+    },
+    "data": {
+      "type": "object",
+      "description": "\u05d4\u05e0\u05ea\u05d5\u05e0\u05d9\u05dd \u05e9\u05e0\u05d0\u05e1\u05e4\u05d5 \u05de\u05d4\u05d8\u05d5\u05e4\u05e1"
+    },
+    "field_metadata": {
+      "type": "object",
+      "description": "\u05de\u05d8\u05d0-\u05d3\u05d0\u05d8\u05d4 \u05e2\u05dc \u05db\u05dc \u05e9\u05d3\u05d4 - \u05de\u05d9 \u05de\u05d9\u05dc\u05d0 \u05d0\u05d5\u05ea\u05d5 \u05d5\u05de\u05ea\u05d9",
+      "default": {}
+    },
+    "is_released": {
+      "type": "boolean",
+      "default": false,
+      "description": "\u05d4\u05d0\u05dd \u05d4\u05d7\u05d9\u05d4 \u05e9\u05d5\u05d7\u05e8\u05e8\u05d4 \u05dc\u05d0\u05d7\u05e8 \u05d4\u05e0\u05d9\u05ea\u05d5\u05d7"
+    },
+    "released_by": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05e9\u05ea\u05de\u05e9 \u05e9\u05e9\u05d7\u05e8\u05e8 \u05d0\u05ea \u05d4\u05d7\u05d9\u05d4"
+    },
+    "released_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d5\u05e9\u05e2\u05ea \u05e9\u05d7\u05e8\u05d5\u05e8 \u05d4\u05d7\u05d9\u05d4"
+    }
+  },
+  "required": [
+    "template_id",
+    "template_name",
+    "patient_name",
+    "filled_by_name",
+    "data"
+  ]
+}

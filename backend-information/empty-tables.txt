@@ -1,0 +1,23 @@
+The following tables/entities are empty:
+
+Billing
+
+ClientDocument
+
+ExternalEmployee
+
+MessageTemplate
+
+PatientMetric
+
+PriceList
+
+PriceListItem
+
+PublicDoctorInfo
+
+SchedulePublication
+
+Slot
+
+SlotTemplate

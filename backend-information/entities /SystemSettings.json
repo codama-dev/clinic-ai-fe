@@ -1,0 +1,35 @@
+{
+  "name": "SystemSettings",
+  "type": "object",
+  "properties": {
+    "constraint_deadline_day": {
+      "type": "string",
+      "enum": [
+        "sunday",
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday"
+      ],
+      "default": "thursday",
+      "description": "\u05d4\u05d9\u05d5\u05dd \u05d4\u05d0\u05d7\u05e8\u05d5\u05df \u05dc\u05d4\u05d2\u05e9\u05ea \u05d0\u05d9\u05dc\u05d5\u05e6\u05d9\u05dd"
+    },
+    "constraint_deadline_time": {
+      "type": "string",
+      "default": "20:00",
+      "description": "\u05d4\u05e9\u05e2\u05d4 \u05d4\u05d0\u05d7\u05e8\u05d5\u05e0\u05d4 \u05dc\u05d4\u05d2\u05e9\u05ea \u05d0\u05d9\u05dc\u05d5\u05e6\u05d9\u05dd (HH:MM)"
+    },
+    "constraint_weeks_ahead": {
+      "type": "number",
+      "default": 3,
+      "description": "\u05db\u05de\u05d4 \u05e9\u05d1\u05d5\u05e2\u05d5\u05ea \u05e7\u05d3\u05d9\u05de\u05d4 \u05e0\u05d9\u05ea\u05df \u05dc\u05d4\u05d2\u05d9\u05e9 \u05d0\u05d9\u05dc\u05d5\u05e6\u05d9\u05dd"
+    }
+  },
+  "required": [
+    "constraint_deadline_day",
+    "constraint_deadline_time",
+    "constraint_weeks_ahead"
+  ]
+}

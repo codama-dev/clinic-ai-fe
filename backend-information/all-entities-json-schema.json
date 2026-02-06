@@ -1,0 +1,814 @@
+{
+  "User": {
+    "name": "User",
+    "type": "object",
+    "properties": {
+      "display_name": {"type": "string", "description": "שם לתצוגה"},
+      "job": {"type": "string", "enum": ["doctor", "assistant", "receptionist", "admin"], "description": "תפקיד המשתמש"},
+      "id_number": {"type": "string", "description": "מספר תעודת זהות"},
+      "date_of_birth": {"type": "string", "format": "date", "description": "תאריך לידה"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם המשתמש פעיל ומשובץ"},
+      "is_approved": {"type": "boolean", "default": false, "description": "האם החשבון אושר על ידי מנהל"},
+      "profile_image": {"type": "string", "description": "קישור לתמונת פרופיל"},
+      "permissions": {"type": "array", "items": {"type": "string"}, "default": [], "description": "הרשאות מיוחדות למשתמש"}
+    },
+    "required": ["display_name", "job", "id_number", "date_of_birth", "profile_image"]
+  },
+  
+  "PublicProfile": {
+    "name": "PublicProfile",
+    "type": "object",
+    "properties": {
+      "user_id": {"type": "string", "description": "מזהה המשתמש"},
+      "email": {"type": "string", "description": "כתובת אימייל"},
+      "display_name": {"type": "string", "description": "שם לתצוגה"},
+      "job": {"type": "string", "enum": ["doctor", "assistant", "receptionist", "admin"], "description": "תפקיד המשתמש"},
+      "id_number": {"type": "string", "description": "מספר תעודת זהות"},
+      "birthday_date": {"type": "string", "format": "date", "description": "תאריך לידה (מועתק מ-User.date_of_birth)"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם המשתמש פעיל ומשובץ"}
+    },
+    "required": ["user_id", "email", "display_name", "job"]
+  },
+  
+  "ExternalEmployee": {
+    "name": "ExternalEmployee",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם מלא של העובד החיצוני"},
+      "job": {"type": "string", "enum": ["doctor", "assistant", "receptionist"], "default": "assistant", "description": "תפקיד העובד"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם העובד פעיל וזמין לשיבוץ"}
+    },
+    "required": ["name", "job"]
+  },
+  
+  "Constraint": {
+    "name": "Constraint",
+    "type": "object",
+    "properties": {
+      "employee_id": {"type": "string", "description": "מזהה העובד"},
+      "employee_name": {"type": "string", "description": "שם העובד"},
+      "week_start_date": {"type": "string", "format": "date", "description": "תאריך תחילת השבוע"},
+      "unavailable_day": {"type": "string", "enum": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"], "description": "יום שבו העובד לא זמין"},
+      "unavailable_shift": {"type": "string", "enum": ["morning", "evening"], "description": "משמרת שבה העובד לא זמין"},
+      "is_submitted_on_time": {"type": "boolean", "default": true, "description": "האם הוגש בזמן"}
+    },
+    "required": ["employee_id", "employee_name", "week_start_date", "unavailable_day", "unavailable_shift"]
+  },
+  
+  "WeeklySchedule": {
+    "name": "WeeklySchedule",
+    "type": "object",
+    "properties": {
+      "week_start_date": {"type": "string", "format": "date", "description": "תאריך תחילת השבוע"},
+      "schedule_data": {"type": "object", "description": "נתוני לוח הזמנים השבועי"},
+      "previous_approved_schedule_data": {"type": "object", "description": "נתוני הסידור המאושר הקודם לצורך השוואה", "default": {}},
+      "locked_shifts": {"type": "object", "description": "An object storing the locked status of shifts, e.g. {\"sunday-morning\": true}", "default": {}},
+      "reception_coverage": {"type": "object", "description": "Tracks which assistants are covering reception. e.g. {\"sunday-morning\": [\"John Doe\"]}", "default": {}},
+      "is_published": {"type": "boolean", "default": false, "description": "האם לוח המשמרות פורסם"},
+      "approval_status": {"type": "string", "enum": ["draft", "pending_approval", "approved", "rejected"], "default": "draft", "description": "סטטוס אישור הסידור"},
+      "submitted_by": {"type": "string", "description": "שם המשתמש ששלח את הסידור לאישור"},
+      "submitted_date": {"type": "string", "format": "date-time", "description": "תאריך ושעת שליחה לאישור"},
+      "approved_by": {"type": "string", "description": "שם האדמין שאישר את הסידור"},
+      "rejection_reason": {"type": "string", "description": "סיבת דחיית הסידור (אם נדחה)"},
+      "publication_date": {"type": "string", "format": "date-time", "description": "תאריך ושעת פרסום"}
+    },
+    "required": ["week_start_date", "schedule_data"]
+  },
+  
+  "ShiftTemplate": {
+    "name": "ShiftTemplate",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם המשמרת"},
+      "start_time": {"type": "string", "description": "שעת התחלה (HH:MM)"},
+      "end_time": {"type": "string", "description": "שעת סיום (HH:MM)"},
+      "staffing_requirements": {
+        "type": "object", 
+        "description": "דרישות איוש למשמרת",
+        "default": {},
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "min": {"type": "number"},
+            "max": {"type": "number"}
+          }
+        }
+      },
+      "is_active": {"type": "boolean", "default": true, "description": "האם המשמרת פעילה"}
+    },
+    "required": ["name", "start_time", "end_time"]
+  },
+  
+  "SchedulePublication": {
+    "name": "SchedulePublication",
+    "type": "object",
+    "properties": {
+      "week_start_date": {"type": "string", "format": "date", "description": "תאריך תחילת השבוע"},
+      "publication_date": {"type": "string", "format": "date-time", "description": "תאריך ושעת פרסום"},
+      "is_published": {"type": "boolean", "default": false, "description": "האם פורסם"},
+      "notification_sent": {"type": "boolean", "default": false, "description": "האם נשלחה התראה למייל"},
+      "recipients": {"type": "array", "items": {"type": "string"}, "description": "רשימת מיילים שקיבלו התראה"}
+    },
+    "required": ["week_start_date"]
+  },
+  
+  "VacationRequest": {
+    "name": "VacationRequest",
+    "type": "object",
+    "properties": {
+      "employee_id": {"type": "string", "description": "מזהה העובד"},
+      "employee_name": {"type": "string", "description": "שם העובד"},
+      "employee_email": {"type": "string", "description": "Email of the employee for filtering"},
+      "start_date": {"type": "string", "format": "date", "description": "תאריך תחילת החופשה"},
+      "end_date": {"type": "string", "format": "date", "description": "תאריך סיום החופשה"},
+      "total_days": {"type": "number", "description": "סך ימי החופשה"},
+      "unpaid_days": {"type": "number", "default": 0, "description": "מספר ימי החופשה ללא תשלום (חל״ת)"},
+      "vacation_type": {"type": "string", "enum": ["regular", "sick_leave", "unpaid_leave"], "default": "regular", "description": "סוג החופשה: חופשה רגילה, חופשת מחלה או חופשה ללא תשלום"},
+      "medical_document_url": {"type": "string", "description": "קישור למסמך אישור רפואי (לחופשת מחלה)"},
+      "reason": {"type": "string", "description": "סיבת החופשה"},
+      "status": {"type": "string", "enum": ["pending", "approved", "rejected"], "default": "pending", "description": "סטטוס הבקשה"},
+      "manager_response": {"type": "string", "description": "תגובת המנהל"},
+      "response_date": {"type": "string", "format": "date-time", "description": "תאריך תגובת המנהל"}
+    },
+    "required": ["employee_id", "employee_name", "employee_email", "start_date", "end_date", "total_days", "vacation_type"]
+  },
+  
+  "TimeClockEntry": {
+    "name": "TimeClockEntry",
+    "type": "object",
+    "properties": {
+      "employee_id": {"type": "string", "description": "מזהה העובד"},
+      "employee_name": {"type": "string", "description": "שם העובד"},
+      "employee_email": {"type": "string", "description": "אימייל העובד"},
+      "date": {"type": "string", "format": "date", "description": "תאריך המשמרת"},
+      "clock_in_time": {"type": "string", "description": "שעת כניסה (HH:MM)"},
+      "clock_out_time": {"type": "string", "description": "שעת יציאה (HH:MM)"},
+      "shift_type": {"type": "string", "enum": ["morning", "evening", "full_day"], "description": "סוג המשמרת"},
+      "total_hours": {"type": "number", "description": "סך שעות עבודה"},
+      "status": {"type": "string", "enum": ["clocked_in", "clocked_out"], "default": "clocked_in", "description": "סטטוס הרשומה"}
+    },
+    "required": ["employee_id", "employee_name", "employee_email", "date", "clock_in_time"]
+  },
+  
+  "SystemSettings": {
+    "name": "SystemSettings",
+    "type": "object",
+    "properties": {
+      "constraint_deadline_day": {"type": "string", "enum": ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"], "default": "thursday", "description": "היום האחרון להגשת אילוצים"},
+      "constraint_deadline_time": {"type": "string", "default": "20:00", "description": "השעה האחרונה להגשת אילוצים (HH:MM)"},
+      "constraint_weeks_ahead": {"type": "number", "default": 3, "description": "כמה שבועות קדימה ניתן להגיש אילוצים"}
+    },
+    "required": ["constraint_deadline_day", "constraint_deadline_time", "constraint_weeks_ahead"]
+  },
+  
+  "Client": {
+    "name": "Client",
+    "type": "object",
+    "properties": {
+      "client_number": {"type": "number", "description": "מספר לקוח סידורי אוטומטי", "unique": true},
+      "full_name": {"type": "string", "description": "שם מלא של הלקוח"},
+      "id_number": {"type": "string", "description": "תעודת זהות", "unique": true},
+      "phone": {"type": "string", "description": "מספר טלפון ראשי - שדה מרכזי לחיפוש"},
+      "phone_secondary": {"type": "string", "description": "מספר טלפון משני"},
+      "email": {"type": "string", "description": "כתובת אימייל"},
+      "address": {"type": "string", "description": "כתובת מגורים"},
+      "city": {"type": "string", "description": "עיר"},
+      "notes": {"type": "string", "description": "הערות כלליות על הלקוח"},
+      "status": {"type": "string", "enum": ["active", "inactive", "blocked"], "default": "active", "description": "סטטוס הלקוח"},
+      "marketing_consent": {"type": "boolean", "default": false, "description": "הסכמה לקבלת חומרי שיווק"},
+      "reminders_consent": {"type": "boolean", "default": true, "description": "הסכמה לקבלת תזכורות"},
+      "preferred_contact": {"type": "string", "enum": ["phone", "email", "whatsapp", "sms"], "default": "whatsapp", "description": "אמצעי תקשורת מועדף"},
+      "balance": {"type": "number", "default": 0, "description": "יתרה/חוב נוכחי"},
+      "has_no_show_history": {"type": "boolean", "default": false, "description": "האם ללקוח יש היסטוריה של אי התייצבות לתורים"}
+    },
+    "required": []
+  },
+  
+  "Patient": {
+    "name": "Patient",
+    "type": "object",
+    "properties": {
+      "patient_number": {"type": "number", "description": "מספר מטופל ייחודי (אוטומטי)"},
+      "client_number": {"type": "number", "description": "מספר לקוח ייחודי (מקשר לטבלת לקוחות)"},
+      "client_id": {"type": "string", "description": "מזהה הלקוח"},
+      "client_name": {"type": "string", "description": "שם הלקוח בעלים"},
+      "name": {"type": "string", "description": "שם המטופל"},
+      "species": {"type": "string", "enum": ["כלב", "חתול", "ארנב", "תוכי", "חמוס", "שרקן", "אחר"], "description": "סוג החיה"},
+      "breed": {"type": "string", "description": "גזע"},
+      "sex": {"type": "string", "enum": ["זכר", "נקבה"], "description": "מין"},
+      "neutered": {"type": "boolean", "default": false, "description": "מעוקר/מסורס"},
+      "neutered_date": {"type": "string", "format": "date", "description": "תאריך עיקור/סירוס"},
+      "date_of_birth": {"type": "string", "format": "date", "description": "תאריך לידה"},
+      "weight": {"type": "number", "description": "משקל (ק״ג)"},
+      "microchip": {"type": "string", "description": "מספר שבב"},
+      "microchip_date": {"type": "string", "format": "date", "description": "תאריך ביצוע שבב"},
+      "color": {"type": "string", "description": "צבע/סימנים"},
+      "description": {"type": "string", "description": "תיאור החיה"},
+      "photo_url": {"type": "string", "description": "תמונת המטופל"},
+      "allergies": {"type": "string", "description": "אלרגיות ידועות"},
+      "chronic_conditions": {"type": "string", "description": "מחלות כרוניות"},
+      "current_medications": {"type": "string", "description": "תרופות קבועות"},
+      "is_insured": {"type": "boolean", "default": false, "description": "לקוח מבוטח"},
+      "insurance_company": {"type": "string", "enum": ["מרפאט", "חיותא", "פניקס", "אחר"], "description": "חברת ביטוח"},
+      "insurance_policy": {"type": "string", "description": "מספר פוליסה"},
+      "status": {"type": "string", "enum": ["active", "inactive"], "default": "active", "description": "סטטוס המטופל"},
+      "inactive_reason": {"type": "string", "enum": ["נפטרה", "אבדה", "עברה בעלים", "אחר"], "description": "סיבת חוסר פעילות"},
+      "notes": {"type": "string", "description": "הערות רפואיות כלליות"}
+    },
+    "required": ["client_number", "client_name", "name", "species"]
+  },
+  
+  "Room": {
+    "name": "Room",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם החדר/משאב"},
+      "room_type": {"type": "string", "enum": ["examination", "surgery", "laboratory", "imaging", "reception"], "description": "סוג החדר"},
+      "capacity": {"type": "number", "default": 1, "description": "קיבולת מקבילה"},
+      "equipment": {"type": "string", "description": "ציוד זמין בחדר"},
+      "status": {"type": "string", "enum": ["available", "maintenance", "unavailable"], "default": "available", "description": "סטטוס החדר"},
+      "notes": {"type": "string", "description": "הערות"}
+    },
+    "required": ["name", "room_type"]
+  },
+  
+  "AppointmentType": {
+    "name": "AppointmentType",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם השירות"},
+      "duration_minutes": {"type": "number", "default": 20, "description": "משך זמן ברירת מחדל (דקות)"},
+      "base_price": {"type": "number", "default": 0, "description": "מחיר בסיס"},
+      "color": {"type": "string", "default": "#3b82f6", "description": "צבע להצגה בלוח שנה"},
+      "requires_room_type": {"type": "string", "enum": ["examination", "surgery", "laboratory", "imaging", "any"], "default": "examination", "description": "סוג חדר נדרש"},
+      "description": {"type": "string", "description": "תיאור השירות"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם השירות פעיל"}
+    },
+    "required": ["name", "duration_minutes", "base_price"]
+  },
+  
+  "SlotTemplate": {
+    "name": "SlotTemplate",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם התבנית"},
+      "day_of_week": {"type": "number", "description": "יום בשבוע (0=ראשון, 6=שבת)"},
+      "start_time": {"type": "string", "description": "שעת התחלה (HH:MM)"},
+      "end_time": {"type": "string", "description": "שעת סיום (HH:MM)"},
+      "slot_duration": {"type": "number", "default": 20, "description": "אורך משבצת בדקות"},
+      "doctor_id": {"type": "string", "description": "מזהה הרופא"},
+      "doctor_name": {"type": "string", "description": "שם הרופא"},
+      "room_id": {"type": "string", "description": "מזהה החדר"},
+      "room_name": {"type": "string", "description": "שם החדר"},
+      "break_times": {"type": "array", "items": {"type": "object", "properties": {"start": {"type": "string"}, "end": {"type": "string"}}}, "default": [], "description": "הפסקות (למשל צהריים)"},
+      "allowed_appointment_types": {"type": "array", "items": {"type": "string"}, "default": [], "description": "סוגי ביקור מותרים (ריק = הכל)"},
+      "capacity": {"type": "number", "default": 1, "description": "מספר תורים במקביל"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם התבנית פעילה"},
+      "valid_from": {"type": "string", "format": "date", "description": "תקף מתאריך"},
+      "valid_until": {"type": "string", "format": "date", "description": "תקף עד תאריך"}
+    },
+    "required": ["name", "day_of_week", "start_time", "end_time", "doctor_id", "doctor_name"]
+  },
+  
+  "Slot": {
+    "name": "Slot",
+    "type": "object",
+    "properties": {
+      "date": {"type": "string", "format": "date", "description": "תאריך המשבצת"},
+      "start_time": {"type": "string", "description": "שעת התחלה (HH:MM)"},
+      "end_time": {"type": "string", "description": "שעת סיום (HH:MM)"},
+      "doctor_id": {"type": "string", "description": "מזהה הרופא"},
+      "doctor_name": {"type": "string", "description": "שם הרופא"},
+      "room_id": {"type": "string", "description": "מזהה החדר"},
+      "room_name": {"type": "string", "description": "שם החדר"},
+      "status": {"type": "string", "enum": ["available", "booked", "blocked"], "default": "available", "description": "סטטוס המשבצת"},
+      "template_id": {"type": "string", "description": "מזהה תבנית המקור"},
+      "capacity": {"type": "number", "default": 1, "description": "קיבולת"},
+      "booked_count": {"type": "number", "default": 0, "description": "מספר תורים שנקבעו"}
+    },
+    "required": ["date", "start_time", "end_time", "doctor_id", "doctor_name"]
+  },
+  
+  "Appointment": {
+    "name": "Appointment",
+    "type": "object",
+    "properties": {
+      "appointment_number": {"type": "number", "description": "מספר מזהה ייחודי לתור"},
+      "date": {"type": "string", "format": "date", "description": "תאריך התור"},
+      "start_time": {"type": "string", "description": "שעת התחלה (HH:MM)"},
+      "end_time": {"type": "string", "description": "שעת סיום (HH:MM)"},
+      "client_id": {"type": "string", "description": "מזהה הלקוח (רק לתור רגיל)"},
+      "client_name": {"type": "string", "description": "שם הלקוח (רק לתור רגיל)"},
+      "client_phone": {"type": "string", "description": "טלפון הלקוח (רק לתור רגיל)"},
+      "patient_id": {"type": "string", "description": "מזהה המטופל (רק לתור רגיל)"},
+      "patient_name": {"type": "string", "description": "שם המטופל (רק לתור רגיל)"},
+      "doctor_id": {"type": "string", "description": "מזהה הרופא המטפל (רק לתור רגיל)"},
+      "doctor_name": {"type": "string", "description": "שם הרופא המטפל (רק לתור רגיל)"},
+      "appointment_type_id": {"type": "string", "description": "מזהה סוג התור (רק לתור רגיל)"},
+      "appointment_type_name": {"type": "string", "description": "שם סוג התור (רק לתור רגיל)"},
+      "room_id": {"type": "string", "description": "מזהה החדר"},
+      "room_name": {"type": "string", "description": "שם החדר"},
+      "duration_minutes": {"type": "number", "description": "משך התור בדקות"},
+      "chief_complaint": {"type": "string", "description": "סיבת ההגעה או נושא הפגישה"},
+      "reception_notes": {"type": "string", "description": "הערות קבלה או פרטים נוספים"},
+      "status": {"type": "string", "enum": ["scheduled", "confirmed", "arrived", "in_progress", "completed", "no_show", "cancelled"], "default": "scheduled", "description": "סטטוס התור"},
+      "is_general_meeting": {"type": "boolean", "default": false, "description": "האם זו פגישה כללית (לא משוייכת ללקוח)"},
+      "participants": {"type": "array", "items": {"type": "object", "properties": {"user_id": {"type": "string"}, "name": {"type": "string"}, "job": {"type": "string"}}}, "default": [], "description": "רשימת משתתפים לפגישה כללית"}
+    },
+    "required": ["date", "start_time", "duration_minutes"]
+  },
+  
+  "MedicalVisit": {
+    "name": "MedicalVisit",
+    "type": "object",
+    "properties": {
+      "visit_number": {"type": "number", "description": "מספר ביקור ייחודי - מתחיל ב-1 ועולה אוטומטית"},
+      "appointment_id": {"type": "string", "description": "מזהה התור המקושר (אם קיים)"},
+      "client_number": {"type": "number", "description": "מספר הלקוח מהישות Client"},
+      "patient_number": {"type": "number", "description": "מספר המטופל מהישות Patient"},
+      "patient_id": {"type": "string", "description": "מזהה המטופל"},
+      "full_name": {"type": "string", "description": "שם מלא של הלקוח מהישות Client"},
+      "client_name": {"type": "string", "description": "שם הלקוח"},
+      "patient_name": {"type": "string", "description": "שם המטופל"},
+      "doctor_name": {"type": "string", "description": "שם הרופא"},
+      "doctor_license": {"type": "string", "description": "מספר רישיון הרופא"},
+      "visit_date": {"type": "string", "format": "date", "description": "תאריך הביקור"},
+      "visit_time": {"type": "string", "description": "שעת הביקור"},
+      "chief_complaint": {"type": "string", "description": "סיבת הביקור"},
+      "findings_and_tests": {"type": "string", "description": "ממצאים ובדיקות"},
+      "diagnosis": {"type": "string", "description": "אבחנה"},
+      "treatment": {"type": "string", "description": "הטיפול שניתן"},
+      "vital_signs": {"type": "object", "properties": {"temperature": {"type": "number"}, "heart_rate": {"type": "number"}, "respiratory_rate": {"type": "number"}, "weight": {"type": "number"}, "blood_pressure_systolic": {"type": "number"}, "blood_pressure_diastolic": {"type": "number"}}, "description": "מדדים חיוניים"},
+      "lab_tests": {"type": "array", "items": {"type": "object", "properties": {"test_name": {"type": "string"}, "results": {"type": "string"}, "status": {"type": "string"}, "price": {"type": "number", "description": "מחיר הבדיקה מהמחירון"}, "from_price_list": {"type": "boolean", "default": false}}}, "default": [], "description": "בדיקות מעבדה כולל מחיר"},
+      "items_from_pricelist": {"type": "array", "items": {"type": "object", "properties": {"product_name": {"type": "string"}, "quantity": {"type": "number"}, "price": {"type": "number"}}}, "default": [], "description": "פריטים ממחירון לקוחות"},
+      "prescriptions": {"type": "array", "items": {"type": "object", "properties": {"medication_name": {"type": "string"}, "dosage": {"type": "string"}, "duration": {"type": "string"}, "administration_method": {"type": "string", "enum": ["בליעה", "מריחה", "טיפות", "זריקה", "אחר"]}, "frequency": {"type": "string", "enum": ["פעם אחת ביום", "פעמיים ביום", "שלוש פעמים ביום", "ארבע פעמים ביום", "לפי הצורך"]}, "instructions": {"type": "string"}}}, "default": [], "description": "מרשמים"},
+      "follow_up_days": {"type": "number", "description": "מספר ימים למעקב"},
+      "follow_up_date": {"type": "string", "format": "date", "description": "תאריך מעקב"},
+      "follow_up_completed": {"type": "boolean", "default": false, "description": "האם המעקב הושלם"},
+      "attachments": {"type": "array", "items": {"type": "string"}, "default": [], "description": "קבצים מצורפים (URLs)"},
+      "notes": {"type": "string", "description": "הערות"},
+      "status": {"type": "string", "enum": ["draft", "completed"], "default": "draft", "description": "סטטוס הביקור"}
+    },
+    "required": ["client_number", "full_name", "patient_number", "patient_name", "doctor_name", "visit_date", "visit_time"]
+  },
+  
+  "Billing": {
+    "name": "Billing",
+    "type": "object",
+    "properties": {
+      "appointment_id": {"type": "string", "description": "מזהה התור"},
+      "visit_id": {"type": "string", "description": "מזהה הביקור הרפואי"},
+      "client_id": {"type": "string", "description": "מזהה הלקוח"},
+      "client_name": {"type": "string", "description": "שם הלקוח"},
+      "patient_id": {"type": "string", "description": "מזהה המטופל"},
+      "patient_name": {"type": "string", "description": "שם המטופל"},
+      "billing_date": {"type": "string", "format": "date", "description": "תאריך החיוב"},
+      "items": {"type": "array", "items": {"type": "object", "properties": {"description": {"type": "string"}, "quantity": {"type": "number"}, "unit_price": {"type": "number"}, "total": {"type": "number"}}}, "default": [], "description": "פריטי החיוב"},
+      "subtotal": {"type": "number", "default": 0, "description": "סכום ביניים"},
+      "discount": {"type": "number", "default": 0, "description": "הנחה"},
+      "discount_type": {"type": "string", "enum": ["amount", "percentage"], "default": "amount"},
+      "discount_reason": {"type": "string", "description": "סיבת ההנחה"},
+      "vat_rate": {"type": "number", "default": 0, "description": "אחוז מע״מ"},
+      "vat_amount": {"type": "number", "default": 0, "description": "סכום מע״מ"},
+      "total": {"type": "number", "default": 0, "description": "סכום כולל"},
+      "status": {"type": "string", "enum": ["draft", "pending", "paid", "partial", "cancelled"], "default": "draft", "description": "סטטוס התשלום"},
+      "payments": {"type": "array", "items": {"type": "object", "properties": {"date": {"type": "string", "format": "date-time"}, "amount": {"type": "number"}, "method": {"type": "string"}, "reference": {"type": "string"}, "notes": {"type": "string"}}}, "default": [], "description": "תשלומים שבוצעו"},
+      "amount_paid": {"type": "number", "default": 0, "description": "סכום ששולם"},
+      "balance": {"type": "number", "default": 0, "description": "יתרה"},
+      "document_type": {"type": "string", "enum": ["invoice", "receipt", "invoice_receipt"], "description": "סוג מסמך"},
+      "document_number": {"type": "string", "description": "מספר מסמך"},
+      "pdf_url": {"type": "string", "description": "קישור למסמך PDF"},
+      "notes": {"type": "string", "description": "הערות"}
+    },
+    "required": ["client_id", "client_name", "billing_date", "total"]
+  },
+  
+  "Notification": {
+    "name": "Notification",
+    "type": "object",
+    "properties": {
+      "appointment_id": {"type": "string", "description": "מזהה התור (אופציונלי)"},
+      "client_id": {"type": "string", "description": "מזהה הלקוח"},
+      "client_name": {"type": "string", "description": "שם הלקוח"},
+      "patient_name": {"type": "string", "description": "שם המטופל"},
+      "channel": {"type": "string", "enum": ["whatsapp", "sms", "email"], "description": "ערוץ התזכורת"},
+      "type": {"type": "string", "enum": ["confirmation", "reminder_24h", "reminder_2h", "cancellation", "rescheduled", "manual"], "description": "סוג ההתראה"},
+      "scheduled_time": {"type": "string", "format": "date-time", "description": "מתי לשלוח"},
+      "sent_time": {"type": "string", "format": "date-time", "description": "מתי נשלח בפועל"},
+      "status": {"type": "string", "enum": ["pending", "sent", "failed", "cancelled"], "default": "pending", "description": "סטטוס השליחה"},
+      "recipient": {"type": "string", "description": "כתובת/מספר הנמען"},
+      "message_content": {"type": "string", "description": "תוכן ההודעה"},
+      "failure_reason": {"type": "string", "description": "סיבת כישלון"},
+      "response": {"type": "string", "description": "תגובת הלקוח"}
+    },
+    "required": ["client_id", "channel", "type", "scheduled_time"]
+  },
+  
+  "CalendarSettings": {
+    "name": "CalendarSettings",
+    "type": "object",
+    "properties": {
+      "setting_type": {"type": "string", "enum": ["time_slots", "blocked_date", "working_hours", "special_schedule"], "description": "סוג ההגדרה"},
+      "date": {"type": "string", "format": "date", "description": "תאריך רלוונטי להגדרה"},
+      "day_of_week": {"type": "number", "description": "יום בשבוע (0=ראשון, 6=שבת)"},
+      "start_time": {"type": "string", "description": "שעת התחלה"},
+      "end_time": {"type": "string", "description": "שעת סיום"},
+      "slot_duration": {"type": "number", "default": 20, "description": "משך זמן של משבצת בדקות"},
+      "is_blocked": {"type": "boolean", "default": false, "description": "האם היומן חסום לתאריך זה"},
+      "block_reason": {"type": "string", "description": "סיבת החסימה"},
+      "doctor_id": {"type": "string", "description": "מזהה רופא (אם ההגדרה ספציפית לרופא)"},
+      "doctor_name": {"type": "string", "description": "שם הרופא"},
+      "max_appointments_per_slot": {"type": "number", "default": 1, "description": "מספר תורים מקסימלי למשבצת"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם ההגדרה פעילה"},
+      "notes": {"type": "string", "description": "הערות"},
+      "recurrence_type": {"type": "string", "enum": ["none", "weekly", "monthly", "yearly"], "default": "none", "description": "סוג החזרתיות"},
+      "recurrence_end_date": {"type": "string", "format": "date", "description": "תאריך סיום החזרתיות"}
+    },
+    "required": ["setting_type"]
+  },
+  
+  "ClientPriceList": {
+    "name": "ClientPriceList",
+    "type": "object",
+    "properties": {
+      "product_name": {"type": "string"},
+      "category": {"type": "string"},
+      "sub_category": {"type": "string"},
+      "supplier_name": {"type": "string"},
+      "supplier_price": {"type": "number"},
+      "client_price": {"type": "number"},
+      "notes": {"type": "string"}
+    },
+    "required": ["product_name", "client_price"]
+  },
+  
+  "PatientMetric": {
+    "name": "PatientMetric",
+    "type": "object",
+    "properties": {
+      "patient_id": {"type": "string", "description": "מזהה המטופל"},
+      "patient_name": {"type": "string", "description": "שם המטופל"},
+      "patient_number": {"type": "number", "description": "מספר המטופל"},
+      "client_id": {"type": "string", "description": "מזהה הלקוח"},
+      "measurement_date": {"type": "string", "format": "date", "description": "תאריך המדידה"},
+      "measurement_time": {"type": "string", "description": "שעת המדידה"},
+      "weight": {"type": "number", "description": "משקל בק\"ג"},
+      "temperature": {"type": "number", "description": "טמפרטורה במעלות צלזיוס"},
+      "heart_rate": {"type": "number", "description": "קצב לב (פעימות לדקה)"},
+      "respiratory_rate": {"type": "number", "description": "קצב נשימות (נשימות לדקה)"},
+      "blood_pressure_systolic": {"type": "number", "description": "לחץ דם סיסטולי"},
+      "blood_pressure_diastolic": {"type": "number", "description": "לחץ דם דיאסטולי"},
+      "notes": {"type": "string", "description": "הערות"},
+      "measured_by": {"type": "string", "description": "שם מי שביצע את המדידה"}
+    },
+    "required": ["patient_id", "patient_name", "client_id", "measurement_date", "measured_by"]
+  },
+  
+  "Vaccination": {
+    "name": "Vaccination",
+    "type": "object",
+    "properties": {
+      "client_id": {"type": "string", "description": "מזהה הלקוח"},
+      "client_name": {"type": "string", "description": "שם הלקוח"},
+      "client_number": {"type": "number", "description": "מספר לקוח"},
+      "patient_id": {"type": "string", "description": "מזהה המטופל"},
+      "patient_name": {"type": "string", "description": "שם המטופל"},
+      "patient_number": {"type": "number", "description": "מספר מטופל"},
+      "vaccination_type": {"type": "string", "description": "סוג החיסון/טיפול המונע"},
+      "vaccination_date": {"type": "string", "format": "date", "description": "תאריך מתן החיסון"},
+      "administered_by": {"type": "string", "description": "שם המבצע"},
+      "next_vaccination_date": {"type": "string", "format": "date", "description": "מועד הבא לחיסון"},
+      "first_reminder_date": {"type": "string", "format": "date", "description": "תזכורת ראשונה"},
+      "second_reminder_date": {"type": "string", "format": "date", "description": "תזכורת שנייה"},
+      "batch_number": {"type": "string", "description": "מספר אצווה"},
+      "notes": {"type": "string", "description": "הערות"}
+    },
+    "required": ["client_id", "patient_id", "vaccination_type", "vaccination_date"]
+  },
+  
+  "VaccinationType": {
+    "name": "VaccinationType",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם סוג החיסון/טיפול המונע"},
+      "description": {"type": "string", "description": "תיאור"},
+      "default_interval_days": {"type": "number", "description": "מרווח זמן ברירת מחדל לחיסון הבא (בימים)"},
+      "first_reminder_days_before": {"type": "number", "default": 14, "description": "כמה ימים לפני לשלוח תזכורת ראשונה"},
+      "second_reminder_days_before": {"type": "number", "default": 7, "description": "כמה ימים לפני לשלוח תזכורת שנייה"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם פעיל"}
+    },
+    "required": ["name"]
+  },
+  
+  "ClientDocument": {
+    "name": "ClientDocument",
+    "type": "object",
+    "properties": {
+      "client_id": {"type": "string", "description": "מזהה הלקוח"},
+      "client_name": {"type": "string", "description": "שם הלקוח"},
+      "patient_id": {"type": "string", "description": "מזהה המטופל (אופציונלי)"},
+      "patient_name": {"type": "string", "description": "שם המטופל (אופציונלי)"},
+      "document_name": {"type": "string", "description": "שם המסמך"},
+      "file_url": {"type": "string", "description": "קישור לקובץ"},
+      "uploaded_by": {"type": "string", "description": "שם המשתמש שהעלה"}
+    },
+    "required": ["client_id", "client_name", "document_name", "file_url"]
+  },
+  
+  "LabTestType": {
+    "name": "LabTestType",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם הבדיקה"},
+      "description": {"type": "string", "description": "תיאור הבדיקה"},
+      "parameters": {"type": "array", "items": {"type": "object", "properties": {"name": {"type": "string", "description": "שם הפרמטר"}, "unit": {"type": "string", "description": "יחידת מדידה"}, "min_normal": {"type": "number", "description": "ערך תקין מינימלי"}, "max_normal": {"type": "number", "description": "ערך תקין מקסימלי"}}}, "default": [], "description": "רשימת פרמטרים עם טווחים תקינים"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם הבדיקה פעילה"}
+    },
+    "required": ["name"]
+  },
+  
+  "LabTest": {
+    "name": "LabTest",
+    "type": "object",
+    "properties": {
+      "test_number": {"type": "number", "description": "מספר בדיקה ייחודי כרונולוגי - מתחיל ב-1 ועולה אוטומטית"},
+      "client_number": {"type": "number", "description": "מספר הלקוח מהישות Client"},
+      "client_name": {"type": "string", "description": "שם הלקוח"},
+      "patient_number": {"type": "number", "description": "מספר המטופל מהישות Patient"},
+      "patient_name": {"type": "string", "description": "שם המטופל"},
+      "test_type_id": {"type": "string", "description": "מזהה סוג הבדיקה"},
+      "test_name": {"type": "string", "description": "שם הבדיקה"},
+      "test_date": {"type": "string", "format": "date", "description": "תאריך ביצוע הבדיקה"},
+      "results": {"type": "object", "description": "תוצאות הבדיקה - אובייקט של פרמטרים עם ערכים", "default": {}},
+      "results_file_url": {"type": "string", "description": "קישור לקובץ תוצאות הבדיקה"},
+      "performed_by": {"type": "string", "description": "שם המבצע"},
+      "notes": {"type": "string", "description": "הערות על הבדיקה"},
+      "status": {"type": "string", "enum": ["pending", "completed", "reviewed"], "default": "pending", "description": "סטטוס הבדיקה"}
+    },
+    "required": ["client_number", "client_name", "patient_number", "patient_name", "test_name", "test_date", "results"]
+  },
+  
+  "DoctorSchedule": {
+    "name": "DoctorSchedule",
+    "type": "object",
+    "properties": {
+      "doctor_id": {"type": "string", "description": "מזהה הרופא"},
+      "doctor_name": {"type": "string", "description": "שם הרופא"},
+      "day_of_week": {"type": "number", "description": "יום בשבוע (0=ראשון, 6=שבת)"},
+      "shift_type": {"type": "string", "enum": ["morning", "evening", "full_day", "split"], "default": "full_day", "description": "סוג המשמרת"},
+      "start_time": {"type": "string", "description": "שעת התחלה"},
+      "end_time": {"type": "string", "description": "שעת סיום"},
+      "morning_start": {"type": "string", "description": "שעת התחלה משמרת בוקר"},
+      "morning_end": {"type": "string", "description": "שעת סיום משמרת בוקר"},
+      "evening_start": {"type": "string", "description": "שעת התחלה משמרת ערב"},
+      "evening_end": {"type": "string", "description": "שעת סיום משמרת ערב"},
+      "break_start": {"type": "string", "description": "שעת התחלת הפסקה"},
+      "break_end": {"type": "string", "description": "שעת סיום הפסקה"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם ההגדרה פעילה"},
+      "notes": {"type": "string", "description": "הערות"}
+    },
+    "required": ["doctor_id", "doctor_name", "day_of_week"]
+  },
+  
+  "FormConfiguration": {
+    "name": "FormConfiguration",
+    "type": "object",
+    "properties": {
+      "form_name": {"type": "string", "description": "שם הטופס במערכת"},
+      "display_name": {"type": "string", "description": "שם לתצוגה בעברית"},
+      "description": {"type": "string", "description": "תיאור הטופס"},
+      "fields": {"type": "array", "items": {"type": "object", "properties": {"field_name": {"type": "string"}, "display_name": {"type": "string"}, "field_type": {"type": "string", "enum": ["text", "number", "date", "textarea", "select", "checkbox", "email", "phone"]}, "is_required": {"type": "boolean", "default": false}, "is_critical": {"type": "boolean", "default": false}, "max_length": {"type": "number"}, "min_value": {"type": "number"}, "max_value": {"type": "number"}, "options": {"type": "array", "items": {"type": "string"}}, "placeholder": {"type": "string"}, "help_text": {"type": "string"}, "is_visible": {"type": "boolean", "default": true}, "validation_pattern": {"type": "string"}, "order": {"type": "number"}}}, "default": [], "description": "הגדרות השדות בטופס"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם הטופס פעיל"},
+      "allow_multiple_submissions": {"type": "boolean", "default": true, "description": "האם מותר להגיש מספר רב של טפסים"},
+      "requires_approval": {"type": "boolean", "default": false, "description": "האם נדרש אישור לשליחת הטופס"},
+      "notification_settings": {"type": "object", "properties": {"send_on_submit": {"type": "boolean", "default": false}, "recipients": {"type": "array", "items": {"type": "string"}}}, "description": "הגדרות התראות"}
+    },
+    "required": ["form_name", "display_name"]
+  },
+  
+  "MessageTemplate": {
+    "name": "MessageTemplate",
+    "type": "object",
+    "properties": {
+      "template_name": {"type": "string", "description": "שם התבנית"},
+      "channel": {"type": "string", "enum": ["email", "whatsapp", "sms"], "description": "ערוץ התקשורת"},
+      "subject": {"type": "string", "description": "כותרת (רלוונטי למייל בלבד)"},
+      "header_image_url": {"type": "string", "description": "לוגו/תמונת כותרת"},
+      "message_content": {"type": "string", "description": "תוכן ההודעה"},
+      "signature": {"type": "string", "description": "חתימה בסוף ההודעה"},
+      "footer_text": {"type": "string", "description": "טקסט תחתון"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם התבנית פעילה"},
+      "is_default": {"type": "boolean", "default": false, "description": "האם זו תבנית ברירת מחדל"}
+    },
+    "required": ["template_name", "channel", "message_content"]
+  },
+  
+  "PriceList": {
+    "name": "PriceList",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם המחירון"},
+      "description": {"type": "string", "description": "תיאור המחירון"},
+      "is_active": {"type": "boolean", "default": true, "description": "האם המחירון פעיל"}
+    },
+    "required": ["name"]
+  },
+  
+  "PriceListItem": {
+    "name": "PriceListItem",
+    "type": "object",
+    "properties": {
+      "price_list_id": {"type": "string", "description": "מזהה המחירון"},
+      "price_list_name": {"type": "string", "description": "שם המחירון"},
+      "product_name": {"type": "string", "description": "שם המוצר"},
+      "category": {"type": "string", "description": "קטגוריה ראשית"},
+      "sub_category": {"type": "string", "description": "תת קטגוריה"},
+      "supplier_name": {"type": "string", "description": "שם הספק"},
+      "supplier_price": {"type": "number", "description": "מחיר הספק"},
+      "sale_price": {"type": "number", "description": "מחיר מכירה"},
+      "notes": {"type": "string", "description": "הערות"}
+    },
+    "required": ["price_list_id", "price_list_name", "product_name", "sale_price"]
+  },
+  
+  "HospitalizedAnimal": {
+    "name": "HospitalizedAnimal",
+    "type": "object",
+    "properties": {
+      "owner_name": {"type": "string", "description": "שם הבעלים"},
+      "animal_name": {"type": "string", "description": "שם החיה"},
+      "animal_image_url": {"type": "string", "description": "קישור לתמונת החיה"},
+      "animal_type": {"type": "string", "enum": ["כלב", "חתול", "ארנב", "תוכי", "חמוס", "שרקן"], "description": "סוג החיה"},
+      "admission_weight": {"type": "number", "description": "משקל החיה בהגעה (ק\"ג)"},
+      "animal_sex": {"type": "string", "enum": ["זכר", "נקבה"], "description": "מין החיה"},
+      "age": {"type": "string", "description": "גיל החיה"},
+      "breed": {"type": "string", "description": "גזע החיה"},
+      "is_neutered": {"type": "boolean", "default": false, "description": "האם מעוקר/מסורס"},
+      "has_catheter": {"type": "boolean", "default": false, "description": "האם הוחדר קטטר ורידי"},
+      "catheter_insertion_date": {"type": "string", "format": "date", "description": "תאריך החדרת הקטטר"},
+      "admission_date": {"type": "string", "format": "date", "description": "תאריך האשפוז"},
+      "diagnoses": {"type": "string", "description": "אבחנות ובעיות רפואיות"},
+      "treatment_instructions": {"type": "array", "items": {"type": "object", "properties": {"medication_name": {"type": "string"}, "dosage": {"type": "string"}, "frequency": {"type": "string"}, "route": {"type": "string"}, "notes": {"type": "string"}, "prescribed_by": {"type": "string"}, "prescribed_date": {"type": "string", "format": "date-time"}}}, "default": [], "description": "הנחיות טיפול מאושפזים - נקבעות על ידי רופאים"},
+      "status": {"type": "string", "enum": ["active", "discharged", "deceased"], "default": "active", "description": "סטטוס האשפוז"},
+      "discharge_instructions": {"type": "string", "description": "הנחיות לשחרור בעת סיום האשפוז"},
+      "date_of_death": {"type": "string", "format": "date", "description": "תאריך פטירה (אם רלוונטי)"},
+      "monitoring_log": {"type": "array", "items": {"type": "object", "properties": {"date": {"type": "string"}, "time": {"type": "string"}, "weight": {"type": "string"}, "temperature": {"type": "string"}, "respirations": {"type": "string"}, "created_by_name": {"type": "string"}}}, "default": []},
+      "fluids_log": {"type": "array", "items": {"type": "object", "properties": {"date": {"type": "string"}, "time": {"type": "string"}, "fluid_type": {"type": "string"}, "rate_ml_hr": {"type": "string"}, "additive_ml": {"type": "string"}, "created_by_name": {"type": "string"}}}, "default": []},
+      "treatments_log": {"type": "array", "items": {"type": "object", "properties": {"date": {"type": "string"}, "time": {"type": "string"}, "treatment_name": {"type": "string"}, "created_by_name": {"type": "string"}}}, "default": []},
+      "observations_log": {"type": "array", "items": {"type": "object", "properties": {"date": {"type": "string"}, "time": {"type": "string"}, "has_feces": {"type": "boolean", "default": false}, "has_urine": {"type": "boolean", "default": false}, "has_appetite": {"type": "boolean", "default": false}, "notes": {"type": "string"}, "created_by_name": {"type": "string"}}}, "default": []}
+    },
+    "required": ["owner_name", "animal_name", "admission_date"]
+  },
+  
+  "TreatmentExecution": {
+    "name": "TreatmentExecution",
+    "type": "object",
+    "properties": {
+      "animal_id": {"type": "string", "description": "מזהה החיה המאושפזת"},
+      "animal_name": {"type": "string", "description": "שם החיה"},
+      "instruction_id": {"type": "string", "description": "מזהה ההנחיה המקורית"},
+      "medication_name": {"type": "string", "description": "שם התרופה/טיפול"},
+      "dosage": {"type": "string", "description": "מינון"},
+      "route": {"type": "string", "description": "דרך מתן"},
+      "frequency": {"type": "string", "description": "תדירות"},
+      "instruction_notes": {"type": "string", "description": "הערות מההנחיה המקורית"},
+      "executed_by": {"type": "string", "description": "אימייל המשתמש שביצע"},
+      "executed_by_name": {"type": "string", "description": "שם המשתמש שביצע"},
+      "execution_date": {"type": "string", "format": "date", "description": "תאריך הביצוע"},
+      "execution_time": {"type": "string", "description": "שעת הביצוע (HH:MM)"}
+    },
+    "required": ["animal_id", "animal_name", "medication_name", "dosage", "executed_by", "executed_by_name", "execution_date", "execution_time"]
+  },
+  
+  "ProtocolTemplate": {
+    "name": "ProtocolTemplate",
+    "type": "object",
+    "properties": {
+      "name": {"type": "string", "description": "שם תבנית הפרוטוקול"},
+      "description": {"type": "string", "description": "תיאור קצר של מטרת הפרוטוקול"},
+      "fields": {"type": "array", "items": {"type": "object", "properties": {"name": {"type": "string", "description": "מזהה ייחודי לשדה (באנגלית)"}, "label": {"type": "string", "description": "התווית שתוצג למשתמש"}, "type": {"type": "string", "enum": ["text", "textarea", "number", "select", "title"], "description": "סוג השדה"}, "options": {"type": "array", "items": {"type": "string"}, "description": "אפשרויות עבור שדה מסוג select"}}, "required": ["name", "label", "type"]}, "description": "מערך של שדות המרכיבים את הטופס"}
+    },
+    "required": ["name", "fields"]
+  },
+  
+  "FilledProtocol": {
+    "name": "FilledProtocol",
+    "type": "object",
+    "properties": {
+      "template_id": {"type": "string", "description": "מזהה של תבנית הפרוטוקול"},
+      "template_name": {"type": "string", "description": "שם תבנית הפרוטוקול"},
+      "patient_name": {"type": "string", "description": "שם המטופל/החיה"},
+      "filled_by_name": {"type": "string", "description": "שם המשתמש שמילא את הפרוטוקול"},
+      "data": {"type": "object", "description": "הנתונים שנאספו מהטופס"},
+      "field_metadata": {"type": "object", "description": "מטא-דאטה על כל שדה - מי מילא אותו ומתי", "default": {}},
+      "is_released": {"type": "boolean", "default": false, "description": "האם החיה שוחררה לאחר הניתוח"},
+      "released_by": {"type": "string", "description": "שם המשתמש ששחרר את החיה"},
+      "released_date": {"type": "string", "format": "date-time", "description": "תאריך ושעת שחרור החיה"}
+    },
+    "required": ["template_id", "template_name", "patient_name", "filled_by_name", "data"]
+  },
+  
+  "InventoryItem": {
+    "name": "InventoryItem",
+    "type": "object",
+    "properties": {
+      "product_name": {"type": "string", "description": "שם המוצר"},
+      "item_type": {"type": "string", "description": "סוג הפריט", "enum": ["תרופה", "ציוד רפואי", "מזון", "מזון רפואי", "תכשיר", "ציוד משרדי", "אחר"]},
+      "current_quantity": {"type": "number", "default": 0, "description": "סך כל הכמות הנוכחית במלאי (סכום מכל המיקומים)"},
+      "required_quantity": {"type": "number", "default": 0, "description": "כמות נדרשת במלאי"},
+      "locations": {"type": "array", "description": "רשימת מיקומים והכמויות בכל מיקום", "items": {"type": "object", "properties": {"location": {"type": "string", "enum": ["חדר בדיקות 1", "חדר בדיקות 2", "קבלה", "חדר ניתוח", "חדרי אשפוז"]}, "quantity": {"type": "number", "default": 0}}}, "default": []},
+      "location": {"type": "string", "enum": ["חדר בדיקות 1", "חדר בדיקות 2", "קבלה", "חדר ניתוח", "חדרי אשפוז"], "description": "מיקום המוצר במרפאה (שדה ישן, לתאימות לאחור)"},
+      "last_counted_by": {"type": "string", "description": "שם המשתמש שעדכן לאחרונה"},
+      "last_counted_date": {"type": "string", "format": "date-time", "description": "תאריך עדכון אחרון"}
+    },
+    "required": ["product_name", "item_type"]
+  },
+  
+  "InventoryShortage": {
+    "name": "InventoryShortage",
+    "type": "object",
+    "properties": {
+      "item_name": {"type": "string", "description": "שם הפריט החסר"},
+      "category": {"type": "string", "enum": ["תרופה", "ציוד מתכלה", "מזון רפואי", "ציוד משרדי", "אחר"], "description": "קטגוריה של הפריט"},
+      "quantity_needed": {"type": "number", "description": "הכמות הנדרשת"},
+      "notes": {"type": "string", "description": "הערות נוספות"},
+      "status": {"type": "string", "enum": ["needed", "ordered", "stocked"], "default": "needed", "description": "סטטוס הפריט"},
+      "requested_by_id": {"type": "string", "description": "מזהה המשתמש שדיווח"},
+      "requested_by_name": {"type": "string", "description": "שם המשתמש שדיווח"}
+    },
+    "required": ["item_name", "category", "requested_by_id", "requested_by_name"]
+  },
+  
+  "Order": {
+    "name": "Order",
+    "type": "object",
+    "properties": {
+      "order_number": {"type": "number", "description": "מספר הזמנה ייחודי"},
+      "customer_name": {"type": "string", "description": "שם הלקוח"},
+      "order_date": {"type": "string", "format": "date", "description": "תאריך ההזמנה"},
+      "total_amount": {"type": "number", "description": "סכום כולל"},
+      "status": {"type": "string", "enum": ["pending", "processing", "shipped", "delivered", "cancelled", "draft", "completed_with_shortages"], "default": "pending", "description": "סטטוס ההזמנה"},
+      "items": {"type": "array", "items": {"type": "object", "properties": {"product_name": {"type": "string"}, "quantity": {"type": "number"}, "chosen_supplier": {"type": "string"}, "price_per_unit": {"type": "number"}, "notes": {"type": "string", "description": "הערות על הפריט"}}}, "description": "פריטים בהזמנה"},
+      "received_items": {"type": "object", "description": "אוביקט המכיל מצב קבלת המוצרים, כאשר המפתח הוא שם המוצר והערך הוא boolean (true=הגיע, false=לא הגיע)", "default": {}},
+      "received_by": {"type": "string", "description": "שם המשתמש שאישר את קבלת המשלוח"},
+      "received_date": {"type": "string", "format": "date-time", "description": "תאריך ושעת אישור קבלת המשלוח"}
+    },
+    "required": ["customer_name", "items", "total_amount", "order_date"]
+  },
+  
+  "SupplierPrice": {
+    "name": "SupplierPrice",
+    "type": "object",
+    "properties": {
+      "product_name": {"type": "string", "description": "שם המוצר"},
+      "category": {"type": "string", "description": "קטגוריה ראשית", "enum": ["בדיקות", "ניתוחים", "תרופות", "מזון", "תכשירים", "ציוד", "צעצועים", "אחר"]},
+      "sub_category": {"type": "string", "description": "תת קטגוריה", "enum": ["אנטיביוטיקה", "סטרואידים ואנטיהיסטמינים", "שיכוך כאבים והרגעה", "תרופות בהזרקה", "שתן", "גאסטרו", "אוזניים", "עיניים", "עור", "תרופות שונות", "בדיקות מעבדה", "בדיקות רופא", "בדיקות מומחה", "טיפול מונע", "שמפו", "משחת שיניים", "תרחיץ", "ציוד רפואי", "ציוד משרדי", "ציוד ניקיון", "לעיסה", "משחק", "חטיפים", "מזון רגיל", "מזון רפואי", "אחר"]},
+      "supplier_prices": {"type": "object", "description": "אוביקט המכיל את מחירי הספקים, כאשר המפתח הוא שם הספק והערך הוא המחיר. לדוגמה: {\"ספק א\": 10.5, \"ספק ב\": 12}"}
+    },
+    "required": ["product_name"]
+  },
+  
+  "PublicDoctorInfo": {
+    "name": "PublicDoctorInfo",
+    "type": "object",
+    "properties": {
+      "user_id": {"type": "string", "description": "The ID of the user who is a doctor."},
+      "display_name": {"type": "string", "description": "The display name of the doctor."},
+      "email": {"type": "string", "description": "The email of the doctor."}
+    },
+    "required": ["user_id", "display_name", "email"]
+  },
+  
+  "ClinicCase": {
+    "name": "ClinicCase",
+    "type": "object",
+    "properties": {
+      "case_number": {"type": "string", "description": "מספר תיק רפואי"},
+      "client_name": {"type": "string", "description": "שם הלקוח"},
+      "created_by_name": {"type": "string", "description": "שם המשתמש שיצר את התיק"},
+      "treatments": {"type": "array", "items": {"type": "object", "properties": {"visit_date": {"type": "string", "format": "date", "description": "תאריך הביקור"}, "description": {"type": "string", "description": "תיאור הטיפול"}}, "required": ["visit_date", "description"]}, "description": "רשימת טיפולים בתיק"},
+      "status": {"type": "string", "enum": ["pending", "approved", "submitted"], "default": "pending", "description": "סטטוס התיק: ממתין, אושר, הוגשה תביעה"},
+      "approved_by": {"type": "string", "description": "שם הרופא שאישר את התיק"},
+      "approval_date": {"type": "string", "format": "date-time", "description": "תאריך ושעת אישור התיק"},
+      "submitted_by": {"type": "string", "description": "שם המשתמש שסימן שהתביעה הוגשה"},
+      "submission_date": {"type": "string", "format": "date-time", "description": "תאריך ושעת סימון הגשת התביעה"}
+    },
+    "required": ["case_number", "client_name"]
+  },
+  
+  "VetReferral": {
+    "name": "VetReferral",
+    "type": "object",
+    "properties": {
+      "subject": {"type": "string", "description": "נושא הפניה"},
+      "referring_user_id": {"type": "string", "description": "מזהה המשתמש המפנה"},
+      "referring_user_name": {"type": "string", "description": "שם המשתמש המפנה"},
+      "target_doctor_id": {"type": "string", "description": "מזהה הרופא המטפל"},
+      "target_doctor_name": {"type": "string", "description": "שם הרופא המטפל"},
+      "is_urgent": {"type": "boolean", "default": false, "description": "האם הפניה דחופה"},
+      "status": {"type": "string", "enum": ["open", "closed"], "default": "open", "description": "סטטוס הפניה"},
+      "messages": {"type": "array", "items": {"type": "object", "properties": {"sender_id": {"type": "string"}, "sender_name": {"type": "string"}, "content": {"type": "string"}, "timestamp": {"type": "string", "format": "date-time"}}}, "description": "היסטוריית ההודעות בפניה"}
+    },
+    "required": ["subject", "referring_user_id", "referring_user_name", "target_doctor_id", "target_doctor_name", "messages"]
+  }
+}

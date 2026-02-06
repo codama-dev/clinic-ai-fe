@@ -1,0 +1,2 @@
+constraint_deadline_day,constraint_deadline_time,constraint_weeks_ahead,id,created_date,updated_date,created_by_id,created_by,is_sample
+thursday,20:00,3,68d7e22b7756929c539b4a20,2025-09-27T13:10:03.890000,2025-09-27T13:10:03.890000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false

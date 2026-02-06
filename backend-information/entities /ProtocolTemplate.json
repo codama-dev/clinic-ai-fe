@@ -1,0 +1,219 @@
+{
+  "name": "MedicalVisit",
+  "type": "object",
+  "properties": {
+    "visit_number": {
+      "type": "number",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05d1\u05d9\u05e7\u05d5\u05e8 \u05d9\u05d9\u05d7\u05d5\u05d3\u05d9 - \u05de\u05ea\u05d7\u05d9\u05dc \u05d1-1 \u05d5\u05e2\u05d5\u05dc\u05d4 \u05d0\u05d5\u05d8\u05d5\u05de\u05d8\u05d9\u05ea"
+    },
+    "client_number": {
+      "type": "number",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05d4\u05dc\u05e7\u05d5\u05d7 \u05de\u05d4\u05d9\u05e9\u05d5\u05ea Client"
+    },
+    "patient_number": {
+      "type": "number",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05d4\u05de\u05d8\u05d5\u05e4\u05dc \u05de\u05d4\u05d9\u05e9\u05d5\u05ea Patient"
+    },
+    "full_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05de\u05dc\u05d0 \u05e9\u05dc \u05d4\u05dc\u05e7\u05d5\u05d7 \u05de\u05d4\u05d9\u05e9\u05d5\u05ea Client"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05dc\u05e7\u05d5\u05d7"
+    },
+    "patient_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05d8\u05d5\u05e4\u05dc"
+    },
+    "doctor_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05e8\u05d5\u05e4\u05d0"
+    },
+    "doctor_license": {
+      "type": "string",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05e8\u05d9\u05e9\u05d9\u05d5\u05df \u05d4\u05e8\u05d5\u05e4\u05d0"
+    },
+    "visit_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d4\u05d1\u05d9\u05e7\u05d5\u05e8"
+    },
+    "visit_time": {
+      "type": "string",
+      "description": "\u05e9\u05e2\u05ea \u05d4\u05d1\u05d9\u05e7\u05d5\u05e8"
+    },
+    "chief_complaint": {
+      "type": "string",
+      "description": "\u05e1\u05d9\u05d1\u05ea \u05d4\u05d1\u05d9\u05e7\u05d5\u05e8"
+    },
+    "findings_and_tests": {
+      "type": "string",
+      "description": "\u05de\u05de\u05e6\u05d0\u05d9\u05dd \u05d5\u05d1\u05d3\u05d9\u05e7\u05d5\u05ea"
+    },
+    "diagnosis": {
+      "type": "string",
+      "description": "\u05d0\u05d1\u05d7\u05e0\u05d4"
+    },
+    "treatment": {
+      "type": "string",
+      "description": "\u05d4\u05d8\u05d9\u05e4\u05d5\u05dc \u05e9\u05e0\u05d9\u05ea\u05df"
+    },
+    "vital_signs": {
+      "type": "object",
+      "properties": {
+        "temperature": {
+          "type": "number"
+        },
+        "heart_rate": {
+          "type": "number"
+        },
+        "respiratory_rate": {
+          "type": "number"
+        },
+        "weight": {
+          "type": "number"
+        },
+        "blood_pressure_systolic": {
+          "type": "number"
+        },
+        "blood_pressure_diastolic": {
+          "type": "number"
+        }
+      },
+      "description": "\u05de\u05d3\u05d3\u05d9\u05dd \u05d7\u05d9\u05d5\u05e0\u05d9\u05d9\u05dd"
+    },
+    "lab_tests": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "test_name": {
+            "type": "string"
+          },
+          "results": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "description": "\u05de\u05d7\u05d9\u05e8 \u05d4\u05d1\u05d3\u05d9\u05e7\u05d4 \u05de\u05d4\u05de\u05d7\u05d9\u05e8\u05d5\u05df"
+          },
+          "from_price_list": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05d1\u05d3\u05d9\u05e7\u05d5\u05ea \u05de\u05e2\u05d1\u05d3\u05d4 \u05db\u05d5\u05dc\u05dc \u05de\u05d7\u05d9\u05e8"
+    },
+    "items_from_pricelist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "price": {
+            "type": "number"
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05e4\u05e8\u05d9\u05d8\u05d9\u05dd \u05de\u05de\u05d7\u05d9\u05e8\u05d5\u05df \u05dc\u05e7\u05d5\u05d7\u05d5\u05ea"
+    },
+    "prescriptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "medication_name": {
+            "type": "string"
+          },
+          "dosage": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "string"
+          },
+          "administration_method": {
+            "type": "string",
+            "enum": [
+              "\u05d1\u05dc\u05d9\u05e2\u05d4",
+              "\u05de\u05e8\u05d9\u05d7\u05d4",
+              "\u05d8\u05d9\u05e4\u05d5\u05ea",
+              "\u05d6\u05e8\u05d9\u05e7\u05d4",
+              "\u05d0\u05d7\u05e8"
+            ]
+          },
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "\u05e4\u05e2\u05dd \u05d0\u05d7\u05ea \u05d1\u05d9\u05d5\u05dd",
+              "\u05e4\u05e2\u05de\u05d9\u05d9\u05dd \u05d1\u05d9\u05d5\u05dd",
+              "\u05e9\u05dc\u05d5\u05e9 \u05e4\u05e2\u05de\u05d9\u05dd \u05d1\u05d9\u05d5\u05dd",
+              "\u05d0\u05e8\u05d1\u05e2 \u05e4\u05e2\u05de\u05d9\u05dd \u05d1\u05d9\u05d5\u05dd",
+              "\u05dc\u05e4\u05d9 \u05d4\u05e6\u05d5\u05e8\u05da"
+            ]
+          },
+          "instructions": {
+            "type": "string"
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05de\u05e8\u05e9\u05de\u05d9\u05dd"
+    },
+    "follow_up_days": {
+      "type": "number",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05d9\u05de\u05d9\u05dd \u05dc\u05de\u05e2\u05e7\u05d1"
+    },
+    "follow_up_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05de\u05e2\u05e7\u05d1"
+    },
+    "follow_up_completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "\u05d4\u05d0\u05dd \u05d4\u05de\u05e2\u05e7\u05d1 \u05d4\u05d5\u05e9\u05dc\u05dd"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "\u05e7\u05d1\u05e6\u05d9\u05dd \u05de\u05e6\u05d5\u05e8\u05e4\u05d9\u05dd (URLs)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "\u05d4\u05e2\u05e8\u05d5\u05ea"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "completed"
+      ],
+      "default": "draft",
+      "description": "\u05e1\u05d8\u05d8\u05d5\u05e1 \u05d4\u05d1\u05d9\u05e7\u05d5\u05e8"
+    }
+  },
+  "required": [
+    "client_number",
+    "full_name",
+    "patient_number",
+    "patient_name",
+    "doctor_name",
+    "visit_date",
+    "visit_time"
+  ]
+}

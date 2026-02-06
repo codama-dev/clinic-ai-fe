@@ -1,0 +1,61 @@
+{
+  "name": "TreatmentExecution",
+  "type": "object",
+  "properties": {
+    "animal_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05d7\u05d9\u05d4 \u05d4\u05de\u05d0\u05d5\u05e9\u05e4\u05d6\u05ea"
+    },
+    "animal_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05d7\u05d9\u05d4"
+    },
+    "medication_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05ea\u05e8\u05d5\u05e4\u05d4/\u05d8\u05d9\u05e4\u05d5\u05dc"
+    },
+    "dosage": {
+      "type": "string",
+      "description": "\u05de\u05d9\u05e0\u05d5\u05df"
+    },
+    "route": {
+      "type": "string",
+      "description": "\u05d3\u05e8\u05da \u05de\u05ea\u05df"
+    },
+    "frequency": {
+      "type": "string",
+      "description": "\u05ea\u05d3\u05d9\u05e8\u05d5\u05ea"
+    },
+    "instruction_notes": {
+      "type": "string",
+      "description": "\u05d4\u05e2\u05e8\u05d5\u05ea \u05de\u05d4\u05d4\u05e0\u05d7\u05d9\u05d4 \u05d4\u05de\u05e7\u05d5\u05e8\u05d9\u05ea"
+    },
+    "executed_by": {
+      "type": "string",
+      "description": "\u05d0\u05d9\u05de\u05d9\u05d9\u05dc \u05d4\u05de\u05e9\u05ea\u05de\u05e9 \u05e9\u05d1\u05d9\u05e6\u05e2"
+    },
+    "executed_by_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05e9\u05ea\u05de\u05e9 \u05e9\u05d1\u05d9\u05e6\u05e2"
+    },
+    "execution_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d4\u05d1\u05d9\u05e6\u05d5\u05e2"
+    },
+    "execution_time": {
+      "type": "string",
+      "description": "\u05e9\u05e2\u05ea \u05d4\u05d1\u05d9\u05e6\u05d5\u05e2 (HH:MM)"
+    }
+  },
+  "required": [
+    "animal_id",
+    "animal_name",
+    "medication_name",
+    "dosage",
+    "executed_by",
+    "executed_by_name",
+    "execution_date",
+    "execution_time"
+  ]
+}

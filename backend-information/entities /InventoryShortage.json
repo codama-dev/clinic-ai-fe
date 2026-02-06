@@ -1,0 +1,53 @@
+{
+  "name": "InventoryShortage",
+  "type": "object",
+  "properties": {
+    "item_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05e4\u05e8\u05d9\u05d8 \u05d4\u05d7\u05e1\u05e8"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "\u05ea\u05e8\u05d5\u05e4\u05d4",
+        "\u05e6\u05d9\u05d5\u05d3 \u05de\u05ea\u05db\u05dc\u05d4",
+        "\u05de\u05d6\u05d5\u05df \u05e8\u05e4\u05d5\u05d0\u05d9",
+        "\u05e6\u05d9\u05d5\u05d3 \u05de\u05e9\u05e8\u05d3\u05d9",
+        "\u05d0\u05d7\u05e8"
+      ],
+      "description": "\u05e7\u05d8\u05d2\u05d5\u05e8\u05d9\u05d4 \u05e9\u05dc \u05d4\u05e4\u05e8\u05d9\u05d8"
+    },
+    "quantity_needed": {
+      "type": "number",
+      "description": "\u05d4\u05db\u05de\u05d5\u05ea \u05d4\u05e0\u05d3\u05e8\u05e9\u05ea"
+    },
+    "notes": {
+      "type": "string",
+      "description": "\u05d4\u05e2\u05e8\u05d5\u05ea \u05e0\u05d5\u05e1\u05e4\u05d5\u05ea"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "needed",
+        "ordered",
+        "stocked"
+      ],
+      "default": "needed",
+      "description": "\u05e1\u05d8\u05d8\u05d5\u05e1 \u05d4\u05e4\u05e8\u05d9\u05d8"
+    },
+    "requested_by_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05de\u05e9\u05ea\u05de\u05e9 \u05e9\u05d3\u05d9\u05d5\u05d5\u05d7"
+    },
+    "requested_by_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05e9\u05ea\u05de\u05e9 \u05e9\u05d3\u05d9\u05d5\u05d5\u05d7"
+    }
+  },
+  "required": [
+    "item_name",
+    "category",
+    "requested_by_id",
+    "requested_by_name"
+  ]
+}

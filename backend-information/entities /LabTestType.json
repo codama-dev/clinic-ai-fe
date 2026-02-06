@@ -1,0 +1,48 @@
+{
+  "name": "LabTestType",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05d1\u05d3\u05d9\u05e7\u05d4"
+    },
+    "description": {
+      "type": "string",
+      "description": "\u05ea\u05d9\u05d0\u05d5\u05e8 \u05d4\u05d1\u05d3\u05d9\u05e7\u05d4"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "\u05e9\u05dd \u05d4\u05e4\u05e8\u05de\u05d8\u05e8"
+          },
+          "unit": {
+            "type": "string",
+            "description": "\u05d9\u05d7\u05d9\u05d3\u05ea \u05de\u05d3\u05d9\u05d3\u05d4"
+          },
+          "min_normal": {
+            "type": "number",
+            "description": "\u05e2\u05e8\u05da \u05ea\u05e7\u05d9\u05df \u05de\u05d9\u05e0\u05d9\u05de\u05dc\u05d9"
+          },
+          "max_normal": {
+            "type": "number",
+            "description": "\u05e2\u05e8\u05da \u05ea\u05e7\u05d9\u05df \u05de\u05e7\u05e1\u05d9\u05de\u05dc\u05d9"
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05e8\u05e9\u05d9\u05de\u05ea \u05e4\u05e8\u05de\u05d8\u05e8\u05d9\u05dd \u05e2\u05dd \u05d8\u05d5\u05d5\u05d7\u05d9\u05dd \u05ea\u05e7\u05d9\u05e0\u05d9\u05dd"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "\u05d4\u05d0\u05dd \u05d4\u05d1\u05d3\u05d9\u05e7\u05d4 \u05e4\u05e2\u05d9\u05dc\u05d4"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

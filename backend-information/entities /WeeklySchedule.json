@@ -1,0 +1,72 @@
+{
+  "name": "WeeklySchedule",
+  "type": "object",
+  "properties": {
+    "week_start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05ea\u05d7\u05d9\u05dc\u05ea \u05d4\u05e9\u05d1\u05d5\u05e2"
+    },
+    "schedule_data": {
+      "type": "object",
+      "description": "\u05e0\u05ea\u05d5\u05e0\u05d9 \u05dc\u05d5\u05d7 \u05d4\u05d6\u05de\u05e0\u05d9\u05dd \u05d4\u05e9\u05d1\u05d5\u05e2\u05d9"
+    },
+    "previous_approved_schedule_data": {
+      "type": "object",
+      "description": "\u05e0\u05ea\u05d5\u05e0\u05d9 \u05d4\u05e1\u05d9\u05d3\u05d5\u05e8 \u05d4\u05de\u05d0\u05d5\u05e9\u05e8 \u05d4\u05e7\u05d5\u05d3\u05dd \u05dc\u05e6\u05d5\u05e8\u05da \u05d4\u05e9\u05d5\u05d5\u05d0\u05d4",
+      "default": {}
+    },
+    "locked_shifts": {
+      "type": "object",
+      "description": "An object storing the locked status of shifts, e.g. {\"sunday-morning\": true}",
+      "default": {}
+    },
+    "reception_coverage": {
+      "type": "object",
+      "description": "Tracks which assistants are covering reception. e.g. {\"sunday-morning\": [\"John Doe\"]}",
+      "default": {}
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false,
+      "description": "\u05d4\u05d0\u05dd \u05dc\u05d5\u05d7 \u05d4\u05de\u05e9\u05de\u05e8\u05d5\u05ea \u05e4\u05d5\u05e8\u05e1\u05dd"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_approval",
+        "approved",
+        "rejected"
+      ],
+      "default": "draft",
+      "description": "\u05e1\u05d8\u05d8\u05d5\u05e1 \u05d0\u05d9\u05e9\u05d5\u05e8 \u05d4\u05e1\u05d9\u05d3\u05d5\u05e8"
+    },
+    "submitted_by": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05e9\u05ea\u05de\u05e9 \u05e9\u05e9\u05dc\u05d7 \u05d0\u05ea \u05d4\u05e1\u05d9\u05d3\u05d5\u05e8 \u05dc\u05d0\u05d9\u05e9\u05d5\u05e8"
+    },
+    "submitted_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d5\u05e9\u05e2\u05ea \u05e9\u05dc\u05d9\u05d7\u05d4 \u05dc\u05d0\u05d9\u05e9\u05d5\u05e8"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05d0\u05d3\u05de\u05d9\u05df \u05e9\u05d0\u05d9\u05e9\u05e8 \u05d0\u05ea \u05d4\u05e1\u05d9\u05d3\u05d5\u05e8"
+    },
+    "rejection_reason": {
+      "type": "string",
+      "description": "\u05e1\u05d9\u05d1\u05ea \u05d3\u05d7\u05d9\u05d9\u05ea \u05d4\u05e1\u05d9\u05d3\u05d5\u05e8 (\u05d0\u05dd \u05e0\u05d3\u05d7\u05d4)"
+    },
+    "publication_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d5\u05e9\u05e2\u05ea \u05e4\u05e8\u05e1\u05d5\u05dd"
+    }
+  },
+  "required": [
+    "week_start_date",
+    "schedule_data"
+  ]
+}

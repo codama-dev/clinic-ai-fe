@@ -1,0 +1,27 @@
+item_name,category,quantity_needed,notes,status,requested_by_id,requested_by_name,id,created_date,updated_date,created_by_id,created_by,is_sample
+Bravecto to dog (ברבקטו לכלב אמפולה 10-20),אחר,1,רונית שחם - לא שולם,ordered,68f0d737ec5f2c3937c3d118,ונינה למביר,6977556465ccbf6d2039a3d1,2026-01-26T11:52:04.931000,2026-02-02T14:11:58.196000,68f0d737ec5f2c3937c3d118,v.lambir@gmail.com,false
+Bravecto to dog (ברבקטו לכלב אמפולה 10-20),תכשירים,1,"תיק לקוח 250
+רונית שחם",ordered,68f248669dc2274903f95a25,אלכס ,6968b18b4d51e4da02270263,2026-01-15T09:21:15.699000,2026-01-19T12:40:10.150000,68f248669dc2274903f95a25,sasha.anikeeva.108@gmail.com,false
+"Bravecto to cat (ברבקטו חתול 2.8-6.25 ק""ג)",תכשירים,2,,ordered,68f0d737ec5f2c3937c3d118,ונינה למביר,6963cb3fe747913ab4fa26e3,2026-01-11T16:09:35.701000,2026-01-13T06:34:17.479000,68f0d737ec5f2c3937c3d118,v.lambir@gmail.com,false
+"Phenylpropanolamine 30 mg 100 tab ( פנילפרופנולאמין 30 מ""ג - 100 טבליות) ",תרופה,1,"תיק לקוח 2970
+וסוולוד טובוטרס 
+אם יש זמין במלאי להתקשר לחייב ואז להזמין
+פנילפרופנולאמין 50 מ""ג (100 טבליות)",ordered,68eceaa6f432485fc9845221,גלית פסקר,6952531cd22b9f0b5042e231,2025-12-29T10:08:28.708000,2025-12-30T07:23:22.512000,68eceaa6f432485fc9845221,galitpaskar@gmail.com,false
+hydrogen peroxide (מי חמצן),אחר,1,מוצר שלא הגיע בהזמנה,ordered,68f0e69727b7405c7c9a8ca1,שירז איגנץ,694d04c9d2c230c5238c4209,2025-12-25T09:32:57.475000,2025-12-30T07:23:23.858000,68f0e69727b7405c7c9a8ca1,shiraz7743@gmail.com,false
+קוויקי (צביעה כחול),ציוד רפואי,1,,ordered,68f248669dc2274903f95a25,אלכס ,694a9730d9faae09051bc25e,2025-12-23T13:20:48.330000,2025-12-28T12:41:16.037000,68f248669dc2274903f95a25,sasha.anikeeva.108@gmail.com,false
+"Tacrolimus 0.03 ophthalmic solution 10 ml (תמיסה אופטלמית טקרולימוס 0.03 10 מל)""""",תרופה,3,עבור גלי אורנשטיין. לא שילמה מראש!!! אמרה שזה בשגרה. אם לא אז לא להזמין לה לפני שמשלמת!,ordered,68efb92d1db2d3eb7fa326da,אביה רביב,693fb7fecb9b241070107534,2025-12-15T07:25:50.980000,2025-12-15T12:57:35.941000,68efb92d1db2d3eb7fa326da,avia.raviv@gmail.com,false
+"Gabapentin 300mg (גבאפנטין 300 מג טבליות)""""",אחר,1,מוצר שלא הגיע בהזמנה,ordered,68f0d737ec5f2c3937c3d118,ונינה למביר,693e9f5c00dc036f669ba39a,2025-12-14T11:28:28.673000,2025-12-16T08:01:55.574000,68f0d737ec5f2c3937c3d118,v.lambir@gmail.com,false
+"Ursolith 100 mg 60 pills (אורסוליט 100 מ""ג 60 כדורים)",תרופה,1,כוכבה ביבס (2472),ordered,68f0e69727b7405c7c9a8ca1,שירז איגנץ,693ac9d533f73ca018176104,2025-12-11T13:40:37.536000,2025-12-11T13:41:30.173000,68f0e69727b7405c7c9a8ca1,shiraz7743@gmail.com,false
+Dust off plaque (פלאק אוף אבקה),אחר,1,מוצר שלא הגיע בהזמנה,ordered,68f0e69727b7405c7c9a8ca1,שירז איגנץ,6937e6bad1ef4368b72fd989,2025-12-09T09:07:06.224000,2025-12-10T12:56:17.975000,68f0e69727b7405c7c9a8ca1,shiraz7743@gmail.com,false
+Depomedrol 40mg (דפומדרול),תרופה,2,לא יודעת בוודאות כמה צריך להזמין. נשאר חצי בקבוקון,ordered,68efb92d1db2d3eb7fa326da,אביה רביב,6936a7aa2787c099fea8d9bb,2025-12-08T10:25:46.048000,2025-12-10T12:56:12.017000,68efb92d1db2d3eb7fa326da,avia.raviv@gmail.com,false
+"Omepradex 10mg  (אומפרודקס 10 מג)""""",תרופה,5,מרפאה,ordered,68f0dd1cfbd9ff8b5ebbd348,ד״ר עדי כהן פלג,6935b3ef89a55fdc5e648d9a,2025-12-07T17:05:51.891000,2025-12-10T12:56:08.388000,68f0dd1cfbd9ff8b5ebbd348,adicohen15@gmail.com,false
+פרופייבר 500 מ״ג,תכשיר,1,"הוזמן למיי לזרוב 
+(לא שולם)",ordered,68f0d737ec5f2c3937c3d118,ונינה למביר,692d907007d231363d97d655,2025-12-01T12:56:16.500000,2025-12-01T16:08:30.296000,68f0d737ec5f2c3937c3d118,v.lambir@gmail.com,false
+"0.9% Saline Solution - 1000 ml (תמיסה סליין 0.9% - 1000 מ""ל)",תרופה,7,,ordered,68f0dd1cfbd9ff8b5ebbd348,ד״ר עדי כהן פלג,692c2546688f0abacf08eced,2025-11-30T11:06:46.554000,2025-12-01T16:08:33.245000,68f0dd1cfbd9ff8b5ebbd348,adicohen15@gmail.com,false
+Bravecto to dog(ברבקטו 2-4.5) לכלב אמפולה,תכשיר,1,הוזמן לנוי עזרן (295) שולם מראש.,ordered,68f0d737ec5f2c3937c3d118,ונינה למביר,6922cea78f2077b1dbe97160,2025-11-23T09:06:47.150000,2025-11-23T12:35:39.445000,68f0d737ec5f2c3937c3d118,v.lambir@gmail.com,false
+pres10+hydro 20,תרופה,1,100 כדורים בחבילה. עבור אדיר אלבז. טרם שולם!!,ordered,68efb92d1db2d3eb7fa326da,אביה רביב,691df7bf357c6c2821ed9c42,2025-11-19T17:00:47.147000,2025-11-20T09:22:57.360000,68efb92d1db2d3eb7fa326da,avia.raviv@gmail.com,false
+לווטרוקסין 0.8 מ''ג 100 כדורים,תרופה,1,עבור אדיר אלבז. טרם שולם!!!,ordered,68efb92d1db2d3eb7fa326da,אביה רביב,691df7807660ef4371d63c00,2025-11-19T16:59:44.482000,2025-11-20T09:22:59.605000,68efb92d1db2d3eb7fa326da,avia.raviv@gmail.com,false
+טקרולימוס ,תרופה,1,שלומית אייזיק,ordered,68f0dd1cfbd9ff8b5ebbd348,ד״ר עדי כהן פלג,691d869c453def27003cbf28,2025-11-19T08:58:04.285000,2025-11-20T09:23:00.847000,68f0dd1cfbd9ff8b5ebbd348,adicohen15@gmail.com,false
+טקרוקלימוס ,תרופה,,,ordered,68eceaa6f432485fc9845221,גלית פסקר,691c876c0f859a29c290bd3f,2025-11-18T14:49:16.193000,2025-11-20T09:23:02.279000,68eceaa6f432485fc9845221,galitpaskar@gmail.com,false
+Bravecto to dog (ברבקטו לכלב אמפולה 4.5-10 ),תכשיר,1,זהבית גרשברג,ordered,68eceaa6f432485fc9845221,גלית פסקר,691c86904239a55d9d1b15c3,2025-11-18T14:45:36.059000,2025-11-20T06:01:46.243000,68eceaa6f432485fc9845221,galitpaskar@gmail.com,false
+Bravecto to dog (ברבקטו 20-40 אמפולה) לכלב,תכשיר,1,עבור מיכל מתוק 345. להודיע לה שמגיע,ordered,68efb92d1db2d3eb7fa326da,אביה רביב,691b199384c5287eafd5483f,2025-11-17T12:48:19.466000,2025-11-20T09:23:03.802000,68efb92d1db2d3eb7fa326da,avia.raviv@gmail.com,false

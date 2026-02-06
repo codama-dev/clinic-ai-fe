@@ -1,0 +1,6 @@
+name,room_type,capacity,equipment,status,notes,id,created_date,updated_date,created_by_id,created_by,is_sample
+חדר ניתוח 2,surgery,1,,available,,6948093047af494f67ccd36f,2025-12-21T14:50:24.301000,2025-12-21T14:50:24.301000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+חדר רנטגן (X-Ray),imaging,1,,available,,694809259bdad0975937015a,2025-12-21T14:50:13.721000,2025-12-21T14:50:13.721000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+חדר ניתוח 1,surgery,1,,available,,6948090dae69ff222b4b8623,2025-12-21T14:49:49.157000,2025-12-21T14:49:49.157000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+חדר בדיקה 2,examination,1,,available,,6948090029fe6a0fde43941c,2025-12-21T14:49:36.172000,2025-12-21T14:49:36.172000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false
+חדר בדיקה 1,examination,1,,available,,694808f139d61e95f4e667cc,2025-12-21T14:49:21.397000,2025-12-21T14:49:21.397000,68d7b52d0d33b12757415b50,yuval@ypeleg-eng.co.il,false

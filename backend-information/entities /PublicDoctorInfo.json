@@ -1,0 +1,23 @@
+{
+  "name": "PublicDoctorInfo",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "The ID of the user who is a doctor."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "The display name of the doctor."
+    },
+    "email": {
+      "type": "string",
+      "description": "The email of the doctor."
+    }
+  },
+  "required": [
+    "user_id",
+    "display_name",
+    "email"
+  ]
+}

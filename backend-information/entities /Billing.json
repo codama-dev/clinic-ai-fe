@@ -1,0 +1,161 @@
+{
+  "name": "Billing",
+  "type": "object",
+  "properties": {
+    "appointment_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05ea\u05d5\u05e8"
+    },
+    "visit_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05d1\u05d9\u05e7\u05d5\u05e8 \u05d4\u05e8\u05e4\u05d5\u05d0\u05d9"
+    },
+    "client_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05dc\u05e7\u05d5\u05d7"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05dc\u05e7\u05d5\u05d7"
+    },
+    "patient_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05de\u05d8\u05d5\u05e4\u05dc"
+    },
+    "patient_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05d8\u05d5\u05e4\u05dc"
+    },
+    "billing_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d4\u05d7\u05d9\u05d5\u05d1"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "unit_price": {
+            "type": "number"
+          },
+          "total": {
+            "type": "number"
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05e4\u05e8\u05d9\u05d8\u05d9 \u05d4\u05d7\u05d9\u05d5\u05d1"
+    },
+    "subtotal": {
+      "type": "number",
+      "default": 0,
+      "description": "\u05e1\u05db\u05d5\u05dd \u05d1\u05d9\u05e0\u05d9\u05d9\u05dd"
+    },
+    "discount": {
+      "type": "number",
+      "default": 0,
+      "description": "\u05d4\u05e0\u05d7\u05d4"
+    },
+    "discount_reason": {
+      "type": "string",
+      "description": "\u05e1\u05d9\u05d1\u05ea \u05d4\u05d4\u05e0\u05d7\u05d4"
+    },
+    "vat_rate": {
+      "type": "number",
+      "default": 0,
+      "description": "\u05d0\u05d7\u05d5\u05d6 \u05de\u05e2\u05f4\u05de"
+    },
+    "vat_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "\u05e1\u05db\u05d5\u05dd \u05de\u05e2\u05f4\u05de"
+    },
+    "total": {
+      "type": "number",
+      "default": 0,
+      "description": "\u05e1\u05db\u05d5\u05dd \u05db\u05d5\u05dc\u05dc"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending",
+        "paid",
+        "partial",
+        "cancelled"
+      ],
+      "default": "draft",
+      "description": "\u05e1\u05d8\u05d8\u05d5\u05e1 \u05d4\u05ea\u05e9\u05dc\u05d5\u05dd"
+    },
+    "payments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "method": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "default": [],
+      "description": "\u05ea\u05e9\u05dc\u05d5\u05de\u05d9\u05dd \u05e9\u05d1\u05d5\u05e6\u05e2\u05d5"
+    },
+    "amount_paid": {
+      "type": "number",
+      "default": 0,
+      "description": "\u05e1\u05db\u05d5\u05dd \u05e9\u05e9\u05d5\u05dc\u05dd"
+    },
+    "balance": {
+      "type": "number",
+      "default": 0,
+      "description": "\u05d9\u05ea\u05e8\u05d4"
+    },
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "invoice",
+        "receipt",
+        "invoice_receipt"
+      ],
+      "description": "\u05e1\u05d5\u05d2 \u05de\u05e1\u05de\u05da"
+    },
+    "document_number": {
+      "type": "string",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05de\u05e1\u05de\u05da"
+    },
+    "pdf_url": {
+      "type": "string",
+      "description": "\u05e7\u05d9\u05e9\u05d5\u05e8 \u05dc\u05de\u05e1\u05de\u05da PDF"
+    },
+    "notes": {
+      "type": "string",
+      "description": "\u05d4\u05e2\u05e8\u05d5\u05ea"
+    }
+  },
+  "required": [
+    "client_id",
+    "client_name",
+    "billing_date",
+    "total"
+  ]
+}

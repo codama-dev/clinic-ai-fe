@@ -1,0 +1,86 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "appointment_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05ea\u05d5\u05e8 (\u05d0\u05d5\u05e4\u05e6\u05d9\u05d5\u05e0\u05dc\u05d9)"
+    },
+    "client_id": {
+      "type": "string",
+      "description": "\u05de\u05d6\u05d4\u05d4 \u05d4\u05dc\u05e7\u05d5\u05d7"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05dc\u05e7\u05d5\u05d7"
+    },
+    "patient_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05d8\u05d5\u05e4\u05dc"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "whatsapp",
+        "sms",
+        "email"
+      ],
+      "description": "\u05e2\u05e8\u05d5\u05e5 \u05d4\u05ea\u05d6\u05db\u05d5\u05e8\u05ea"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "confirmation",
+        "reminder_24h",
+        "reminder_2h",
+        "cancellation",
+        "rescheduled",
+        "manual"
+      ],
+      "description": "\u05e1\u05d5\u05d2 \u05d4\u05d4\u05ea\u05e8\u05d0\u05d4"
+    },
+    "scheduled_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u05de\u05ea\u05d9 \u05dc\u05e9\u05dc\u05d5\u05d7"
+    },
+    "sent_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u05de\u05ea\u05d9 \u05e0\u05e9\u05dc\u05d7 \u05d1\u05e4\u05d5\u05e2\u05dc"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "sent",
+        "failed",
+        "cancelled"
+      ],
+      "default": "pending",
+      "description": "\u05e1\u05d8\u05d8\u05d5\u05e1 \u05d4\u05e9\u05dc\u05d9\u05d7\u05d4"
+    },
+    "recipient": {
+      "type": "string",
+      "description": "\u05db\u05ea\u05d5\u05d1\u05ea/\u05de\u05e1\u05e4\u05e8 \u05d4\u05e0\u05de\u05e2\u05df"
+    },
+    "message_content": {
+      "type": "string",
+      "description": "\u05ea\u05d5\u05db\u05df \u05d4\u05d4\u05d5\u05d3\u05e2\u05d4"
+    },
+    "failure_reason": {
+      "type": "string",
+      "description": "\u05e1\u05d9\u05d1\u05ea \u05db\u05d9\u05e9\u05dc\u05d5\u05df"
+    },
+    "response": {
+      "type": "string",
+      "description": "\u05ea\u05d2\u05d5\u05d1\u05ea \u05d4\u05dc\u05e7\u05d5\u05d7"
+    }
+  },
+  "required": [
+    "client_id",
+    "channel",
+    "type",
+    "scheduled_time"
+  ]
+}

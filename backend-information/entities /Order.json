@@ -1,0 +1,82 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "order_number": {
+      "type": "number",
+      "description": "\u05de\u05e1\u05e4\u05e8 \u05d4\u05d6\u05de\u05e0\u05d4 \u05d9\u05d9\u05d7\u05d5\u05d3\u05d9"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05dc\u05e7\u05d5\u05d7"
+    },
+    "order_date": {
+      "type": "string",
+      "format": "date",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d4\u05d4\u05d6\u05de\u05e0\u05d4"
+    },
+    "total_amount": {
+      "type": "number",
+      "description": "\u05e1\u05db\u05d5\u05dd \u05db\u05d5\u05dc\u05dc"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled",
+        "draft",
+        "completed_with_shortages"
+      ],
+      "default": "pending",
+      "description": "\u05e1\u05d8\u05d8\u05d5\u05e1 \u05d4\u05d4\u05d6\u05de\u05e0\u05d4"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "product_name": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "number"
+          },
+          "chosen_supplier": {
+            "type": "string"
+          },
+          "price_per_unit": {
+            "type": "number"
+          },
+          "notes": {
+            "type": "string",
+            "description": "\u05d4\u05e2\u05e8\u05d5\u05ea \u05e2\u05dc \u05d4\u05e4\u05e8\u05d9\u05d8"
+          }
+        }
+      },
+      "description": "\u05e4\u05e8\u05d9\u05d8\u05d9\u05dd \u05d1\u05d4\u05d6\u05de\u05e0\u05d4"
+    },
+    "received_items": {
+      "type": "object",
+      "description": "\u05d0\u05d5\u05d1\u05d9\u05e7\u05d8 \u05d4\u05de\u05db\u05d9\u05dc \u05de\u05e6\u05d1 \u05e7\u05d1\u05dc\u05ea \u05d4\u05de\u05d5\u05e6\u05e8\u05d9\u05dd, \u05db\u05d0\u05e9\u05e8 \u05d4\u05de\u05e4\u05ea\u05d7 \u05d4\u05d5\u05d0 \u05e9\u05dd \u05d4\u05de\u05d5\u05e6\u05e8 \u05d5\u05d4\u05e2\u05e8\u05da \u05d4\u05d5\u05d0 boolean (true=\u05d4\u05d2\u05d9\u05e2, false=\u05dc\u05d0 \u05d4\u05d2\u05d9\u05e2)",
+      "default": {}
+    },
+    "received_by": {
+      "type": "string",
+      "description": "\u05e9\u05dd \u05d4\u05de\u05e9\u05ea\u05de\u05e9 \u05e9\u05d0\u05d9\u05e9\u05e8 \u05d0\u05ea \u05e7\u05d1\u05dc\u05ea \u05d4\u05de\u05e9\u05dc\u05d5\u05d7"
+    },
+    "received_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "\u05ea\u05d0\u05e8\u05d9\u05da \u05d5\u05e9\u05e2\u05ea \u05d0\u05d9\u05e9\u05d5\u05e8 \u05e7\u05d1\u05dc\u05ea \u05d4\u05de\u05e9\u05dc\u05d5\u05d7"
+    }
+  },
+  "required": [
+    "customer_name",
+    "items",
+    "total_amount",
+    "order_date"
+  ]
+}
