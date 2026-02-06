@@ -1,0 +1,228 @@
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+
+// Helper function to parse date from DD/MM/YYYY or D/M/YYYY format to YYYY-MM-DD
+function parseDate(dateStr) {
+  if (!dateStr) return null;
+  
+  // Remove any leading/trailing whitespace
+  dateStr = dateStr.trim();
+  
+  // Try to parse DD/MM/YYYY or D/M/YYYY format
+  const parts = dateStr.split('/');
+  if (parts.length === 3) {
+    const day = parts[0].padStart(2, '0');
+    const month = parts[1].padStart(2, '0');
+    const year = parts[2];
+    
+    // Validate the date
+    const parsed = `${year}-${month}-${day}`;
+    const date = new Date(parsed);
+    if (!isNaN(date.getTime())) {
+      return parsed;
+    }
+  }
+  
+  return null;
+}
+
+Deno.serve(async (req) => {
+  try {
+    const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+
+    if (!user) {
+      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const body = await req.json();
+    console.log('Request body keys:', Object.keys(body));
+    
+    const { csvContent, dry_run = false } = body;
+
+    if (!csvContent) {
+      console.error('No CSV content in request');
+      return Response.json({ error: 'No CSV content provided' }, { status: 400 });
+    }
+    
+    console.log('CSV content length:', csvContent.length);
+    console.log('Dry run:', dry_run);
+
+  const lines = csvContent.split('\n').filter(line => line.trim());
+  
+  if (lines.length < 2) {
+    return Response.json({ error: 'קובץ CSV ריק או לא תקין' }, { status: 400 });
+  }
+
+  // Parse CSV header
+  const header = lines[0].split(',').map(h => h.trim());
+  
+  console.log('CSV Headers:', header);
+  
+  // Flexible column mapping - support multiple variations
+  const columnMapping = {
+    vaccination_date: ['תאריך החיסון', 'תאריך חיסון', 'תאריך'],
+    client_name: ['שם הלקוח', 'שם לקוח', 'לקוח'],
+    client_number: ['מספר לקוח', 'מס לקוח', 'מס\' לקוח'],
+    administered_by: ['שם הרופא המחסן', 'שם רופא', 'רופא', 'מחסן', 'שם הרופא'],
+    patient_name: ['שם החיה', 'שם חיה', 'חיה'],
+    vaccination_type: ['שם החיסון', 'שם חיסון', 'חיסון'],
+    phone: ['טלפון', 'טל לקוח', 'טלפון לקוח']
+  };
+
+  // Find column indices - match flexibly (normalize spaces and case)
+  const columnIndices = {};
+  
+  for (const [fieldName, possibleNames] of Object.entries(columnMapping)) {
+    let index = -1;
+    for (const possibleName of possibleNames) {
+      const normalizedPossibleName = possibleName.toLowerCase().replace(/\s+/g, '');
+      index = header.findIndex(h => 
+        h.toLowerCase().replace(/\s+/g, '') === normalizedPossibleName
+      );
+      if (index !== -1) break;
+    }
+    
+    if (index !== -1) {
+      columnIndices[fieldName] = index;
+      console.log(`Mapped ${fieldName} to column ${index}: ${header[index]}`);
+    }
+  }
+
+  const results = {
+    total: 0,
+    successful: 0,
+    failed: 0,
+    errors: [],
+    to_create: [],
+    duplicates: []
+  };
+
+  // Fetch all clients and patients for efficient lookup
+  const allClients = await base44.asServiceRole.entities.Client.list('', 5000);
+  const allPatients = await base44.asServiceRole.entities.Patient.list('', 5000);
+
+  // Process each row
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+
+    results.total++;
+    
+    const values = line.split(',').map(v => v.trim());
+    
+    // Extract data from CSV - use "-" for empty fields
+    const rawData = {
+      vaccination_date: values[columnIndices.vaccination_date] || '',
+      client_name: values[columnIndices.client_name] || '-',
+      client_number: parseFloat(values[columnIndices.client_number]) || null,
+      administered_by: values[columnIndices.administered_by] || '-',
+      patient_name: values[columnIndices.patient_name] || '-',
+      vaccination_type: values[columnIndices.vaccination_type] || '-',
+      phone: columnIndices.phone !== undefined ? (values[columnIndices.phone] || '-') : '-'
+    };
+
+    // Parse date - if invalid, skip this row
+    const parsedDate = parseDate(rawData.vaccination_date);
+    if (!parsedDate) {
+      results.failed++;
+      results.errors.push({
+        row: i + 1,
+        error: `תאריך לא תקין או חסר: ${rawData.vaccination_date}`,
+        data: rawData
+      });
+      continue;
+    }
+
+    const csvData = {
+      ...rawData,
+      vaccination_date: parsedDate
+    };
+
+    // Find client (flexible matching) - DO NOT create new clients
+    const client = allClients.find(c => 
+      c.client_number === csvData.client_number ||
+      (c.full_name && csvData.client_name && csvData.client_name !== '-' &&
+       c.full_name.trim().toLowerCase().replace(/\s+/g, ' ') === csvData.client_name.trim().toLowerCase().replace(/\s+/g, ' '))
+    );
+
+    // If client not found, skip this row
+    if (!client) {
+      results.failed++;
+      results.errors.push({
+        row: i + 1,
+        error: `לקוח לא נמצא: ${csvData.client_name} (מספר: ${csvData.client_number || 'לא צוין'})`,
+        data: csvData
+      });
+      continue;
+    }
+
+    // Find patient for this client (flexible matching)
+    const patient = allPatients.find(p => 
+      p.client_id === client.id &&
+      p.name && csvData.patient_name && csvData.patient_name !== '-' &&
+      p.name.trim().toLowerCase().replace(/\s+/g, ' ') === csvData.patient_name.trim().toLowerCase().replace(/\s+/g, ' ')
+    );
+
+    // If patient not found, skip this row
+    if (!patient) {
+      results.failed++;
+      results.errors.push({
+        row: i + 1,
+        error: `מטופל לא נמצא: ${csvData.patient_name} עבור לקוח ${csvData.client_name}`,
+        data: csvData
+      });
+      continue;
+    }
+
+    // Create vaccination record
+    const vaccinationData = {
+      client_id: client.id,
+      client_name: client.full_name,
+      client_number: client.client_number,
+      patient_id: patient.id,
+      patient_name: patient.name,
+      patient_number: patient.patient_number,
+      vaccination_type: csvData.vaccination_type,
+      vaccination_date: csvData.vaccination_date,
+      administered_by: csvData.administered_by
+    };
+
+    if (dry_run) {
+      results.to_create.push({
+        row_index: i + 1,
+        data: vaccinationData,
+        csv_data: csvData
+      });
+      results.successful++;
+    } else {
+      try {
+        await base44.asServiceRole.entities.Vaccination.create(vaccinationData);
+        results.successful++;
+        
+        // Small delay to avoid rate limits
+        await new Promise(resolve => setTimeout(resolve, 100));
+      } catch (error) {
+        results.failed++;
+        results.errors.push({
+          row: i + 1,
+          error: `שגיאה ביצירת חיסון: ${error.message}`,
+          data: csvData
+        });
+      }
+    }
+  }
+
+    console.log('Final results:', results);
+    
+    return Response.json({
+      success: true,
+      results
+    });
+  } catch (error) {
+    console.error('Function error:', error);
+    return Response.json({ 
+      error: error.message,
+      stack: error.stack 
+    }, { status: 400 });
+  }
+});

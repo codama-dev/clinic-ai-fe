@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Suppress console errors from Base44 analytics */
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}

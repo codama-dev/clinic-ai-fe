@@ -1,0 +1,2484 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "LoVeT Clinic Backend API - Complete Specification",
+    "description": "Complete REST API for LoVeT veterinary clinic management system - Backup implementation mirroring Base44 platform functionality. Includes all 44 entities, authentication, analytics, AI agents, integrations, and real-time subscriptions.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "LoVeT Clinic",
+      "email": "admin@lovet.clinic"
+    },
+    "license": {
+      "name": "Proprietary"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3001/api",
+      "description": "Local development server"
+    },
+    {
+      "url": "https://api.lovet.clinic/api",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT token from Supabase Auth. Include in Authorization header as: Bearer <token>"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Validation failed"
+          },
+          "details": {
+            "type": "string",
+            "example": "Missing required field: client_name"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique user identifier"
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the user was created"
+          },
+          "updated_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          },
+          "created_by": {
+            "type": "string",
+            "description": "Email of creator"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "User email (unique)"
+          },
+          "full_name": {
+            "type": "string",
+            "description": "Full name"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["admin", "user"],
+            "description": "System role"
+          },
+          "display_name": {
+            "type": "string",
+            "description": "Display name"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number"
+          },
+          "job": {
+            "type": "string",
+            "enum": ["doctor", "assistant", "receptionist", "admin"],
+            "description": "Job position"
+          },
+          "id_number": {
+            "type": "string",
+            "description": "ID number"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date",
+            "description": "Birth date"
+          },
+          "is_active": {
+            "type": "boolean",
+            "description": "Active status"
+          },
+          "is_approved": {
+            "type": "boolean",
+            "description": "Admin approval status"
+          },
+          "profile_image": {
+            "type": "string",
+            "description": "Profile image URL"
+          },
+          "permissions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Special permissions array"
+          }
+        }
+      },
+      "Client": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "client_number": {
+            "type": "integer",
+            "description": "Auto-incrementing client number"
+          },
+          "full_name": {
+            "type": "string"
+          },
+          "id_number": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "phone_secondary": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "inactive", "blocked"]
+          },
+          "marketing_consent": {
+            "type": "boolean"
+          },
+          "reminders_consent": {
+            "type": "boolean"
+          },
+          "preferred_contact": {
+            "type": "string",
+            "enum": ["phone", "email", "whatsapp", "sms"]
+          },
+          "balance": {
+            "type": "number"
+          },
+          "has_no_show_history": {
+            "type": "boolean"
+          }
+        }
+      },
+      "GenericEntity": {
+        "type": "object",
+        "description": "Generic entity response - structure varies by entity type. All entities have: id, created_date, updated_date, created_by",
+        "additionalProperties": true
+      },
+      "ListResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenericEntity"
+            }
+          },
+          "count": {
+            "type": "integer",
+            "description": "Total number of records matching query"
+          }
+        }
+      },
+      "Conversation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "created_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "agent_name": {
+            "type": "string",
+            "description": "Agent identifier"
+          },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          },
+          "messages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Message"
+            }
+          }
+        }
+      },
+      "Message": {
+        "type": "object",
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["user", "assistant", "system"]
+          },
+          "content": {
+            "type": "string"
+          },
+          "file_urls": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tool_calls": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "arguments_string": {
+                  "type": "string"
+                },
+                "results": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": ["pending", "running", "completed", "failed"]
+                }
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AnalyticsEvent": {
+        "type": "object",
+        "properties": {
+          "eventName": {
+            "type": "string",
+            "description": "Event name (snake_case, descriptive)"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Event properties (string, number, boolean, or null)"
+          }
+        },
+        "required": ["eventName"]
+      }
+    },
+    "parameters": {
+      "EntityName": {
+        "name": "entityName",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "User",
+            "PublicProfile",
+            "ExternalEmployee",
+            "Constraint",
+            "WeeklySchedule",
+            "ShiftTemplate",
+            "SchedulePublication",
+            "VacationRequest",
+            "TimeClockEntry",
+            "SystemSettings",
+            "Client",
+            "Patient",
+            "Room",
+            "AppointmentType",
+            "SlotTemplate",
+            "Slot",
+            "Appointment",
+            "MedicalVisit",
+            "Billing",
+            "Notification",
+            "CalendarSettings",
+            "ClientPriceList",
+            "PatientMetric",
+            "Vaccination",
+            "VaccinationType",
+            "ClientDocument",
+            "LabTestType",
+            "LabTest",
+            "DoctorSchedule",
+            "FormConfiguration",
+            "MessageTemplate",
+            "PriceList",
+            "PriceListItem",
+            "HospitalizedAnimal",
+            "TreatmentExecution",
+            "ProtocolTemplate",
+            "FilledProtocol",
+            "InventoryItem",
+            "InventoryShortage",
+            "Order",
+            "SupplierPrice",
+            "ClinicCase",
+            "VetReferral",
+            "PublicDoctorInfo"
+          ]
+        },
+        "description": "Entity name - one of the 44 available entities"
+      },
+      "EntityId": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Entity UUID"
+      },
+      "SortParam": {
+        "name": "sort",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "default": "-created_date"
+        },
+        "description": "Sort field (prefix with - for descending). Example: -updated_date, name, -client_number"
+      },
+      "LimitParam": {
+        "name": "limit",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 50,
+          "minimum": 1,
+          "maximum": 1000
+        },
+        "description": "Maximum number of records to return"
+      },
+      "OffsetParam": {
+        "name": "offset",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        "description": "Number of records to skip (for pagination)"
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid or missing JWT token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "Unauthorized"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden - User lacks required permissions",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "Forbidden"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found - Resource does not exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "Not found"
+            }
+          }
+        }
+      },
+      "ValidationError": {
+        "description": "Bad Request - Validation failed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "Validation failed",
+              "details": "Missing required field: name"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/entities/{entityName}": {
+      "get": {
+        "summary": "List entities",
+        "description": "Get paginated list of entities with optional sorting. Supports all 44 entity types.",
+        "tags": ["Entities - CRUD"],
+        "operationId": "listEntities",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityName"
+          },
+          {
+            "$ref": "#/components/parameters/SortParam"
+          },
+          {
+            "$ref": "#/components/parameters/LimitParam"
+          },
+          {
+            "$ref": "#/components/parameters/OffsetParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListResponse"
+                },
+                "examples": {
+                  "clients": {
+                    "summary": "List of clients",
+                    "value": {
+                      "data": [
+                        {
+                          "id": "abc-123",
+                          "client_number": 1,
+                          "full_name": "יוסי כהן",
+                          "phone": "0501234567",
+                          "status": "active"
+                        }
+                      ],
+                      "count": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create entity",
+        "description": "Create a new entity record. Auto-generates id, created_date, updated_date, created_by.",
+        "tags": ["Entities - CRUD"],
+        "operationId": "createEntity",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityName"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericEntity"
+              },
+              "examples": {
+                "client": {
+                  "summary": "Create client",
+                  "value": {
+                    "full_name": "יוסי כהן",
+                    "phone": "0501234567",
+                    "email": "yossi@example.com",
+                    "city": "תל אביב",
+                    "status": "active"
+                  }
+                },
+                "patient": {
+                  "summary": "Create patient",
+                  "value": {
+                    "client_number": 123,
+                    "client_id": "abc-123",
+                    "client_name": "יוסי כהן",
+                    "name": "מקס",
+                    "species": "כלב",
+                    "breed": "לברדור",
+                    "sex": "זכר"
+                  }
+                },
+                "appointment": {
+                  "summary": "Create appointment",
+                  "value": {
+                    "date": "2026-02-10",
+                    "start_time": "10:00",
+                    "end_time": "10:20",
+                    "duration_minutes": 20,
+                    "client_id": "abc-123",
+                    "client_name": "יוסי כהן",
+                    "patient_id": "def-456",
+                    "patient_name": "מקס",
+                    "doctor_id": "doc-1",
+                    "doctor_name": "ד״ר שרה",
+                    "appointment_type_name": "בדיקה כללית",
+                    "status": "scheduled"
+                  }
+                },
+                "constraint": {
+                  "summary": "Create constraint",
+                  "value": {
+                    "employee_id": "user-123",
+                    "employee_name": "דני כהן",
+                    "week_start_date": "2026-02-09",
+                    "unavailable_day": "monday",
+                    "unavailable_shift": "morning",
+                    "is_submitted_on_time": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericEntity"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/entities/{entityName}/filter": {
+      "post": {
+        "summary": "Filter entities",
+        "description": "Query entities with complex filters and conditions. Supports all comparison operators.",
+        "tags": ["Entities - CRUD"],
+        "operationId": "filterEntities",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityName"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "object",
+                    "description": "Filter conditions - field: value or field: {operator: value}",
+                    "additionalProperties": true
+                  },
+                  "sort": {
+                    "type": "string",
+                    "default": "-created_date"
+                  },
+                  "limit": {
+                    "type": "integer",
+                    "default": 50
+                  },
+                  "offset": {
+                    "type": "integer",
+                    "default": 0
+                  }
+                }
+              },
+              "examples": {
+                "activeClients": {
+                  "summary": "Get active clients",
+                  "value": {
+                    "query": {
+                      "status": "active"
+                    },
+                    "sort": "full_name",
+                    "limit": 100
+                  }
+                },
+                "pendingVacations": {
+                  "summary": "Pending vacation requests",
+                  "value": {
+                    "query": {
+                      "status": "pending"
+                    },
+                    "sort": "-created_date"
+                  }
+                },
+                "weekSchedule": {
+                  "summary": "Specific week schedule",
+                  "value": {
+                    "query": {
+                      "week_start_date": "2026-02-09"
+                    }
+                  }
+                },
+                "doctorAppointments": {
+                  "summary": "Doctor's appointments for date range",
+                  "value": {
+                    "query": {
+                      "doctor_id": "doc-1",
+                      "date": {
+                        "$gte": "2026-02-01",
+                        "$lte": "2026-02-28"
+                      },
+                      "status": {
+                        "$ne": "cancelled"
+                      }
+                    },
+                    "sort": "date"
+                  }
+                },
+                "hospitalizedAnimals": {
+                  "summary": "Active hospitalized animals",
+                  "value": {
+                    "query": {
+                      "status": "active"
+                    },
+                    "sort": "-admission_date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/entities/{entityName}/{id}": {
+      "get": {
+        "summary": "Get entity by ID",
+        "description": "Retrieve a single entity by its UUID",
+        "tags": ["Entities - CRUD"],
+        "operationId": "getEntityById",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityName"
+          },
+          {
+            "$ref": "#/components/parameters/EntityId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericEntity"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update entity",
+        "description": "Update an existing entity (partial update allowed). Auto-updates updated_date.",
+        "tags": ["Entities - CRUD"],
+        "operationId": "updateEntity",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityName"
+          },
+          {
+            "$ref": "#/components/parameters/EntityId"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericEntity"
+              },
+              "examples": {
+                "approveVacation": {
+                  "summary": "Approve vacation request",
+                  "value": {
+                    "status": "approved",
+                    "manager_response": "Approved. Enjoy your vacation!",
+                    "response_date": "2026-02-06T10:30:00Z"
+                  }
+                },
+                "updateClientPhone": {
+                  "summary": "Update client phone",
+                  "value": {
+                    "phone": "0509876543"
+                  }
+                },
+                "publishSchedule": {
+                  "summary": "Publish weekly schedule",
+                  "value": {
+                    "is_published": true,
+                    "publication_date": "2026-02-06T14:00:00Z"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericEntity"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete entity",
+        "description": "Permanently delete an entity (no cascade - related records are not deleted)",
+        "tags": ["Entities - CRUD"],
+        "operationId": "deleteEntity",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityName"
+          },
+          {
+            "$ref": "#/components/parameters/EntityId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/entities/{entityName}/bulk": {
+      "post": {
+        "summary": "Bulk create entities",
+        "description": "Create multiple entities in a single transaction (all or nothing)",
+        "tags": ["Entities - CRUD"],
+        "operationId": "bulkCreateEntities",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityName"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GenericEntity"
+                    },
+                    "minItems": 1
+                  }
+                },
+                "required": ["data"]
+              },
+              "examples": {
+                "multipleConstraints": {
+                  "summary": "Multiple constraints for employee",
+                  "value": {
+                    "data": [
+                      {
+                        "employee_id": "user-123",
+                        "employee_name": "דני",
+                        "week_start_date": "2026-02-09",
+                        "unavailable_day": "monday",
+                        "unavailable_shift": "morning"
+                      },
+                      {
+                        "employee_id": "user-123",
+                        "employee_name": "דני",
+                        "week_start_date": "2026-02-09",
+                        "unavailable_day": "wednesday",
+                        "unavailable_shift": "evening"
+                      }
+                    ]
+                  }
+                },
+                "importVaccinations": {
+                  "summary": "Import multiple vaccinations",
+                  "value": {
+                    "data": [
+                      {
+                        "client_id": "abc-123",
+                        "patient_id": "def-456",
+                        "vaccination_type": "כלבת",
+                        "vaccination_date": "2026-01-15"
+                      },
+                      {
+                        "client_id": "abc-123",
+                        "patient_id": "def-456",
+                        "vaccination_type": "משושה",
+                        "vaccination_date": "2026-01-15"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GenericEntity"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/entities/{entityName}/schema": {
+      "get": {
+        "summary": "Get entity schema",
+        "description": "Retrieve JSON schema definition for entity validation (excludes built-in fields: id, created_date, updated_date, created_by)",
+        "tags": ["Entities - CRUD"],
+        "operationId": "getEntitySchema",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/EntityName"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "JSON Schema",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "example": "Client"
+                    },
+                    "type": {
+                      "type": "string",
+                      "example": "object"
+                    },
+                    "properties": {
+                      "type": "object",
+                      "example": {
+                        "full_name": {
+                          "type": "string"
+                        },
+                        "phone": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "required": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": ["full_name"]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Entity type not found"
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "summary": "Get current user",
+        "description": "Returns the authenticated user's full profile from JWT token",
+        "tags": ["Authentication"],
+        "operationId": "getCurrentUser",
+        "responses": {
+          "200": {
+            "description": "Current user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update current user",
+        "description": "Update the authenticated user's profile. Cannot change: id, email, role, permissions (admin only)",
+        "tags": ["Authentication"],
+        "operationId": "updateCurrentUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "display_name": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "job": {
+                    "type": "string",
+                    "enum": ["doctor", "assistant", "receptionist", "admin"]
+                  },
+                  "profile_image": {
+                    "type": "string"
+                  },
+                  "id_number": {
+                    "type": "string"
+                  },
+                  "date_of_birth": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/is-authenticated": {
+      "get": {
+        "summary": "Check authentication",
+        "description": "Returns whether the JWT token is valid (doesn't throw 401)",
+        "tags": ["Authentication"],
+        "operationId": "checkAuthentication",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "Authentication status",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "authenticated": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "examples": {
+                  "authenticated": {
+                    "value": {
+                      "authenticated": true
+                    }
+                  },
+                  "notAuthenticated": {
+                    "value": {
+                      "authenticated": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "Login",
+        "description": "Authenticate with email and password, returns JWT tokens",
+        "tags": ["Authentication"],
+        "operationId": "login",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "JWT access token"
+                    },
+                    "refresh_token": {
+                      "type": "string",
+                      "description": "JWT refresh token"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "error": "Invalid credentials"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Logout",
+        "description": "Invalidate the current JWT session",
+        "tags": ["Authentication"],
+        "operationId": "logout",
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/invite": {
+      "post": {
+        "summary": "Invite user",
+        "description": "Send invitation email to new user (admin only or users with manage_employees permission)",
+        "tags": ["Authentication"],
+        "operationId": "inviteUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": ["admin", "user"],
+                    "default": "user",
+                    "description": "Only admins can invite other admins"
+                  }
+                },
+                "required": ["email"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invitation sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/list": {
+      "get": {
+        "summary": "List all users",
+        "description": "Get all users in the system (admin only or users with manage_employees permission)",
+        "tags": ["Users Management"],
+        "operationId": "listUsers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitParam"
+          },
+          {
+            "$ref": "#/components/parameters/OffsetParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "patch": {
+        "summary": "Update user",
+        "description": "Update any user (admin only). Can change role, permissions, approval status.",
+        "tags": ["Users Management"],
+        "operationId": "updateUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": ["admin", "user"]
+                  },
+                  "permissions": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "is_approved": {
+                    "type": "boolean"
+                  },
+                  "is_active": {
+                    "type": "boolean"
+                  },
+                  "display_name": {
+                    "type": "string"
+                  },
+                  "job": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user",
+        "description": "Permanently delete user (admin only). WARNING: Cannot undo.",
+        "tags": ["Users Management"],
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/analytics/track": {
+      "post": {
+        "summary": "Track analytics event",
+        "description": "Log custom analytics event with properties",
+        "tags": ["Analytics"],
+        "operationId": "trackEvent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyticsEvent"
+              },
+              "examples": {
+                "buttonClick": {
+                  "summary": "Button click event",
+                  "value": {
+                    "eventName": "add_to_cart_button_clicked",
+                    "properties": {
+                      "product_id": "prod_123",
+                      "success": true
+                    }
+                  }
+                },
+                "formSubmit": {
+                  "summary": "Form submission",
+                  "value": {
+                    "eventName": "user_contact_form_submit",
+                    "properties": {
+                      "success": true,
+                      "form_type": "vacation_request"
+                    }
+                  }
+                },
+                "schedulePublish": {
+                  "summary": "Schedule published",
+                  "value": {
+                    "eventName": "weekly_schedule_published",
+                    "properties": {
+                      "week_start_date": "2026-02-09",
+                      "employee_count": 12
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event tracked",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/ValidationError"
+          }
+        }
+      }
+    },
+    "/agents/{agentName}/conversations": {
+      "post": {
+        "summary": "Create conversation",
+        "description": "Start a new conversation with an AI agent",
+        "tags": ["AI Agents"],
+        "operationId": "createConversation",
+        "parameters": [
+          {
+            "name": "agentName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Agent identifier (e.g., task_manager)"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "metadata": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Conversation created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Conversation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List conversations",
+        "description": "Get all conversations for an agent (for current user)",
+        "tags": ["AI Agents"],
+        "operationId": "listConversations",
+        "parameters": [
+          {
+            "name": "agentName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of conversations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Conversation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/conversations/{conversationId}": {
+      "get": {
+        "summary": "Get conversation",
+        "description": "Retrieve full conversation with all messages",
+        "tags": ["AI Agents"],
+        "operationId": "getConversation",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Conversation details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Conversation"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update conversation",
+        "description": "Update conversation metadata",
+        "tags": ["AI Agents"],
+        "operationId": "updateConversation",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "metadata": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Conversation updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Conversation"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/conversations/{conversationId}/messages": {
+      "post": {
+        "summary": "Add message",
+        "description": "Add a user message to conversation and get AI response (streaming via Server-Sent Events)",
+        "tags": ["AI Agents"],
+        "operationId": "addMessage",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "role": {
+                    "type": "string",
+                    "enum": ["user"],
+                    "default": "user"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "file_urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Optional file attachments"
+                  }
+                },
+                "required": ["content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Message added, AI response streaming via SSE",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string",
+                  "description": "Server-Sent Events stream with message updates"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/conversations/{conversationId}/subscribe": {
+      "get": {
+        "summary": "Subscribe to conversation updates",
+        "description": "Server-Sent Events stream for real-time conversation updates",
+        "tags": ["AI Agents"],
+        "operationId": "subscribeConversation",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SSE stream established",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agents/{agentName}/whatsapp-url": {
+      "get": {
+        "summary": "Get WhatsApp connect URL",
+        "description": "Generate URL for WhatsApp integration (handles auth redirect)",
+        "tags": ["AI Agents"],
+        "operationId": "getWhatsAppUrl",
+        "parameters": [
+          {
+            "name": "agentName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "WhatsApp URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri",
+                      "example": "https://wa.me/...?text=..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/core/upload-file": {
+      "post": {
+        "summary": "Upload file",
+        "description": "Upload file to public storage (accessible via URL)",
+        "tags": ["Integrations - Core"],
+        "operationId": "uploadFile",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": ["file"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File uploaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file_url": {
+                      "type": "string",
+                      "format": "uri",
+                      "example": "https://storage.example.com/public/file123.pdf"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/core/upload-private-file": {
+      "post": {
+        "summary": "Upload private file",
+        "description": "Upload file to private storage (requires signed URL to access)",
+        "tags": ["Integrations - Core"],
+        "operationId": "uploadPrivateFile",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": ["file"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "File uploaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "file_uri": {
+                      "type": "string",
+                      "example": "private://app-id/file123.pdf"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/core/create-file-signed-url": {
+      "post": {
+        "summary": "Create signed URL",
+        "description": "Generate temporary signed URL for accessing private file",
+        "tags": ["Integrations - Core"],
+        "operationId": "createSignedUrl",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file_uri": {
+                    "type": "string",
+                    "description": "Private file URI from upload-private-file"
+                  },
+                  "expires_in": {
+                    "type": "integer",
+                    "default": 300,
+                    "description": "Expiry time in seconds"
+                  }
+                },
+                "required": ["file_uri"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Signed URL created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "signed_url": {
+                      "type": "string",
+                      "format": "uri",
+                      "example": "https://storage.example.com/private/file123.pdf?token=..."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/core/send-email": {
+      "post": {
+        "summary": "Send email",
+        "description": "Send email via SMTP service",
+        "tags": ["Integrations - Core"],
+        "operationId": "sendEmail",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "to": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "subject": {
+                    "type": "string"
+                  },
+                  "body": {
+                    "type": "string",
+                    "description": "HTML or plain text content"
+                  },
+                  "from_name": {
+                    "type": "string",
+                    "description": "Optional sender name (defaults to app name)"
+                  }
+                },
+                "required": ["to", "subject", "body"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email sent",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/core/invoke-llm": {
+      "post": {
+        "summary": "Invoke LLM",
+        "description": "Call LLM service with optional web search, vision, and structured JSON output",
+        "tags": ["Integrations - Core"],
+        "operationId": "invokeLLM",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "Detailed prompt"
+                  },
+                  "add_context_from_internet": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Add Google Search, Maps, News context"
+                  },
+                  "response_json_schema": {
+                    "type": "object",
+                    "description": "JSON schema for structured output (root must be object type)",
+                    "additionalProperties": true
+                  },
+                  "file_urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Attach files/images for context"
+                  }
+                },
+                "required": ["prompt"]
+              },
+              "examples": {
+                "simple": {
+                  "summary": "Simple text generation",
+                  "value": {
+                    "prompt": "Write a professional email reminder for veterinary appointment tomorrow at 10:00 AM"
+                  }
+                },
+                "structuredVaccinationExtraction": {
+                  "summary": "Extract structured vaccination data",
+                  "value": {
+                    "prompt": "Extract all vaccination records from this document",
+                    "file_urls": ["https://example.com/vaccination-history.pdf"],
+                    "response_json_schema": {
+                      "type": "object",
+                      "properties": {
+                        "vaccinations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "vaccination_type": {
+                                "type": "string"
+                              },
+                              "date": {
+                                "type": "string"
+                              },
+                              "batch_number": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "webSearch": {
+                  "summary": "Get current information with web search",
+                  "value": {
+                    "prompt": "What are the latest veterinary guidelines for canine parvovirus vaccination in Israel?",
+                    "add_context_from_internet": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "LLM response (string or structured object)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "string",
+                      "description": "Plain text response"
+                    },
+                    {
+                      "type": "object",
+                      "description": "Structured JSON response"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/core/generate-image": {
+      "post": {
+        "summary": "Generate AI image",
+        "description": "Generate image using AI (takes 5-10 seconds)",
+        "tags": ["Integrations - Core"],
+        "operationId": "generateImage",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "prompt": {
+                    "type": "string",
+                    "description": "Detailed image description"
+                  },
+                  "existing_image_urls": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Reference images for style/editing"
+                  }
+                },
+                "required": ["prompt"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Image generated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/integrations/core/extract-data-from-uploaded-file": {
+      "post": {
+        "summary": "Extract data from file",
+        "description": "Extract structured data from CSV, Excel, PDF, or images using AI",
+        "tags": ["Integrations - Core"],
+        "operationId": "extractData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file_url": {
+                    "type": "string",
+                    "format": "uri",
+                    "description": "URL from upload-file"
+                  },
+                  "json_schema": {
+                    "type": "object",
+                    "description": "Target schema for extraction"
+                  }
+                },
+                "required": ["file_url", "json_schema"]
+              },
+              "examples": {
+                "vaccinationImport": {
+                  "summary": "Import vaccinations from Excel",
+                  "value": {
+                    "file_url": "https://storage.example.com/file.xlsx",
+                    "json_schema": {
+                      "type": "object",
+                      "properties": {
+                        "vaccinations": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "patient_name": {
+                                "type": "string"
+                              },
+                              "vaccination_type": {
+                                "type": "string"
+                              },
+                              "date": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Data extracted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "enum": ["success", "error"]
+                    },
+                    "details": {
+                      "type": "string",
+                      "nullable": true
+                    },
+                    "output": {
+                      "oneOf": [
+                        {
+                          "type": "array"
+                        },
+                        {
+                          "type": "object"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connectors/access-token/{integrationType}": {
+      "get": {
+        "summary": "Get OAuth access token",
+        "description": "Retrieve OAuth access token for external service (admin/service-role only)",
+        "tags": ["App Connectors"],
+        "operationId": "getAccessToken",
+        "parameters": [
+          {
+            "name": "integrationType",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "googlecalendar",
+                "googledrive",
+                "gmail",
+                "googlesheets",
+                "googledocs",
+                "googleslides",
+                "slack",
+                "notion",
+                "salesforce",
+                "hubspot",
+                "linkedin",
+                "tiktok"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access token (string only, not object)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": "ya29.a0AfH6SMBx..."
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Connector not authorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      }
+    },
+    "/connectors/list": {
+      "get": {
+        "summary": "List authorized connectors",
+        "description": "Get all authorized app connectors (admin only)",
+        "tags": ["App Connectors"],
+        "operationId": "listConnectors",
+        "responses": {
+          "200": {
+            "description": "List of authorized connectors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "integration_type": {
+                        "type": "string"
+                      },
+                      "scopes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "authorized_at": {
+                        "type": "string",
+                        "format": "date-time"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/functions/{functionName}": {
+      "post": {
+        "summary": "Invoke custom function",
+        "description": "Execute a custom backend function (specific to your app)",
+        "tags": ["Custom Functions"],
+        "operationId": "invokeFunction",
+        "parameters": [
+          {
+            "name": "functionName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["importVaccinationHistory", "syncSupplierPrices"]
+            },
+            "description": "Function name"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "Function-specific payload",
+                "additionalProperties": true
+              },
+              "examples": {
+                "importVaccinationHistory": {
+                  "summary": "Import vaccination history from XML",
+                  "value": {
+                    "file_url": "https://storage.example.com/vaccination-history.xml",
+                    "client_id": "abc-123"
+                  }
+                },
+                "syncSupplierPrices": {
+                  "summary": "Sync supplier prices from external API",
+                  "value": {
+                    "source": "external_api",
+                    "supplier_name": "VetSupply Ltd"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Function executed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Function-specific response",
+                  "additionalProperties": true
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Function execution error"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Check if API is running and database is accessible",
+        "tags": ["System"],
+        "operationId": "healthCheck",
+        "security": [],
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "database": {
+                      "type": "string",
+                      "example": "connected"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service unavailable"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Entities - CRUD",
+      "description": "Complete CRUD operations for all 44 entity types (Client, Patient, Appointment, WeeklySchedule, VacationRequest, TimeClockEntry, HospitalizedAnimal, ProtocolTemplate, FilledProtocol, Order, InventoryItem, InventoryShortage, etc.)"
+    },
+    {
+      "name": "Authentication",
+      "description": "User authentication, session management, and JWT token operations"
+    },
+    {
+      "name": "Users Management",
+      "description": "Admin-only endpoints for managing users, roles, and permissions"
+    },
+    {
+      "name": "Analytics",
+      "description": "Custom event tracking for application analytics"
+    },
+    {
+      "name": "AI Agents",
+      "description": "Conversational AI agents with tool use, real-time streaming, and WhatsApp integration"
+    },
+    {
+      "name": "Integrations - Core",
+      "description": "Built-in integration services (file upload, email, LLM, image generation, data extraction)"
+    },
+    {
+      "name": "App Connectors",
+      "description": "OAuth integrations for external services (Google Calendar, Gmail, Slack, etc.)"
+    },
+    {
+      "name": "Custom Functions",
+      "description": "App-specific backend logic (importVaccinationHistory, syncSupplierPrices)"
+    },
+    {
+      "name": "System",
+      "description": "System utilities, health checks, and monitoring"
+    }
+  ],
+  "externalDocs": {
+    "description": "WebSocket Real-time API Documentation",
+    "url": "#websocket-api"
+  }
+}

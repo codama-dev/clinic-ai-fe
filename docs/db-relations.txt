@@ -1,0 +1,178 @@
+כל היחסים (Relations) בין הטבלאות
+יחסים מ-User (משתמש מערכת)
+Constraint → User
+
+employee_id → User.id
+Many-to-One (משתמש אחד יכול להגיש אילוצים רבים)
+VacationRequest → User
+
+employee_id → User.id
+Many-to-One (משתמש אחד יכול להגיש בקשות חופשה רבות)
+VetReferral → User (2 יחסים)
+
+referring_user_id → User.id - Many-to-One (משתמש אחד יכול ליצור פניות רבות)
+target_doctor_id → User.id - Many-to-One (רופא אחד יכול לקבל פניות רבות)
+InventoryShortage → User
+
+requested_by_id → User.id
+Many-to-One (משתמש אחד יכול לדווח על חוסרים רבים)
+PublicProfile → User
+
+user_id → User.id
+One-to-One (לכל משתמש יש פרופיל ציבורי אחד)
+PublicDoctorInfo → User
+
+user_id → User.id
+One-to-One (לכל רופא יש מידע ציבורי אחד)
+SlotTemplate → User (כרופא)
+
+doctor_id → User.id
+Many-to-One (רופא אחד יכול להיות בתבניות זמן רבות)
+Slot → User (כרופא)
+
+doctor_id → User.id
+Many-to-One (רופא אחד יכול להיות במשבצות רבות)
+Appointment → User (כרופא)
+
+doctor_id → User.id
+Many-to-One (רופא אחד יכול להיות בתורים רבים)
+CalendarSettings → User (כרופא)
+
+doctor_id → User.id
+Many-to-One (רופא אחד יכול להיות בהגדרות יומן רבות)
+DoctorSchedule → User (כרופא)
+
+doctor_id → User.id
+Many-to-One (רופא אחד יכול להיות בהגדרות לוח שעות רבות)
+TimeClockEntry → User (כעובד)
+
+employee_id → User.id
+Many-to-One (עובד אחד יכול להיות עם רישומי נוכחות רבים)
+יחסים מ-Client (לקוח)
+Patient → Client
+
+client_id → Client.id
+client_number → Client.client_number
+Many-to-One (ללקוח אחד יכולים להיות מטופלים רבים)
+Appointment → Client
+
+client_id → Client.id
+Many-to-One (ללקוח אחד יכולים להיות תורים רבים)
+MedicalVisit → Client
+
+client_number → Client.client_number
+Many-to-One (ללקוח אחד יכולים להיות ביקורים רפואיים רבים)
+Billing → Client
+
+client_id → Client.id
+Many-to-One (ללקוח אחד יכולים להיות חיובים רבים)
+Notification → Client
+
+client_id → Client.id
+Many-to-One (ללקוח אחד יכולות להישלח התראות רבות)
+PatientMetric → Client
+
+client_id → Client.id
+Many-to-One (ללקוח אחד יכולים להיות מדדים רבים של מטופליו)
+Vaccination → Client
+
+client_id → Client.id
+client_number → Client.client_number
+Many-to-One (ללקוח אחד יכולים להיות חיסונים רבים למטופליו)
+ClientDocument → Client
+
+client_id → Client.id
+Many-to-One (ללקוח אחד יכולים להיות מסמכים רבים)
+LabTest → Client
+
+client_number → Client.client_number
+Many-to-One (ללקוח אחד יכולות להיות בדיקות מעבדה רבות)
+יחסים מ-Patient (מטופל)
+Appointment → Patient
+
+patient_id → Patient.id
+Many-to-One (למטופל אחד יכולים להיות תורים רבים)
+MedicalVisit → Patient
+
+patient_number → Patient.patient_number
+Many-to-One (למטופל אחד יכולים להיות ביקורים רפואיים רבים)
+Billing → Patient
+
+patient_id → Patient.id
+Many-to-One (למטופל אחד יכולים להיות חיובים רבים)
+PatientMetric → Patient
+
+patient_id → Patient.id
+Many-to-One (למטופל אחד יכולים להיות מדדים רבים)
+Vaccination → Patient
+
+patient_id → Patient.id
+patient_number → Patient.patient_number
+Many-to-One (למטופל אחד יכולים להיות חיסונים רבים)
+ClientDocument → Patient (אופציונלי)
+
+patient_id → Patient.id
+Many-to-One (למטופל אחד יכולים להיות מסמכים רבים)
+LabTest → Patient
+
+patient_number → Patient.patient_number
+Many-to-One (למטופל אחד יכולות להיות בדיקות מעבדה רבות)
+יחסים מ-Room (חדר)
+SlotTemplate → Room
+
+room_id → Room.id
+Many-to-One (חדר אחד יכול להיות בתבניות זמן רבות)
+Slot → Room
+
+room_id → Room.id
+Many-to-One (חדר אחד יכול להיות במשבצות זמן רבות)
+Appointment → Room
+
+room_id → Room.id
+Many-to-One (חדר אחד יכול לארח תורים רבים)
+יחסים מ-AppointmentType (סוג תור)
+Appointment → AppointmentType
+appointment_type_id → AppointmentType.id
+Many-to-One (סוג תור אחד יכול להיות בתורים רבים)
+יחסים מ-SlotTemplate (תבנית משבצת)
+Slot → SlotTemplate
+template_id → SlotTemplate.id
+Many-to-One (תבנית אחת יכולה ליצור משבצות רבות)
+יחסים מ-Appointment (תור)
+Billing → Appointment
+
+appointment_id → Appointment.id
+Many-to-One או One-to-One (תור אחד יכול להיות קשור לחיובים, בדרך כלל אחד)
+Notification → Appointment
+
+appointment_id → Appointment.id
+Many-to-One (תור אחד יכול להיות קשור להתראות רבות)
+יחסים מ-MedicalVisit (ביקור רפואי)
+Billing → MedicalVisit
+visit_id → MedicalVisit.id
+Many-to-One או One-to-One (ביקור רפואי אחד יכול להיות קשור לחיובים)
+יחסים מ-ProtocolTemplate (תבנית פרוטוקול)
+FilledProtocol → ProtocolTemplate
+template_id → ProtocolTemplate.id
+Many-to-One (תבנית אחת יכולה לשמש לפרוטוקולים ממולאים רבים)
+יחסים מ-HospitalizedAnimal (חיה מאושפזת)
+TreatmentExecution → HospitalizedAnimal
+animal_id → HospitalizedAnimal.id
+Many-to-One (חיה מאושפזת אחת יכולה להיות קשורה לביצועי טיפול רבים)
+יחסים מ-LabTestType (סוג בדיקת מעבדה)
+LabTest → LabTestType
+test_type_id → LabTestType.id
+Many-to-One (סוג בדיקה אחד יכול לשמש בדיקות רבות)
+יחסים מ-PriceList (מחירון)
+PriceListItem → PriceList
+price_list_id → PriceList.id
+Many-to-One (מחירון אחד יכול להכיל פריטים רבים)
+סיכום לפי סוג יחס:
+One-to-One (2 יחסים)
+User ↔ PublicProfile
+User ↔ PublicDoctorInfo
+One-to-Many / Many-to-One (38 יחסים)
+כל שאר היחסים במערכת
+
+Many-to-Many (0 יחסים)
+אין יחסים מסוג Many-to-Many במערכת (לא קיימות טבלאות חיבור)
